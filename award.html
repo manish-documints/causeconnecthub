@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Funding | CauseConnects</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        :root {
+            --vibrant-pink: #ff3399;
+            --vibrant-pink-hover: #e62e8a;
+            --vibrant-orange: #ff6633;
+            --vibrant-orange-hover: #e65526;
+            --vibrant-yellow: #ffcc33;
+            --hero-gradient: linear-gradient(135deg, #ff3399 0%, #ff6633 50%, #ffcc33 100%);
+            --soft-bg: #fffcf9;
+            --text-dark: #1a1a1a;
+            --text-muted: #64748b;
+            --primary-purple: #4a0f66;
+            --soft-lavender: #f7f3ff;
+            --pastel-bg: #fff5f2;
+            --pastel-border: #ffd8cc;
+            --aura-color: rgba(255, 102, 51, 0.12);
+            --eligibility-pink-bg: #fdf2f8;
+            --deadline-pink-bg: #fce7f3;
+            --pink-aura: rgba(255, 51, 153, 0.15);
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--soft-bg);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* --- NAVIGATION --- */
+        .nav-bar {
+            position: fixed; top: 0; left: 0; width: 100%;
+            display: flex; justify-content: center; z-index: 1000; padding: 20px 0;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        .nav-bar.scrolled {
+            padding: 12px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        .nav-container { width: 90%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo h1 { font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--text-dark); margin: 0; }
+        .nav-logo h1 span { background: var(--hero-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links a { color: var(--text-dark); text-decoration: none; font-weight: 500; font-size: 0.95rem; margin: 0 12px; }
+        .btn-nav {
+            background: var(--hero-gradient); color: white; padding: 10px 22px;
+            border-radius: 50px; font-weight: 700; text-decoration: none; transition: 0.2s;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero-outer {
+            padding-top: 120px;
+            display: flex;
+            justify-content: center;
+            padding-bottom: 80px;
+        }
+        .hero-box {
+            width: 95%;
+            max-width: 1280px;
+            background: var(--hero-gradient);
+            padding: 120px 60px;
+            text-align: center;
+            color: white;
+            border-radius: 40px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(255, 102, 51, 0.15);
+        }
+        .hero-box h2 { font-family: 'Outfit', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 15px; }
+        .hero-box p { font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+
+        /* --- FILTER DASHBOARD --- */
+        .filter-wrapper {
+            max-width: 1100px; margin: -40px auto 40px; padding: 30px;
+            background: white; border-radius: 35px; box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
+            position: relative; z-index: 10;
+        }
+        .search-bar { position: relative; flex-grow: 1; }
+        .search-bar input {
+            width: 100%; padding: 14px 20px 14px 50px; border: 1px solid var(--pastel-border);
+            border-radius: 20px; outline: none; font-weight: 500; background-color: var(--pastel-bg);
+        }
+        .search-bar svg { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--vibrant-orange); width: 20px; }
+
+        .action-btn {
+            display: flex; align-items: center; gap: 8px; background: var(--soft-lavender);
+            padding: 12px 24px; border-radius: 20px; cursor: pointer; color: var(--primary-purple);
+            font-weight: 700; transition: 0.2s; border: 1px solid var(--pastel-border); font-size: 0.9rem;
+        }
+        .action-btn:hover { background: #efeaff; }
+        .action-btn.active { background: var(--primary-purple) !important; color: white !important; border-color: var(--primary-purple) !important; }
+
+        .shortlist-btn {
+            background: #fff0f6;
+            color: var(--vibrant-pink);
+            border-color: #ffd6e7;
+        }
+        .shortlist-btn:hover { background: #ffe3f0; }
+        .shortlist-btn.active {
+            background: var(--vibrant-pink) !important;
+            color: white !important;
+            border-color: var(--vibrant-pink) !important;
+        }
+
+        .dropdown-menu {
+            position: absolute; top: 120%; right: 0; width: 500px;
+            background: white; border-radius: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            padding: 25px; z-index: 500; display: none; border: 1px solid #f0f0f0;
+        }
+        .dropdown-menu.show { display: block; animation: slideIn 0.3s ease; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .checkbox-item {
+            padding: 8px 16px; border-radius: 12px; background: #fafafa; border: 1px solid #eee;
+            cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: 0.2s; color: #475569;
+        }
+        .checkbox-item.active { background: var(--vibrant-orange); color: white; border-color: var(--vibrant-orange); }
+
+        /* Award Type Colors */
+        .type-Scholarship { background-color: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
+        .type-Grant { background-color: #dcfce7; color: #15803d; border-color: #bbf7d0; }
+        .type-Prize { background-color: #fce7f3; color: #be185d; border-color: #fbcfe8; }
+        .type-Fellowship { background-color: #fef3c7; color: #b45309; border-color: #fde68a; }
+
+        .type-pill {
+            padding: 10px 22px; border-radius: 50px; font-weight: 800; font-size: 0.95rem;
+            cursor: pointer; border: 2px solid transparent; opacity: 0.6; transition: 0.2s;
+        }
+        .type-pill.active { opacity: 1; border-color: currentColor; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+
+        /* --- CARDS GRID --- */
+        .content-wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px 100px; }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+
+        .award-card {
+            background: white; padding: 28px; border-radius: 28px; border: 1px solid #f1f5f9;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04); transition: 0.3s;
+            display: flex; flex-direction: column; position: relative; cursor: pointer;
+        }
+        .award-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px var(--aura-color); }
+
+        .award-card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--primary-purple);
+            line-height: 1.2;
+            margin-top: 4px;
+        }
+
+        .award-card .org-name {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--vibrant-orange);
+            margin-bottom: 2px;
+        }
+
+        .save-btn {
+            position: absolute; top: 15px; right: 15px; padding: 10px; border-radius: 50%;
+            background: white; color: #cbd5e1; transition: 0.2s; z-index: 10; border: 1px solid #f1f5f9;
+        }
+        .save-btn:hover { color: var(--vibrant-pink); }
+        .save-btn.active { color: var(--vibrant-pink); background: #fff0f6; border-color: #ffd6e7; }
+
+        .funding-label {
+            display: inline-flex; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em;
+            font-weight: 800; padding: 4px 10px; border-radius: 8px; margin-bottom: 12px; border: 1px solid;
+            align-self: flex-start;
+        }
+
+        .card-desc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; margin: 16px 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+        .card-amount {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--primary-purple);
+        }
+
+        .deadline-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            opacity: 0.75;
+        }
+
+        /* --- VIEW BUTTON --- */
+        .card-view-btn {
+            background: var(--vibrant-orange);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 6px 14px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.2s;
+        }
+        .award-card:hover .card-view-btn {
+            background: var(--vibrant-orange-hover);
+            transform: scale(1.05);
+        }
+
+        .dot-separator {
+            width: 4px;
+            height: 4px;
+            background: #cbd5e1;
+            border-radius: 50%;
+            margin: 0 8px;
+        }
+
+        /* --- EMPTY STATE --- */
+        .empty-state {
+            grid-column: 1 / -1;
+            padding: 80px 20px;
+            text-align: center;
+            background: white;
+            border-radius: 40px;
+            border: 2px dashed #f1f5f9;
+        }
+        .empty-state svg { margin: 0 auto 24px; color: #cbd5e1; width: 64px; height: 64px; }
+        .empty-state h4 { font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--primary-purple); margin-bottom: 8px; }
+        .empty-state p { color: var(--text-muted); max-width: 400px; margin: 0 auto 24px; font-size: 0.95rem; line-height: 1.6; }
+
+        /* --- MODAL --- */
+        #modalWrapper { position: fixed; inset: 0; display: none; justify-content: center; align-items: center; z-index: 2000; padding: 20px; }
+        #modalWrapper.show { display: flex; }
+        #modalOverlay { position: absolute; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); }
+        #modalContent {
+            position: relative; width: 100%; max-width: 700px; background: white; border-radius: 40px;
+            padding: 40px; z-index: 2001; max-height: 90vh; overflow-y: auto;
+            animation: modalFadeScale 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes modalFadeScale {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .apply-now-btn {
+            display: block; text-align: center; text-decoration: none;
+            width: 100%;
+            background: var(--vibrant-orange);
+            color: white;
+            padding: 16px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            transition: background 0.2s, transform 0.1s;
+            border: none;
+            box-shadow: 0 10px 20px rgba(255, 102, 51, 0.2);
+        }
+        .apply-now-btn:active {
+            background: var(--primary-purple) !important;
+            transform: scale(0.98);
+        }
+        .apply-now-btn:hover {
+            background: var(--vibrant-orange-hover);
+        }
+
+        /* NAVIGATION ARROWS */
+        .nav-arrow {
+            position: fixed; top: 50%; transform: translateY(-50%);
+            width: 56px; height: 56px; border-radius: 50%; background: white;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #f1f5f9;
+            cursor: pointer; transition: 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 2005; color: var(--primary-purple);
+        }
+        .nav-arrow:hover {
+            background: var(--vibrant-orange);
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 15px 35px rgba(255, 102, 51, 0.3);
+        }
+        .nav-arrow.left { left: calc(50% - 430px); }
+        .nav-arrow.right { right: calc(50% - 430px); }
+
+        .eligibility-box { background: var(--eligibility-pink-bg); border: 2px dashed #f9c7d8; border-radius: 20px; padding: 20px; margin-top: 20px; }
+        .deadline-box-pink { background: var(--deadline-pink-bg); color: #be185d; }
+
+        .requirement-item {
+            display: flex; align-items: center; gap: 12px; padding: 10px;
+            background: white; border-radius: 12px; margin-bottom: 8px;
+            transition: 0.2s; cursor: pointer; border: 1px solid #f1f5f9;
+        }
+        .requirement-item.checked { background: #f0fdf4; border-color: #86efac; }
+        .requirement-item.checked .req-text { text-decoration: line-through; color: #94a3b8; }
+        .check-circle { width: 20px; height: 20px; border-radius: 6px; border: 2px solid #cbd5e1; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .requirement-item.checked .check-circle { background: #22c55e; border-color: #22c55e; }
+        .requirement-item.checked .check-circle::after { content: "✓"; color: white; font-size: 12px; font-weight: 900; }
+        .req-text { font-size: 0.85rem; font-weight: 600; color: #475569; }
+
+        .tag-bubble {
+            background: var(--soft-lavender); color: var(--primary-purple); font-weight: 700;
+            padding: 4px 12px; border-radius: 8px; font-size: 0.75rem; border: 1px solid #e9e3ff;
+        }
+
+        @media (max-width: 950px) {
+            .nav-arrow { width: 44px; height: 44px; }
+            .nav-arrow.left { left: 10px; }
+            .nav-arrow.right { right: 10px; }
+        }
+        @media (max-width: 600px) {
+            .nav-arrow { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="nav-bar">
+    <div class="nav-container">
+        <div class="nav-logo"><h1><span>Cause</span>Connects</h1></div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Find Extracurriculars</a>
+            <a href="#" style="font-weight: 800; color: var(--vibrant-orange);">Awards & Scholarships</a>
+            <a href="#">Resources</a>
+        </div>
+        <a href="#" class="btn-nav">Add Your Project</a>
+    </div>
+</nav>
+
+<div class="hero-outer">
+    <section class="hero-box">
+        <h2>Find the Support Your Story Deserves.</h2>
+        <p>Discover scholarships, grants, and opportunities tailored to your unique journey and impact.</p>
+    </section>
+</div>
+
+<div class="content-wrap">
+    <div class="filter-wrapper">
+        <div class="flex flex-col md:flex-row gap-4 mb-6">
+            <div class="search-bar">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                <input type="text" id="searchInput" placeholder="Search awards or majors..." oninput="handleSearch()">
+            </div>
+
+            <div class="relative">
+                <button id="filterToggleBtn" class="action-btn" onclick="toggleDropdown('filterDropdown')">
+                    Detailed Filters
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>
+                </button>
+                <div id="filterDropdown" class="dropdown-menu">
+                    <div class="grid grid-cols-2 gap-8">
+                        <div>
+                            <p class="text-[10px] uppercase font-black text-gray-400 mb-3 tracking-widest">Field of Study</p>
+                            <div class="flex flex-wrap gap-2">
+                                <div class="checkbox-item" data-cat="STEM" onclick="toggleCategory('STEM')">STEM</div>
+                                <div class="checkbox-item" data-cat="Arts" onclick="toggleCategory('Arts')">Arts</div>
+                                <div class="checkbox-item" data-cat="Humanities" onclick="toggleCategory('Humanities')">Humanities</div>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-[10px] uppercase font-black text-gray-400 mb-3 tracking-widest">Impact Area</p>
+                            <div class="flex flex-wrap gap-2">
+                                <div class="checkbox-item" data-cat="Leadership" onclick="toggleCategory('Leadership')">Leadership</div>
+                                <div class="checkbox-item" data-cat="Community" onclick="toggleCategory('Community')">Community</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t flex justify-between items-center">
+                        <button class="text-xs font-bold text-gray-400 hover:text-red-500" onclick="clearAllFilters()">Reset</button>
+                        <button class="bg-[#ff6633] text-white px-8 py-2.5 rounded-full text-xs font-extrabold shadow-md hover:bg-[#e65526] transition" onclick="closeDropdowns()">APPLY FILTERS</button>
+                    </div>
+                </div>
+            </div>
+
+            <button id="shortlistBtn" class="action-btn shortlist-btn" onclick="toggleShortlistMode()">
+                <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748z"/></svg>
+                Shortlist (<span id="shortlistCount">0</span>)
+            </button>
+        </div>
+
+        <div id="activeTagRow" class="flex flex-wrap gap-2 mb-6 min-h-[20px]"></div>
+
+        <div class="flex items-center gap-6 border-t pt-6">
+            <span class="text-[11px] font-black text-gray-400 uppercase tracking-[0.15em]">Award Type:</span>
+            <div class="flex flex-wrap gap-3">
+                <div class="type-pill type-Scholarship" data-type="Scholarship" onclick="toggleType('Scholarship')">Scholarship</div>
+                <div class="type-pill type-Grant" data-type="Grant" onclick="toggleType('Grant')">Grant</div>
+                <div class="type-pill type-Prize" data-type="Prize" onclick="toggleType('Prize')">Prize</div>
+                <div class="type-pill type-Fellowship" data-type="Fellowship" onclick="toggleType('Fellowship')">Fellowship</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cardsGrid" class="cards-grid"></div>
+</div>
+
+<div id="modalWrapper">
+    <div id="modalOverlay" onclick="closeModal()"></div>
+
+    <button class="nav-arrow left" id="prevBtn" onclick="navigate(-1)">
+        <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+    </button>
+    <button class="nav-arrow right" id="nextBtn" onclick="navigate(1)">
+        <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+    </button>
+
+    <div id="modalContent">
+        <div class="flex justify-between items-start mb-6">
+            <div id="mLabel" class="funding-label">TYPE</div>
+            <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+
+        <h2 id="mTitle" class="text-3xl font-black text-purple-900 mb-2" style="font-family:'Outfit';">Award Title</h2>
+        <p id="mOrg" class="text-sm font-bold text-vibrant-orange mb-6">Organization Name</p>
+
+        <div class="grid grid-cols-2 gap-4 mb-8">
+            <div class="bg-purple-50 p-4 rounded-xl text-center">
+                <p class="text-xs text-purple-400 uppercase font-bold mb-1">Amount</p>
+                <p id="mAmount" class="text-xl font-extrabold text-purple-900" style="font-family:'Outfit';">$0,000</p>
+            </div>
+            <div class="deadline-box-pink p-4 rounded-xl text-center">
+                <p class="text-xs text-pink-400 uppercase font-bold mb-1">Deadline</p>
+                <p id="mDeadline" class="text-xl font-extrabold text-pink-700" style="font-family:'Outfit';">Month DD</p>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <h4 class="font-bold text-gray-900 mb-2">Description</h4>
+            <p id="mDesc" class="text-gray-600 leading-relaxed text-sm"></p>
+        </div>
+
+        <div class="eligibility-box mb-8">
+            <div class="flex items-center gap-2 mb-4">
+                <svg class="text-vibrant-pink w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                <h4 class="font-extrabold text-purple-900">Eligibility Checklist</h4>
+            </div>
+            <div id="mRequirements"></div>
+        </div>
+
+        <div class="mb-8">
+            <h4 class="font-bold text-gray-900 mb-2 text-sm">Relevant Fields</h4>
+            <div id="mCats" class="flex flex-wrap gap-2"></div>
+        </div>
+
+        <div class="space-y-4">
+            <div class="bg-gray-50 border border-gray-100 p-4 rounded-2xl flex items-center justify-between">
+                <div class="overflow-hidden">
+                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Application URL</p>
+                    <p id="mUrlText" class="text-xs text-vibrant-orange font-semibold truncate max-w-[250px] md:max-w-[400px]">https://example.com/apply</p>
+                </div>
+                <button onclick="copyLink()" class="text-gray-400 hover:text-vibrant-orange transition p-2">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"/></svg>
+                </button>
+            </div>
+            
+            <a id="mApplyBtn" href="#" target="_blank" class="apply-now-btn">
+                Apply Now
+            </a>
+            <p id="copyFeedback" class="text-center text-[10px] text-green-500 font-bold opacity-0 transition-opacity">Link copied to clipboard!</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    const DATA = [
+        { 
+            id: '1', 
+            title: 'Coca-Cola Scholars Program', 
+            org: 'Coca-Cola Scholars Foundation', 
+            desc: 'One of the most prestigious merit scholarships in the U.S., awarded to students with strong academics, leadership, and community involvement.', 
+            amount: '$20,000', 
+            deadline: 'Jan 15', 
+            type: 'Scholarship', 
+            cats: ['Leadership','Community'], 
+            reqs: ['Current High School Senior' ,'In the U.S', 'Minimum GPA ~3.0+','Strong Leadership & Service Record'],
+            link: 'https://www.coca-colascholarsfoundation.org/apply/'
+        },
+        { 
+            id: '2', 
+            title: 'Gates Scholarship', 
+            org: 'Bill & Melinda Gates Foundation', 
+            desc: 'Highly selective scholarship for outstanding minority high school seniors with significant financial need. Covers full college cost.', 
+            amount: 'Full-ride', 
+            deadline: 'Feb 1', 
+            type: 'Scholarship', 
+            cats: ['Leadership', 'Community','STEM','Humanities'], 
+            reqs: ['U.S. Citizen', 'Pell-eligible', 'Minimum 3.3 GPA', 'Leadership & Community Involvement'],
+            link: 'https://www.thegatesscholarship.org/scholarship'
+        },
+        { 
+            id: '3', 
+            title: 'Jack Kent Cooke Foundation College Scholarship', 
+            org: 'Jack Kent Cooke Foundation', 
+            desc: 'Offers generous support to high-achieving students with financial need.', 
+            amount: 'Up to $55,000', 
+            deadline: 'Feb 28', 
+            type: 'Scholarship', 
+            cats: ['Humanities','Community','STEM','Leadership'], 
+            reqs: ['High School Senior Graduating', 'Strong Academic Record', 'Financial Need'],
+            link: 'https://www.jkcf.org/our-scholarships/college-scholarship-program/how-to-apply/'
+        },
+        { 
+            id: '4', 
+            title: 'Discus Awards Scholarship', 
+            org: 'Discus Awards', 
+            desc: 'Recognizes “all-around” high school students for achievements across diverse attributes like arts, academics, and service.', 
+            amount: '$2,000', 
+            deadline: 'Apr 20', 
+            type: 'Scholarship', 
+            cats: ['Arts','STEM','Humanities', 'Leadership', 'Community'], 
+            reqs: ['U.S. high school students in grades 9-12'],
+            link: 'https://www.discusawards.com/apply'
+        },
+        { 
+            id: '5', 
+            title: 'Voice of Democracy Scholarship', 
+            org: 'Amazon', 
+            desc: 'Audio-essay contest where students record essays on patriotic themes; state winners advance to the national competition.', 
+            amount: '$30,000', 
+            deadline: 'Jan 20', 
+            type: 'Scholarship', 
+            cats: ['STEM', 'Humanities', 'Leadership', 'Community'], 
+            reqs: ['Grades 9-12','Enrolled In U.S. School', 'Submit Original Audio Essay'],
+            link: 'https://www.vfw.org/community/youth-and-education/youth-scholarships/voice-of-democracy'
+        },
+        { 
+            id: '6', 
+            title: 'NSHSS Scholarships', 
+            org: 'National Society of High School Scholars', 
+            desc: 'Offers a suite of scholarships for its members, based on academics, leadership, and extracurricular involvement.', 
+            amount: 'Varies', 
+            deadline: 'Apr 20', 
+            type: 'Scholarship', 
+            cats: ['Arts','STEM','Humanities', 'Leadership', 'Community'], 
+            reqs: ['High School Student', 'NSHSS membership'],
+            link: 'https://www.nshss.org/scholarships/'
+        },
+        { 
+            id: '7', 
+            title: 'Edison International Scholars Program', 
+            org: 'Edison International', 
+            desc: 'Supports Southern California high school seniors pursuing STEM degrees with financial need.', 
+            amount: '$50,000', 
+            deadline: 'Apr 20', 
+            type: 'Scholarship', 
+            cats: ['STEM'], 
+            reqs: ['Calif. Resident In Edison Territory', 'GPA ~3.0+','Financial Need', 'STEM Major'],
+            link: 'https://getschooled.com/article/4685-california-scholarships'
+        },
+        { 
+            id: '8', 
+            title: 'Microsoft Diversity Scholarships', 
+            org: 'Microsoft', 
+            desc: 'Includes scholarships for Black students, Latinx students, students with disabilities, and Women in STEAM.', 
+            amount: '$5,000', 
+            deadline: 'Apr 20', 
+            type: 'Scholarship', 
+            cats: ['STEM', 'Leadership'], 
+            reqs: ['High School Senior', 'Specific Groups Planning Relevant Majors'],
+            link: 'https://getschooled.com/article/4685-california-scholarships'
+        },  
+        { 
+            id: '9', 
+            title: 'TD Scholarship for Community Leadership', 
+            org: 'Toronto-Dominion Bank', 
+            desc: 'Major Canadian scholarship for students demonstrating outstanding leadership in community service.', 
+            amount: '$70,000', 
+            deadline: 'Apr 20', 
+            type: 'Scholarship', 
+            cats: ['Community', 'Leadership'], 
+            reqs: ['Canadian High School Students', 'Strong Community Leadership'],
+            link: 'http://www.tdcanadatrust.com/scholarship/index.jsp'
+        },
+        { 
+            id: '10', 
+            title: 'Rosa L. Parks Scholarship Foundation', 
+            org: 'Rosa L. Parks Scholarship Foundation', 
+            desc: 'For Michigan high school seniors who show academic achievement and community involvement.', 
+            amount: 'Varies', 
+            deadline: 'Apr 20', 
+            type: 'Scholarship', 
+            cats: ['Community', 'Leadership'], 
+            reqs: ['Michigan Resident', 'Academic Achievement','Community Involvement'],
+            link: 'http://www.rosaparksscholarshipfoundation.org/'
+        }
+    ];
+
+    let filters = { search: '', types: [], cats: [] };
+    let saved = new Set();
+    let showShortlistOnly = false;
+    let currentIdx = -1;
+    let filteredItems = [];
+
+    function getTypeClass(type) { return `type-${type}`; }
+
+    function render() {
+        const grid = document.getElementById('cardsGrid');
+        
+        filteredItems = DATA.filter(item => {
+            const matchesSearch = item.title.toLowerCase().includes(filters.search) || 
+                                 item.org.toLowerCase().includes(filters.search);
+            const matchesType = filters.types.length === 0 || filters.types.includes(item.type);
+            const matchesCat = filters.cats.length === 0 || item.cats.some(c => filters.cats.includes(c));
+            const isSaved = !showShortlistOnly || saved.has(item.id);
+            return matchesSearch && matchesType && matchesCat && isSaved;
+        });
+
+        if (filteredItems.length === 0) {
+            let emptyMsg = "Nothing meets your current criteria.";
+            let emptySub = "Try adjusting your search or filters to discover more opportunities.";
+            
+            if (showShortlistOnly && saved.size === 0) {
+                emptyMsg = "Nothing has been liked yet.";
+                emptySub = "Heart your favorite opportunities to save them here for later!";
+            } else if (showShortlistOnly && filteredItems.length === 0) {
+                emptyMsg = "No matches in your shortlist.";
+                emptySub = "None of your saved items match the current search or filters.";
+            }
+
+            grid.innerHTML = `
+                <div class="empty-state">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <h4>${emptyMsg}</h4>
+                    <p>${emptySub}</p>
+                    <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2 px-6 rounded-full text-sm transition" onclick="clearAllFilters()">Reset All Filters</button>
+                </div>
+            `;
+        } else {
+            grid.innerHTML = filteredItems.map(item => `
+                <div class="award-card" onclick="openModal('${item.id}')">
+                    <div class="funding-label ${getTypeClass(item.type)}">${item.type}</div>
+                    <button class="save-btn ${saved.has(item.id) ? 'active' : ''}" onclick="toggleSave('${item.id}', event)">
+                        <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748z"/></svg>
+                    </button>
+                    <div class="org-name">${item.org}</div>
+                    <h3>${item.title}</h3>
+                    <p class="card-desc">${item.desc}</p>
+                    <div class="mt-auto flex items-center justify-between pt-4 border-t border-gray-50">
+                        <div class="flex items-center">
+                            <span class="card-amount">${item.amount}</span>
+                            <div class="dot-separator"></div>
+                            <span class="deadline-text">${item.deadline}</span>
+                        </div>
+                        <button class="card-view-btn">View</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Update UI states
+        document.querySelectorAll('.checkbox-item').forEach(el => el.classList.toggle('active', filters.cats.includes(el.dataset.cat)));
+        document.querySelectorAll('.type-pill').forEach(el => el.classList.toggle('active', filters.types.includes(el.dataset.type)));
+        
+        const tagRow = document.getElementById('activeTagRow');
+        const activeTags = [...filters.types, ...filters.cats];
+        tagRow.innerHTML = activeTags.map(tag => `
+            <div class="tag-bubble flex items-center gap-1">
+                ${tag} 
+                <span class="hover:text-red-500 font-black cursor-pointer px-1" onclick="removeTag('${tag}')">×</span>
+            </div>
+        `).join('');
+    }
+
+    function removeTag(tag) {
+        filters.types = filters.types.filter(t => t !== tag);
+        filters.cats = filters.cats.filter(c => c !== tag);
+        render();
+    }
+
+    function toggleSave(id, e) {
+        e.stopPropagation();
+        if (saved.has(id)) saved.delete(id);
+        else saved.add(id);
+        document.getElementById('shortlistCount').textContent = saved.size;
+        render();
+    }
+
+    function openModal(id) {
+        const item = DATA.find(d => d.id === id);
+        currentIdx = filteredItems.findIndex(d => d.id === id);
+        if (!item) return;
+
+        document.getElementById('mLabel').textContent = item.type;
+        document.getElementById('mLabel').className = `funding-label ${getTypeClass(item.type)}`;
+        document.getElementById('mTitle').textContent = item.title;
+        document.getElementById('mOrg').textContent = item.org;
+        document.getElementById('mAmount').textContent = item.amount;
+        document.getElementById('mDeadline').textContent = item.deadline;
+        document.getElementById('mDesc').textContent = item.desc;
+        document.getElementById('mUrlText').textContent = item.link;
+        document.getElementById('mApplyBtn').href = item.link;
+
+        document.getElementById('mRequirements').innerHTML = item.reqs.map(r => `
+            <div class="requirement-item" onclick="this.classList.toggle('checked')">
+                <div class="check-circle"></div>
+                <span class="req-text">${r}</span>
+            </div>
+        `).join('');
+
+        document.getElementById('mCats').innerHTML = item.cats.map(c => `<div class="tag-bubble">${c}</div>`).join('');
+        document.getElementById('modalWrapper').classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        document.getElementById('modalWrapper').classList.remove('show');
+        document.body.style.overflow = 'auto';
+    }
+
+    function navigate(dir) {
+        let newIdx = currentIdx + dir;
+        if (newIdx < 0) newIdx = filteredItems.length - 1;
+        if (newIdx >= filteredItems.length) newIdx = 0;
+        if (filteredItems[newIdx]) openModal(filteredItems[newIdx].id);
+    }
+
+    function toggleDropdown(id) {
+        const menu = document.getElementById(id);
+        const isShow = menu.classList.contains('show');
+        closeDropdowns();
+        if (!isShow) {
+            menu.classList.add('show');
+            document.getElementById('filterToggleBtn').classList.add('active');
+        }
+    }
+
+    function closeDropdowns() {
+        document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show'));
+        document.getElementById('filterToggleBtn').classList.remove('active');
+    }
+
+    function handleSearch() {
+        filters.search = document.getElementById('searchInput').value.toLowerCase();
+        render();
+    }
+
+    function toggleType(type) {
+        const idx = filters.types.indexOf(type);
+        if (idx > -1) filters.types.splice(idx, 1);
+        else filters.types.push(type);
+        render();
+    }
+
+    function toggleCategory(cat) {
+        const idx = filters.cats.indexOf(cat);
+        if (idx > -1) filters.cats.splice(idx, 1);
+        else filters.cats.push(cat);
+        render();
+    }
+
+    function clearAllFilters() {
+        filters = { search: '', types: [], cats: [] };
+        document.getElementById('searchInput').value = '';
+        showShortlistOnly = false;
+        document.getElementById('shortlistBtn').classList.remove('active');
+        render();
+    }
+
+    function toggleShortlistMode() {
+        showShortlistOnly = !showShortlistOnly;
+        document.getElementById('shortlistBtn').classList.toggle('active', showShortlistOnly);
+        render();
+    }
+
+    function copyLink() {
+        const text = document.getElementById('mUrlText').textContent;
+        const temp = document.createElement('textarea');
+        temp.value = text;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+        const feedback = document.getElementById('copyFeedback');
+        feedback.style.opacity = '1';
+        setTimeout(() => feedback.style.opacity = '0', 2000);
+    }
+
+    window.onload = render;
+    window.addEventListener('scroll', () => {
+        const nav = document.querySelector('.nav-bar');
+        if (window.scrollY > 50) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CauseConnectsHub - Vibrant & Rounded</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+        /* Exact palette from the screenshots */
+        --vibrant-pink: #ff3399;
+        --vibrant-orange: #ff6633;
+        --vibrant-yellow: #ffcc33;
+        --deep-accent: #8e2de2;
+        
+        --soft-bg: #fffcf9;
+        --text-dark: #1a1a1a;
+        --text-muted: #555555;
+        
+        /* The Sunset Gradient */
+        --hero-gradient: linear-gradient(135deg, #ff3399 0%, #ff6633 50%, #ffcc33 100%);
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--soft-bg);
+      color: var(--text-dark);
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* --- ANIMATIONS --- */
+    @keyframes gradientBG {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* --- NAVIGATION --- */
+    .nav-bar {
+      position: fixed;
+      top: 0; left: 0; width: 100%; 
+      display: flex;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px 0;
+      transition: all 0.3s ease;
+    }
+
+    .nav-bar.scrolled {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 12px 0;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+
+    .nav-container {
+        width: 90%;
+        max-width: 1200px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .nav-logo h1 {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.6rem;
+        font-weight: 800;
+        margin: 0;
+        color: white;
+    }
+
+.nav-bar.scrolled .nav-logo h1 {
+    /* Fallback color for browsers that don't support gradients */
+    color: var(--fallback-text-color, black);
+
+    /* Gradient background */
+    background: var(--hero-gradient);
+
+    /* For Chrome, Safari, Edge */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    /* For Firefox */
+    background-clip: text;
+    color: transparent;
+
+    /* Optional: smooth font rendering */
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+}
+
+    .nav-links {
+        display: flex;
+        gap: 24px;
+    }
+
+    .nav-links a {
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;S
+      transition: color 0.2s;
+    }
+
+    .nav-bar.scrolled .nav-links a {
+        color: var(--text-dark);
+    }
+
+    .nav-links a:hover {
+        color: white;
+    }
+
+    .btn-nav {
+        background: white;
+        color: var(--vibrant-orange);
+        padding: 10px 20px;
+        border-radius: 50px;
+        font-weight: 700;
+        text-decoration: none;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        transition: transform 0.2s;
+    }
+
+    .nav-bar.scrolled .btn-nav {
+        background: var(--hero-gradient);
+        color: white;
+    }
+
+    /* --- HERO SECTION (NOW WITH ROUNDED EDGES) --- */
+    .hero-outer {
+        background: var(--soft-bg);
+        padding: 0;
+    }
+
+    .hero-container {
+      min-height: 85vh;
+      background: var(--hero-gradient);
+      background-size: 200% 200%;
+      animation: gradientBG 12s ease infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 20px 100px;
+      color: white;
+      position: relative;
+      /* The requested rounded corners */
+      border-bottom-left-radius: 80px;
+      border-bottom-right-radius: 80px;
+      box-shadow: 0 20px 50px rgba(255, 102, 51, 0.15);
+    }
+
+    .hero-content {
+        max-width: 850px;
+        animation: fadeIn 1s ease-out forwards;
+    }
+
+    .hero-content h2 {
+        font-family: 'Outfit', sans-serif;
+        font-size: clamp(3rem, 8vw, 5rem);
+        line-height: 1.1;
+        margin-bottom: 24px;
+        font-weight: 800;
+        letter-spacing: -2px;
+    }
+
+    .hero-content p {
+        font-size: 1.25rem;
+        margin-bottom: 40px;
+        opacity: 0.95;
+        line-height: 1.6;
+        max-width: 650px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-btns {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+    }
+
+    .btn-main {
+        background: white;
+        color: var(--vibrant-orange);
+        padding: 18px 36px;
+        border-radius: 16px;
+        font-weight: 700;
+        text-decoration: none;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .btn-main:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    }
+
+    .btn-outline {
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255,255,255,0.4);
+        color: white;
+        padding: 18px 36px;
+        border-radius: 16px;
+        font-weight: 700;
+        text-decoration: none;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+    }
+
+    .btn-outline:hover {
+        background: rgba(255,255,255,0.2);
+        transform: translateY(-4px);
+    }
+
+    /* --- INFO SECTION --- */
+    .section-wrap {
+        padding: 60px 20px 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .grid-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: -80px; /* Overlap the rounded hero */
+        position: relative;
+        z-index: 5;
+    }
+
+    .card {
+        background: white;
+        padding: 40px;
+        border-radius: 30px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+        transition: transform 0.3s ease;
+        border: 1px solid rgba(0,0,0,0.02);
+    }
+
+    .card:hover { transform: translateY(-10px); }
+
+    .card-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 25px;
+    }
+
+    .icon-pink { background: #fff0f6; color: var(--vibrant-pink); }
+    .icon-orange { background: #fff4f0; color: var(--vibrant-orange); }
+    .icon-yellow { background: #fffdf0; color: #d9a406; }
+
+    .card-icon svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    .card h3 {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: var(--text-dark);
+    }
+
+    .card p {
+        color: var(--text-muted);
+        line-height: 1.7;
+    }
+
+    /* --- ABOUT SECTION --- */
+    .about-flex {
+        display: flex;
+        align-items: center;
+        gap: 60px;
+        margin-top: 60px;
+        flex-wrap: wrap;
+    }
+
+    .about-image {
+        flex: 1;
+        min-width: 350px;
+        height: 450px;
+        background: var(--hero-gradient);
+        border-radius: 40px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .about-image::after {
+        content: '';
+        position: absolute;
+        inset: 20px;
+        border: 2px solid rgba(255,255,255,0.3);
+        border-radius: 25px;
+    }
+
+    .about-text {
+        flex: 1;
+        min-width: 350px;
+    }
+
+    .tagline {
+        display: inline-block;
+        background: #fff0eb;
+        color: var(--vibrant-orange);
+        padding: 6px 16px;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+    }
+
+    .about-text h2 {
+        font-family: 'Outfit', sans-serif;
+        font-size: 2.8rem;
+        margin-bottom: 25px;
+    }
+
+    /* --- FAQ --- */
+    .faq-container {
+        background: #fdfdfd;
+        padding: 60px 0 100px;
+    }
+
+    .faq-inner {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .faq-item {
+        margin-bottom: 16px;
+        border-radius: 20px;
+        background: white;
+        border: 1px solid #f0f0f0;
+        overflow: hidden;
+    }
+
+    .faq-trigger {
+        padding: 24px 30px;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: white;
+        transition: background 0.2s;
+    }
+
+    .faq-trigger:hover {
+        background: #fffcfb;
+    }
+
+    .faq-body {
+        padding: 0 30px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease, padding 0.4s;
+        color: var(--text-muted);
+        line-height: 1.6;
+    }
+
+    .faq-item.active .faq-body {
+        max-height: 200px;
+        padding-bottom: 30px;
+    }
+
+    @media (max-width: 768px) {
+        .nav-links { display: none; }
+        .hero-container { border-radius: 0 0 40px 40px; min-height: 70vh; }
+        .hero-content h2 { font-size: 3.2rem; }
+        .grid-cards { margin-top: -40px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="nav-bar">
+    <div class="nav-container">
+        <div class="nav-logo"><h1>CauseConnects</h1></div>
+        <div class="nav-links">
+          <a href="home.html">Home</a> 
+          <a href="explore.html">Find Extracurriculars</a> 
+          <a href="award.html">Awards & Scholarships</a> 
+          <a href="resources.html">Resources</a>
+        </div>
+        <a href="project.html" class="btn-nav">Add Your Project</a>
+    </div>
+  </nav>
+
+  <div class="hero-outer">
+    <section class="hero-container">
+      <div class="hero-content">
+          <h2>Your Passion, <br>Our Connection.</h2>
+          <p>The ultimate platform for high schoolers to discover youth-led initiatives, join impactful projects, and build a community of changemakers.</p>
+          <div class="hero-btns">
+              <a href="explore.html" class="btn-main">Find a Project</a>
+              <a href="project.html" class="btn-outline">Recruit Members</a>
+          </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="section-wrap">
+      <div class="grid-cards">
+          <div class="card">
+              <div class="card-icon icon-pink">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+              </div>
+              <h3>Explore Projects</h3>
+              <p>Filter through dozens of niche categories from STEM to Social Justice and find your perfect fit.</p>
+          </div>
+          <div class="card">
+              <div class="card-icon icon-orange">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path>
+                </svg>
+              </div>
+              <h3>Grow Your Org</h3>
+              <p>List your youth-led initiative and find passionate students looking to make an impact with you.</p>
+          </div>
+          <div class="card">
+              <div class="card-icon icon-yellow">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.143-5.714L5 12l5.714-2.143L13 3z"></path>
+                </svg>
+              </div>
+              <h3>Get Recognized</h3>
+              <p>Apply for awards and scholarships tailored for student leaders and volunteers.</p>
+          </div>
+      </div>
+
+      <div class="about-flex">
+          <div class="about-image"></div>
+          <div class="about-text">
+              <span class="tagline">Our Mission</span>
+              <h2>Bridging the gap between ambition and action.</h2>
+              <p>Finding meaningful extracurricular opportunities shouldn’t be a scavenger hunt. We bring high-quality programs, awards, scholarships, and resources into one supportive hub, so students can explore their passions and take action with confidence.</p>
+              <p>Whether you want to lead, volunteer, or start something of your own, CauseConnects is here to help you succeed.</p>
+          </div>
+      </div>
+  </section>
+
+  <div class="faq-container">
+    <div class="faq-inner">
+        <h2 style="text-align: center; font-family: 'Outfit'; font-size: 2.5rem; margin-bottom: 40px;">Common Questions</h2>
+        <div class="faq-item">
+            <div class="faq-trigger" onclick="this.parentElement.classList.toggle('active')">What is CauseConnects? <span>+</span></div>
+            <div class="faq-body">CauseConnects is a platform that helps students discover extracurricular opportunities, awards, scholarships, and resources to start their own passion projects—all in one place.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-trigger" onclick="this.parentElement.classList.toggle('active')">Who can use CauseConnects? <span>+</span></div>
+            <div class="faq-body">CauseConnects is built for middle school and high school students who want to explore their passions, discover extracurricular opportunities, apply for awards and scholarships, and start their own initiatives.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-trigger" onclick="this.parentElement.classList.toggle('active')">Is there a cost involved? <span>+</span></div>
+            <div class="faq-body">Nope! CauseConnects is 100% free for students. Access to opportunities should never be a barrier.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-trigger" onclick="this.parentElement.classList.toggle('active')">What kinds of opportunities can I find? <span>+</span></div>
+            <div class="faq-body">You can explore youth-led initiatives, volunteer roles, leadership opportunities, competitions, awards, scholarships, and resources to start your own extracurriculars.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-trigger" onclick="this.parentElement.classList.toggle('active')">Do I need prior experience to join opportunities? <span>+</span></div>
+            <div class="faq-body">Not at all. CauseConnects is built for students at any stage, whether you’re just starting out or already deeply involved.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-trigger" onclick="this.parentElement.classList.toggle('active')">How do I list my organization? <span>+</span></div>
+            <div class="faq-body">Click "Add Your Project" and fill out the form including information such as what you do and what your looking for. After about a week a confirmation email will be sent out!</div>
+        </div>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('scroll', () => {
+        const nav = document.querySelector('.nav-bar');
+        if (window.scrollY > 50) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
+    });
+  </script>
+
+</body>
+</html>
