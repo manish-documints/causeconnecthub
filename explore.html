@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <title>CauseConnectHub</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resources | CauseConnectHub</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <style>
         :root {
             --vibrant-pink: #ff3399;
@@ -28,139 +29,315 @@
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--soft-bg);
+            background: var(--soft-bg);
             color: var(--text-dark);
             margin: 0;
             padding: 0;
         }
+        /* --- ADVANCED TRANSITIONS --- */
+        
+        /* Initial state for elements we want to reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
 
+        /* Visible state triggered by Intersection Observer */
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Staggered Entrance for Cards */
+        .stagger-card {
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .stagger-card.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Delay helper classes for staggered loading */
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
         /* --- NAVIGATION --- */
         .nav-bar {
             position: fixed; top: 0; left: 0; width: 100%; 
             display: flex; justify-content: center; z-index: 1000; padding: 20px 0;
             transition: all 0.3s ease;
+        }
+        .nav-bar.scrolled {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
+            padding: 12px 0;
             box-shadow: 0 4px 20px rgba(0,0,0,0.05);
         }
         .nav-container { width: 90%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; }
         .nav-logo h1 { font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--text-dark); margin: 0; }
         .nav-logo h1 span { background: var(--hero-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        .nav-links a { color: var(--text-dark); text-decoration: none; font-weight: 500; font-size: 0.95rem; margin: 0 12px; transition: 0.2s; }
-        .nav-links a.active { color: var(--vibrant-orange); font-weight: 800; }
-        
+        .nav-links a { color: var(--text-dark); text-decoration: none; font-weight: 500; font-size: 0.95rem; margin: 0 12px; }
+        .nav-links a.active { color: var(--vibrant-orange); font-weight: 700; }
         .btn-nav {
             background: var(--hero-gradient); color: white; padding: 10px 22px;
             border-radius: 50px; font-weight: 700; text-decoration: none; transition: 0.2s;
-            cursor: pointer; border: none;
         }
 
         /* --- HERO SECTION --- */
-        .hero-outer {
-            padding-top: 120px;
+        .hero-outer { padding-top: 110px; display: flex; flex-direction: column; align-items: center; }
+        .hero-box {
+            width: 90%; max-width: 1200px; background: var(--hero-gradient);
+            padding: 100px 80px; text-align: center; color: white; border-radius: 40px;
+            position: relative; box-shadow: 0 20px 40px rgba(255, 102, 51, 0.15);
+        }
+        .hero-box h2 { font-family: 'Outfit', sans-serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; line-height: 1.1; margin-bottom: 12px; }
+        .hero-box p { font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+            /* --- MOBILE MENU STYLES --- */
+    .mobile-hamburger {
+        display: none;
+        cursor: pointer;
+        z-index: 1100;
+        width: 30px;
+        height: 20px;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .mobile-hamburger span {
+        display: block;
+        height: 3px;
+        width: 100%;
+        background-color: white;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+    }
+
+    .nav-bar.scrolled .mobile-hamburger span {
+        background-color: var(--vibrant-orange);
+    }
+
+    /* Mobile Drawer */
+    @media (max-width: 991px) {
+        .mobile-hamburger {
             display: flex;
-            justify-content: center;
-            padding-bottom: 60px; 
         }
 
-        .hero-box {
-            width: 95%; 
-            max-width: 1200px; 
-            background: var(--hero-gradient);
-            padding: 80px 40px; 
-            text-align: center;
-            color: white;
-            border-radius: 40px;
-            position: relative;
-            box-shadow: 0 20px 40px rgba(255, 102, 51, 0.15);
+        .nav-links {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            height: 100vh;
+            width: 80%;
+            max-width: 300px;
+            background: white;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+            z-index: 1050;
         }
-        .hero-box h2 { font-family: 'Outfit', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; line-height: 1.1; margin-bottom: 15px; }
-        .hero-box p { font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+
+        .nav-links.active {
+            right: 0;
+        }
+
+        .nav-links a {
+            color: var(--text-dark) !important;
+            font-size: 1.2rem;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+
+        .desktop-btn {
+            display: none;
+        }
+
+        /* Hamburger Active State */
+        .mobile-hamburger.active span:nth-child(1) {
+            transform: translateY(8.5px) rotate(45deg);
+            background-color: var(--vibrant-orange) !important;
+        }
+        .mobile-hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .mobile-hamburger.active span:nth-child(3) {
+            transform: translateY(-8.5px) rotate(-45deg);
+            background-color: var(--vibrant-orange) !important;
+        }
+    }
+
+
+        /* --- SUBMIT BAR --- */
+        .submit-bar {
+            width: 90%; max-width: 1200px; margin-top: 27px;
+            background: white; border: 2px dashed var(--vibrant-orange);
+            border-radius: 20px; padding: 12px 30px; 
+            display: flex; justify-content: center; align-items: center; gap: 12px;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            cursor: pointer; text-decoration: none;
+        }
+        .submit-bar:hover {
+            background-color: var(--pastel-bg);
+            transform: scale(1.01);
+            border-style: solid;
+        }
+        .submit-text { font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--primary-purple); }
+        .submit-plus {
+            background: var(--hero-gradient); color: white; width: 26px; height: 26px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; font-weight: 800; box-shadow: 0 4px 10px rgba(255, 51, 153, 0.3);
+        }
+
+        /* --- FILTER DASHBOARD --- */
+        .filter-wrapper {
+            max-width: 1100px; margin: 15px auto 40px; padding: 25px;
+            background: white; border-radius: 35px; box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
+            position: relative; z-index: 10;
+        }
+        .search-bar { position: relative; flex-grow: 1; }
+        .search-bar input {
+            width: 100%; padding: 14px 20px 14px 50px; border: 1px solid var(--pastel-border);
+            border-radius: 20px; outline: none; font-weight: 500; background-color: var(--pastel-bg);
+        }
+        .search-bar svg { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--vibrant-pink); width: 20px; }
+
+        .action-btn {
+            display: flex; align-items: center; gap: 8px; background: var(--soft-lavender);
+            padding: 12px 24px; border-radius: 20px; cursor: pointer; color: var(--primary-purple);
+            font-weight: 700; transition: 0.2s; border: 1px solid var(--pastel-border); font-size: 0.9rem;
+        }
+        .action-btn.active { background: var(--primary-purple) !important; color: white !important; border-color: var(--primary-purple) !important; }
+
+        .dropdown-menu {
+            position: absolute; top: 120%; right: 0; width: 450px;
+            background: white; border-radius: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            padding: 25px; z-index: 500; display: none; border: 1px solid #f0f0f0;
+        }
+        .dropdown-menu.show { display: block; animation: slideIn 0.3s ease; }
+
+        .accordion-item { border-bottom: 1px solid #f1f5f9; }
+        .accordion-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 0; cursor: pointer; font-weight: 700; color: var(--primary-purple);
+        }
+        .accordion-content { max-height: 0; overflow: hidden; transition: 0.3s ease; }
+        .accordion-content.open { max-height: 400px; padding: 5px 0 15px; }
+
+        .location-dropdown {
+            position: absolute; top: 110%; left: 0; background: white; 
+            border: 1px solid var(--pastel-border); border-radius: 12px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 180px; z-index: 50;
+            display: none; padding: 8px;
+        }
+        .location-dropdown.show { display: block; }
+
+        /* Pills */
+        .type-pill {
+            padding: 10px 22px; border-radius: 50px; font-weight: 800; font-size: 0.85rem;
+            cursor: pointer; border: 2px solid transparent; opacity: 0.6; transition: 0.2s;
+            text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .type-pill.active { opacity: 1; border-color: currentColor; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        
+        .pill-Youth-led { background-color: #bae6fd; color: #0c4a6e; }
+        .pill-Startup { background-color: #fbcfe8; color: #831843; }
+        .pill-Research { background-color: #bbf7d0; color: #064e3b; }
+        .pill-Competition { background-color: #fde68a; color: #78350f; }
+
+        .subject-pill {
+            padding: 6px 14px; border-radius: 12px; background: #fafafa; border: 1px solid #eee;
+            cursor: pointer; font-size: 0.8rem; font-weight: 600; transition: 0.2s; color: #475569;
+        }
+        .subject-pill.active { background: var(--vibrant-pink); color: white; border-color: var(--vibrant-pink); }
+
+        .tag-bubble {
+            padding: 4px 12px; border-radius: 20px; background-color: var(--soft-lavender);
+            color: var(--primary-purple); font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; gap: 5px; cursor: pointer;
+        }
 
         /* --- CARDS --- */
         .content-wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px 100px; }
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 30px; }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
         
-        .resource-card {
-            background: white; padding: 32px; border-radius: 32px; border: 1px solid #f1f5f9; 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.04); transition: 0.3s;
-            display: flex; flex-direction: column; cursor: pointer;
-            position: relative; overflow: hidden;
+        .project-card {
+            background: white; padding: 35px; border-radius: 30px; border: 1px solid #f1f5f9; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s;
+            display: flex; flex-direction: column; position: relative;
+            /* Added min-height and height:auto to ensure text never overflows */
+            min-height: 420px; 
+            height: auto;
         }
-        .resource-card:hover:not(.cursor-default) { transform: translateY(-8px); box-shadow: 0 20px 40px var(--aura-color); }
+        .project-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px var(--aura-color); }
 
-        .icon-box {
-            width: 50px; height: 50px; border-radius: 16px; 
-            display: flex; align-items: center; justify-content: center;
-            background: var(--pastel-bg); color: var(--vibrant-orange);
-            margin-bottom: 20px; transition: 0.3s;
-        }
-        .resource-card:hover:not(.cursor-default) .icon-box { background: var(--vibrant-orange); color: white; }
+        .pill-container { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
 
-        .resource-card h3 {
-            font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.5rem;
-            color: var(--primary-purple); margin-bottom: 12px;
-        }
-        .resource-card p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
-
-        .card-footer {
-            margin-top: auto; padding-top: 24px; display: flex; 
-            justify-content: flex-end; align-items: center;
-        }
-        .btn-action {
-            background: var(--vibrant-orange); color: white; padding: 10px 24px;
-            border-radius: 50px; font-weight: 700; font-size: 0.85rem; transition: 0.2s;
-            border: none; cursor: pointer;
+        .program-label {
+            display: inline-flex; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; 
+            font-weight: 800; padding: 4px 12px; border-radius: 8px; border: 1px solid;
+            
         }
 
-        /* --- MODAL --- */
-        #resourceModal {
-            position: fixed; inset: 0; z-index: 2000; display: none;
-            justify-content: center; align-items: center; padding: 20px;
-        }
-        #resourceModal.show { display: flex; }
-        #modalOverlay { position: absolute; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); }
-        #modalContent {
-            position: relative; width: 100%; max-width: 600px; background: white; border-radius: 40px;
-            padding: 40px; z-index: 2001; animation: modalIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        @keyframes modalIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .label-Youth-led { background-color: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
+        .label-Startup { background-color: #fce7f3; color: #be185d; border-color: #fbcfe8; }
+        .label-Research { background-color: #dcfce7; color: #15803d; border-color: #bbf7d0; }
+        .label-Competition { background-color: #fef3c7; color: #b45309; border-color: #fde68a; }
 
-        .quiz-option {
-            width: 100%; text-align: left; padding: 16px 20px; border-radius: 18px;
-            border: 2px solid #f1f5f9; background: white; transition: 0.2s;
-            font-weight: 600; color: #475569; margin-bottom: 10px;
+        .subject-label {
+            display: inline-flex; font-size: 0.65rem; font-weight: 700; padding: 4px 10px; 
+            border-radius: 8px; background-color: var(--soft-lavender); color: var(--primary-purple);
+            border: 1px solid #e9e3ff;
         }
-        .quiz-option:hover { border-color: var(--vibrant-orange); background: var(--pastel-bg); }
-        .quiz-option.selected { border-color: var(--vibrant-orange); background: var(--vibrant-orange); color: white; }
 
-        .progress-bar { height: 8px; border-radius: 10px; background: #f1f5f9; overflow: hidden; margin-bottom: 20px; }
-        .progress-fill { height: 100%; background: var(--hero-gradient); transition: 0.3s; }
-
-        .nav-arrow {
-            position: absolute; top: 50%; transform: translateY(-50%);
-            width: 44px; height: 44px; border-radius: 50%; background: white;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #f1f5f9;
-            display: flex; align-items: center; justify-content: center; cursor: pointer;
-            transition: 0.2s; color: var(--primary-purple);
+        .card-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; margin: 10px 0 20px; flex-grow: 1; }
+        
+        .card-info-box {
+            background: var(--soft-bg); border: 1px solid var(--pastel-border);
+            padding: 12px 15px; border-radius: 15px; margin-bottom: 10px;
         }
-        .nav-arrow:hover { background: var(--vibrant-pink); color: white; }
-        .nav-arrow.left { left: -22px; }
-        .nav-arrow.right { right: -22px; }
+        .box-label { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: var(--vibrant-pink); letter-spacing: 0.05em; display: block; margin-bottom: 4px; }
+        .box-text { font-size: 0.85rem; font-weight: 600; color: var(--primary-purple); }
 
+        .meta-text { font-size: 0.75rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
+        
+        .btn-group { display: flex; gap: 10px; width: 100%; margin-top: 15px; }
+        .btn-apply { 
+            flex: 4; background-color: var(--vibrant-orange); color: white; 
+            padding: 12px 15px; border-radius: 15px; font-size: 0.85rem; 
+            font-weight: 800; text-align: center; transition: 0.2s;
+            box-shadow: 0 4px 12px rgba(255, 51, 153, 0.2);
+        }
+        .btn-apply:hover { opacity: 0.9; transform: scale(1.02); }
+
+        .btn-insta { 
+            flex: 1; background-color: white; color: var(--text-dark); 
+            padding: 12px 10px; border-radius: 15px; font-size: 1.2rem; 
+            font-weight: 800; border: 1.5px solid #eee; display: flex;
+            align-items: center; justify-content: center; transition: 0.2s;
+        }
+        .btn-insta:hover { border-color: var(--vibrant-pink); color: var(--vibrant-pink); }
+
+        .hidden { display: none !important; }
+        .rotate-180 { transform: rotate(180deg); }
+
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <nav class="nav-bar">
+    <nav class="nav-bar" id="navbar">
         <div class="nav-container">
-            <div class="nav-logo"><h1><span>Cause</span>Connects</h1></div>
+            <div class="nav-logo"><h1><span>Cause</span>Connect<span>Hub</span></h1></div>
             <div class="nav-links">
-          <a href="index.html">Home</a> 
-          <a href="explore.html">Find Extracurriculars</a> 
-          <a href="award.html">Awards & Scholarships</a> 
-          <a href="resource.html"class="active">Resources</a>
+                <a href="index.html">Home</a>
+                <a href="explore.html" class="active">Find Extracurriculars</a>
+                <a href="award.html">Awards & Scholarships</a>
+                <a href="resource.html">Resources</a>
             </div>
             <a href="project.html" class="btn-nav">Add Your Project</a>
         </div>
@@ -168,232 +345,693 @@
 
     <div class="hero-outer">
         <section class="hero-box">
-            <h2>Resource Hub</h2>
-            <p>Everything you need to launch your project, track your impact, and find your passion.</p>
+            <h2>Find Your Perfect Project</h2>
+            <p>Connect with student-led initiatives, research programs, and global competitions designed for high schoolers.</p>
         </section>
+
+        <a href="project.html" class="submit-bar">
+            <div class="submit-plus">+</div>
+            <span class="submit-text">Submit Your Project</span>
+        </a>
     </div>
 
     <div class="content-wrap">
-        <div class="cards-grid">
-            <!-- Quiz Card -->
-            <div class="resource-card" onclick="openModal()">
-                <div class="icon-box">
-                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22V10m0 0l8.58 3.832a2 2 0 011.66 0L22 10 12 5 2 10l1.66 3.832a2 2 0 011.66 0L12 10z"/></svg>
+        <div class="filter-wrapper ">
+            <div class="flex flex-col md:flex-row gap-4 mb-6">
+                <div class="search-bar">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                    <input type="text" id="keywordSearch" placeholder="Search by name, role, or keywords...">
                 </div>
-                <h3>EC Interest Finder</h3>
-                <p>Not sure where to start? Take our fast 5-question personality quiz to discover which extracurricular path matches your unique goals.</p>
-                <div class="card-footer">
-                    <button class="btn-action">Start Discovery</button>
+                
+                <div class="relative">
+                    <button class="action-btn" id="locBtn" onclick="toggleDropdown('locDropdown')">
+                        <span id="locationLabel">Location</span>
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>
+                    </button>
+                    <div id="locDropdown" class="location-dropdown">
+                        <div class="px-3 py-2 text-[10px] font-black text-gray-400 uppercase">Region</div>
+                        <div class="cursor-pointer px-3 py-2 text-sm font-bold hover:bg-pink-50 rounded-lg" onclick="selectLocation('Remote')">Remote</div>
+                        <div class="cursor-pointer px-3 py-2 text-sm font-bold hover:bg-pink-50 rounded-lg" onclick="selectLocation('In-Person')">In-Person</div>
+                        <div class="cursor-pointer px-3 py-2 text-sm font-bold hover:bg-pink-50 rounded-lg border-t mt-1" onclick="selectLocation('All')">All</div>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <button id="filterToggleBtn" class="action-btn" onclick="toggleDropdown('subjectDropdown')">
+                        Subject Filters
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>
+                    </button>
+                    <div id="subjectDropdown" class="dropdown-menu">
+                        <!-- STEM -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion('stem-content')">
+                                <span>STEM Subjects</span>
+                                <svg class="transition-transform" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/></svg>
+                            </div>
+                            <div class="accordion-content" id="stem-content">
+                                <div class="flex flex-wrap gap-2">
+                                   <div class="subject-pill" onclick="toggleTag(this, 'STEM')">STEM</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Computer Science')">Computer Science</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Biology')">Biology</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Mathematics')">Mathematics</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Engineering')">Engineering</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Physics')">Physics</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Environmental')">Environmental</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Social Sciences -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion('social-content')">
+                                <span>Social Sciences</span>
+                                <svg class="transition-transform" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/></svg>
+                            </div>
+                            <div class="accordion-content" id="social-content">
+                                <div class="flex flex-wrap gap-2">
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Economics')">Economics</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Psychology')">Psychology</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Politics')">Politics</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Sociology')">Sociology</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Law')">Law</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Arts & Humanities -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion('arts-content')">
+                                <span>Arts & Humanities</span>
+                                <svg class="transition-transform" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/></svg>
+                            </div>
+                            <div class="accordion-content" id="arts-content">
+                                <div class="flex flex-wrap gap-2">
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Literature')">Literature</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Visual Arts')">Visual Arts</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Music')">Music</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'History')">History</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Philosophy')">Philosophy</div>
+                                </div>
+                            </div>
+                        </div>
+                         <!-- Community Service  -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion('community-content')">
+                                <span>Community Service</span>
+                                <svg class="transition-transform" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/></svg>
+                            </div>
+                            <div class="accordion-content" id="community-content">
+                                <div class="flex flex-wrap gap-2">
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Education Access')">Education Access </div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Mental Health')">Mental Health</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Equity & Rights')">Equity & Rights</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Community Support')">Community Support</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Youth Empowerment')">Youth Empowerment</div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="mt-6 pt-4 border-t flex justify-end">
+                            <button class="bg-[#ff3399] text-white px-8 py-2.5 rounded-full text-xs font-extrabold shadow-md hover:opacity-90" onclick="closeDropdowns()">APPLY FILTERS</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Tracker Card (Coming Soon) -->
-            <div class="resource-card opacity-70 cursor-default">
-                <div class="icon-box" style="background: #f1f5f9; color: #94a3b8;">
-                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4m-4 5h4"/></svg>
-                </div>
-                <h3>Activity Tracker</h3>
-                <p>Log your hours, leadership roles, and quantitative impact in one place. Perfect for organizing your resume and college applications.</p>
-                <div class="card-footer">
-                    <span class="text-xs font-black uppercase text-gray-400 tracking-widest">Coming Soon</span>
+            <div id="activeTagRow" class="flex flex-wrap gap-2 mb-6 min-h-[20px]"></div>
+
+            <div class="flex items-center gap-6 border-t pt-6">
+                <span class="text-[11px] font-black text-gray-400 uppercase tracking-[0.15em]">Program Type:</span>
+                <div class="flex flex-wrap gap-3">
+                    <div class="type-pill pill-Youth-led" data-type="Youth-led" onclick="toggleTag(this, 'Youth-led')">Youth-led</div>
+                    <div class="type-pill pill-Startup" data-type="Startup" onclick="toggleTag(this, 'Startup')">Startup</div>
+                    <div class="type-pill pill-Research" data-type="Research" onclick="toggleTag(this, 'Research')">Research</div>
+                    <div class="type-pill pill-Competition" data-type="Competition" onclick="toggleTag(this, 'Competition')">Competition</div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Modal Implementation -->
-    <div id="resourceModal">
-        <div id="modalOverlay" onclick="closeModal()"></div>
-        <div id="modalContent">
-            <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-400 hover:text-gray-600">
-                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
-            </button>
-
-            <!-- Quiz Arrows -->
-            <div id="quizArrows" class="hidden">
-                <button onclick="prevQuestion()" class="nav-arrow left">
-                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
-                </button>
-                <button id="arrowNext" onclick="nextQuestion()" class="nav-arrow right">
-                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
-                </button>
+        <div id="projectGrid" class="cards-grid">
+            <!-- 1.  / Youth-led -->
+            <div class="project-card" data-type="Youth-led" data-subject="Equity & Rights" data-location="Remote">
+                <div class="pill-container"><div class="program-label label-Youth-led">Youth-led</div><div class="subject-label">Equity & Rights</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Project EquiFlow</h3>
+                <p class="meta-text mt-2">Remote</p>
+                <p class="card-desc">Project: EquiFlows mission is to empower young women worldwide by promoting equitable access to menstrual products, womens health resources, and removing barriers to education. </p>
+                <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text">Chapter Leaders, Marketing Director, Social Media Manger</span></div>
+                <div class="btn-group"><a href="https://docs.google.com/forms/d/e/1FAIpQLScWna4eCEz8d1K9ekpxZppTkpYnTzY47qi8JI4XTCaVUeegtA/viewform?usp=dialog" class="btn-apply">Apply Now</a><a href="https://www.instagram.com/projectequiflow/" class="btn-insta"><svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04 1.8.196 1.412.39 1.914.247.525.567.973.923 1.417.444.356.892.676 1.417.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.765-.893.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.282.11-.705.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg></a></div>
             </div>
 
-            <div id="quizStart" class="text-center py-10">
-                <h3 class="text-3xl font-black text-purple-900 mb-4" style="font-family:'Outfit';">Find Your Path</h3>
-                <p class="text-gray-500 mb-8">This short quiz helps categorize your interests to suggest relevant activities.</p>
-                <button onclick="startQuiz()" class="btn-nav py-4 px-10 inline-block">Start 5-Question Quiz</button>
+                 <!-- 1. Reseach/ STEM -->
+            <div class="project-card" data-type="Research" data-subject="STEM" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Research">Research</div><div class="subject-label">STEM</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Research Science Institute (RSI)</h3>
+                <p class="meta-text mt-2">MIT - Cambridge, MA</p>
+                <p class="card-desc">One of the most prestigious summer research programs for high school students worldwide. RSI combines a week of intensive STEM coursework with five weeks of original research mentored by scientists, culminating in a research paper and symposium presentation.</p>
+                <div class="btn-group"><a href="https://www.cee.org/programs/apply-rsi?utm_source=chatgpt.com" class="btn-apply">Apply Now</a></div>
             </div>
 
-            <div id="quizQuestions" class="hidden">
-                <p class="text-[11px] font-black text-pink-500 uppercase tracking-widest mb-2">Question <span id="currentQNum">1</span> of 5</p>
-                <div class="progress-bar"><div id="progressFill" class="progress-fill" style="width: 20%"></div></div>
-                <h4 id="questionText" class="text-xl font-bold text-purple-900 mb-6" style="font-family:'Outfit';"></h4>
-                <div id="optionsContainer"></div>
-                <div class="mt-8 flex justify-end">
-                    <button id="nextButton" onclick="nextQuestion()" disabled class="btn-action px-10 opacity-50 cursor-not-allowed">Next →</button>
+                  <!-- 2. Reseach/ STEM -->
+            <div class="project-card" data-type="Research" data-subject="STEM" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Research">Research</div><div class="subject-label">STEM</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Stanford Institutes of Medicine Summer Research Program (SIMR)</h3>
+                <p class="meta-text mt-2">Stanford University, Stanford, CA</p>
+                <p class="card-desc">A highly selective 8-week summer research internship where high school juniors and seniors work in real medical research labs under Stanford mentors, attend seminars, and present their work at a poster session.</p>
+                <div class="btn-group"><a href="https://simr.slideroom.com/?utm_source=chatgpt.com#/Login" class="btn-apply">Apply Now</a></div>
+            </div>
+
+                  <!-- 3. Reseach/ STEM -->
+            <div class="project-card" data-type="Research" data-subject="Environmental" data-subject="Biology" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Research">Research</div><div class="subject-label">Environmental</div> <div class="subject-label">Biology</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Boyce Thompson Institute (BTI) High School Research Internships</h3>
+                <p class="meta-text mt-2">Cornell University, Ithaca, NY</p>
+                <p class="card-desc">A 6-week summer research experience where students work with researchers on plant biology and biotechnology projects, gaining lab experience and presenting at a scientific symposium.</p>
+                <div class="btn-group"><a href="https://btiscience.org/education-outreach/high-school-research-internships/" class="btn-apply">Apply Now</a></div>
+            </div>
+              <!-- 4. Reseach/ STEM -->
+            <div class="project-card" data-type="Research" data-subject="Biology" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Research">Research</div><div class="subject-label">Biology</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Heithoff-Brody High School Scholars Program (Salk Institute)</h3>
+                <p class="meta-text mt-2">Salk Institute - La Jolla, CA</p>
+                <p class="card-desc">Paid summer internship where students are mentored by Salk researchers, learn lab techniques, and conduct hands-on research in cutting-edge life sciences.</p>
+                <div class="btn-group"><a href="https://www.salk.edu/about/education-outreach/programs/high-school-scholars/" class="btn-apply">Apply Now</a></div>
+            </div>
+              <!-- 5. Reseach/Bio  -->
+            <div class="project-card" data-type="Research" data-subject="Biology" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Research">Research</div><div class="subject-label">Biology</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Worldwide Youth in Science and Engineering (WYSE) High School Research</h3>
+                <p class="meta-text mt-2">University of Illinois Urbana-Champaign - Champaign, IL</p>
+                <p class="card-desc">A 6-week non-residential research program pairing rising high school juniors and seniors with faculty mentors to conduct hands-on STEM research.</p>
+                <div class="btn-group"><a href="https://wyse.grainger.illinois.edu/summer-programs/young-scholars-summer-research" class="btn-apply">Apply Now</a></div>
+            </div>
+                  <!-- 6. Reseach/STEM  -->
+            <div class="project-card" data-type="Research" data-subject="STEM" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Research">Research</div><div class="subject-label">STEM</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Summer Science Program (SSP)</h3>
+                <p class="meta-text mt-2">Multiple campuses</p>
+                <p class="card-desc">A ~39-day immersive summer research experience where students work in small teams to solve real scientific problems, combining classroom learning with laboratory/field research.</p>
+                <div class="btn-group"><a href="https://ssp.org/" class="btn-apply">Apply Now</a></div>
+            </div>
+                              <!-- 7. Reseach/STEM  -->
+            <div class="project-card" data-type="Research" data-subject="STEM" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Research">Research</div><div class="subject-label">STEM</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Notre Dame QuarkNet Center</h3>
+                <p class="meta-text mt-2">University of Notre Dame</p>
+                <p class="card-desc">A summer research experience pairing high school students with university faculty and research groups in STEM, particularly physics and high-energy science.</p>
+                <div class="btn-group"><a href="https://physics.nd.edu/research/quarknet/" class="btn-apply">Apply Now</a></div>
+            </div>
+              <!-- 8. Reseach/STEM  -->
+            <div class="project-card" data-type="Research" data-subject="STEM" data-location="In-Person"data-location="remote">
+                <div class="pill-container"><div class="program-label label-Research">Research</div><div class="subject-label">STEM</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">UCSB Research Mentorship Program </h3>
+                <p class="meta-text mt-2">University of California, Santa Barbara or Remote</p>
+                <p class="card-desc">A ~39-day immersive summer research experience where students work in small teams to solve real scientific problems, combining classroom learning with laboratory/field research.</p>
+                <div class="btn-group"><a href="https://www.summer.ucsb.edu/programs/research-mentorship-program/overview" class="btn-apply">Apply Now</a></div>
+            </div>
+                <!-- 9. Reseach/STEM  -->
+            <div class="project-card" data-type="Research" data-subject="STEM" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Research">Research</div><div class="subject-label">STEM</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">COSMOS - California State Summer School for Mathematics and Science</h3>
+                <p class="meta-text mt-2">UC campuses in California</p>
+                <p class="card-desc">A four-week residential summer program with research projects, lectures, and lab work across STEM fields for motivated high school students.</p>
+                <div class="btn-group"><a href="https://cosmos-ucop.ucdavis.edu/app/main" class="btn-apply">Apply Now</a></div>
+            </div>
+                <!-- 10. Reseach/STEM  -->
+            <div class="project-card" data-type="Research" data-subject="STEM" data-location="Virtual">
+                <div class="pill-container">
+                <div class="program-label label-Research">Research</div>
+                <div class="subject-label">STEM</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Lumiere Research Scholar Program</h3>
+                <p class="meta-text mt-2">Lumiere Education — Virtual</p>
+                <p class="card-desc">Mentored 1:1 research program where students conduct independent research in STEM, social science, or humanities under PhD-level mentors, culminating in a paper or project.</p>
+                <div class="btn-group"><a href="https://www.lumiere-education.com/" class="btn-apply">Apply Now</a></div>
+            </div>
+                <!-- 11. Reseach/STEM  -->
+            <div class="project-card" data-type="Research" data-subject="STEM" data-location="Virtual">
+                <div class="pill-container">
+                <div class="program-label label-Research">Research</div>
+                <div class="subject-label">STEM</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Polygence Research Program</h3>
+                <p class="meta-text mt-2">Polygence — Virtual</p>
+                <p class="card-desc">Project-based research experience pairing students with expert mentors to explore original research questions in STEM, humanities, or CS.</p>
+                <div class="btn-group"><a href="https://www.polygence.org/" class="btn-apply">Apply Now</a></div>
+            </div>
+                <!-- 12. Reseach/STEM  -->
+            <div class="project-card" data-type="Research" data-subject="STEM" data-location="In-Person">
+                <div class="pill-container">
+                <div class="program-label label-Research">Research</div>
+                <div class="subject-label">STEM</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">UCSC Science Internship Program (SIP)</h3>
+                <p class="meta-text mt-2">University of California</p>
+                <p class="card-desc">Hands-on summer research internship placing high school students in real university labs across biology, chemistry, engineering, and computer science.</p>
+                <div class="btn-group"><a href="https://sip.ucsc.edu/" class="btn-apply">Apply Now</a></div>
+            </div>
+                <!-- 13. Reseach/STEM  -->
+            <div class="project-card" data-type="Research" data-subject="STEM" data-location="In-Person">
+                <div class="pill-container">
+                <div class="program-label label-Research">Research</div>
+                <div class="subject-label">STEM</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Clark Scholars Program</h3>
+                <p class="meta-text mt-2">Texas Tech University — Lubbock, TX</p>
+                <p class="card-desc">Highly selective, fully funded 7-week summer research program allowing students to conduct intensive research with Texas Tech faculty mentors.</p>
+                <div class="btn-group"><a href="https://www.depts.ttu.edu/honors/academicsandenrichment/affiliatedandhighschool/clarks/" class="btn-apply">Apply Now</a></div>
+            </div>
+                <!-- 14. Reseach/STEM  -->
+            <div class="project-card" data-type="Research" data-subject="Social Science" data-location="Hybrid">
+                <div class="pill-container">
+                <div class="program-label label-Research">Research</div>
+                <div class="subject-label">Social Science</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Stanford SPICE Research Internships</h3>
+                <p class="meta-text mt-2">Stanford University — Palo Alto, CA</p>
+                <p class="card-desc">Research internship focused on international relations, education, and public policy through curriculum development and policy research.</p>
+                <div class="btn-group"><a href="https://spice.fsi.stanford.edu/" class="btn-apply">Apply Now</a></div>
+            </div>
+                <!-- 15. Reseach/Politics  -->
+            <div class="project-card" data-type="Research" data-subject="Politics" data-location="Virtual">
+                <div class="pill-container">
+                <div class="program-label label-Research">Research</div>
+                <div class="subject-label">Politics</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Civics Unplugged Fellowship</h3>
+                <p class="meta-text mt-2">Civics Unplugged — Virtual</p>
+                <p class="card-desc">Selective fellowship engaging students in research, policy writing, and civic innovation focused on democracy, technology, and social impact.</p>
+                <div class="btn-group"><a href="https://www.civicsunplugged.org/" class="btn-apply">Apply Now</a></div>
+            </div>
+                <!-- 16. Reseach/Literature  -->
+            <div class="project-card" data-type="Research" data-subject="Literature" data-location="In-Person">
+                <div class="pill-container">
+                <div class="program-label label-Research">Research</div>
+                <div class="subject-label">Literature</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Library of Congress High School Internship</h3>
+                <p class="meta-text mt-2">Library of Congress — Washington, DC</p>
+                <p class="card-desc">Archival research internship allowing students to work with primary historical documents and develop original humanities research.</p>
+                <div class="btn-group"><a href="https://www.loc.gov/item/internships/" class="btn-apply">Apply Now</a></div>
+            </div>
+                <!-- 17. Reseach/Computer Science  -->
+            <div class="project-card" data-type="Research" data-subject="Computer Science" data-location="Virtual">
+                <div class="pill-container">
+                <div class="program-label label-Research">Research</div>
+                <div class="subject-label">Computer Science</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">AI4ALL Research Pathways</h3>
+                <p class="meta-text mt-2">AI4ALL — Virtual</p>
+                <p class="card-desc">AI research and ethics program introducing students to machine learning, data science, and socially responsible AI research.</p>
+                <div class="btn-group"><a href="https://ai-4-all.org/" class="btn-apply">Apply Now</a></div>
+            </div>
+                <!-- 18. Reseach/Computer Science - AI  -->
+            <div class="project-card" data-type="Research" data-subject="Computer Science" data-location="Virtual">
+                <div class="pill-container">
+                 <div class="program-label label-Research">Research</div>
+                <div class="subject-label">Computer Science</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Google CSSI Extension Programs</h3>
+                <p class="meta-text mt-2">Google — Virtual</p>
+                <p class="card-desc">Advanced follow-on programs from Google's CSSI that include applied CS projects, mentorship, and collaborative research-style problem solving.</p>
+                <div class="btn-group"><a href="https://buildyourfuture.withgoogle.com/programs/computer-science-summer-institute" class="btn-apply">Apply Now</a></div>
+            </div>
+                <!-- 19. Reseach/Biology - biomedical   -->
+            <div class="project-card" data-type="Research" data-subject="Biology" data-location="In-Person">
+                <div class="pill-container">
+                <div class="program-label label-Research">Research</div>
+                <div class="subject-label">Biology</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">NIH High School Summer Internship Program</h3>
+                <p class="meta-text mt-2">National Institutes of Health — Bethesda, MD</p>
+                <p class="card-desc">Paid biomedical research internship where students work alongside NIH scientists on cutting-edge medical research projects.</p>
+                <div class="btn-group"><a href="https://www.training.nih.gov/programs/hs-sip" class="btn-apply">Apply Now</a></div>
+            </div>
+                <!-- 20. Reseach/STEM  -->
+            <div class="project-card" data-type="Research" data-subject="STEM" data-location="Virtual">
+                <div class="pill-container">
+                <div class="program-label label-Research">Research</div>
+                <div class="subject-label">STEM</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Max Planck Institute Summer Programs</h3>
+                <p class="meta-text mt-2">Max Planck Society — Virtual / Germany</p>
+                <p class="card-desc">International research opportunities offering students exposure to advanced scientific research in physics, biology, and neuroscience.</p>
+                <div class="btn-group"><a href="https://www.mpg.de/en" class="btn-apply">Apply Now</a></div>
+            </div>
+                            <!-- 1. Comp/STEM  -->
+            <div class="project-card" data-type="Competition" data-subject="STEM" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Competition">Competition</div><div class="subject-label">STEM</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Regeneron International Science & Engineering Fair (ISEF)</h3>
+                <p class="meta-text mt-2">Phoenix, Arizona (national finals for 2026)</p>
+                <p class="card-desc">ISEF is the largest international pre-college science competition, bringing students from dozens of countries to present original research projects. Participants qualify through affiliated regional and state science fairs and showcase their work to professional judges. Winners receive scholarships, internships, and awards, and top projects often gain national scientific recognition.</p>
+                <div class="btn-group"><a href="https://findafair.societyforscience.org/?utm_source=chatgpt.com" class="btn-apply">Apply Now</a></div>
+            </div>
+                            <!-- 2. Comp/STEM  -->
+            <div class="project-card" data-type="Competition" data-subject="STEM" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Competition">Competition</div><div class="subject-label">STEM</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">National Science Bowl (NSB)</h3>
+                <p class="meta-text mt-2">Regional competitions across the U.S</p>
+                <p class="card-desc">Sponsored by the U.S. Department of Energy, this team quiz competition tests students on quick recall and deep understanding of science and math topics. Teams of high school students compete in fast-paced matches, with top teams advancing to the national finals. Its one of the largest academic competitions in the country.</p>
+                <div class="btn-group"><a href="https://science.osti.gov/wdts/nsb/Regional-Competitions/High-School-Regionals?utm_source=chatgpt.com" class="btn-apply">Apply Now</a></div>
+            </div>
+            <!-- 3. Comp/STEM  -->
+            <div class="project-card" data-type="Competition" data-subject="Mathematics" data-location="Remote">
+                <div class="pill-container"><div class="program-label label-Competition">Competition</div><div class="subject-label">Mathematics</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">MathWorks Math Modeling Challenge (M3 Challenge)</h3>
+                <p class="meta-text mt-2">Remote</p>
+                <p class="card-desc">Teams of high school juniors and seniors use math and data to solve real-world problems in a continuous 14-hour challenge window. There are no participation fees, and top teams can earn scholarships and present their work in person at the final event. Its ideal for students who excel in applied math and collaborative problem solving.</p>
+                <div class="btn-group"><a href="https://m3challenge.siam.org/?utm_source=chatgpt.com" class="btn-apply">Apply Now</a></div>
+            </div>
+                        <!-- 4. Comp/STEM  -->
+            <div class="project-card" data-type="Competition" data-subject="Mathematics" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Competition">Competition</div><div class="subject-label">Mathematics</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">International Mathematical Modeling Challenge (IMMC)</h3>
+                <p class="meta-text mt-2">International</p>
+                <p class="card-desc">IMMC invites teams to apply mathematical modeling to solve real issues and demonstrate their approach in a written submission. The competition promotes mathematical applications across countries and levels of education. It culminates in international recognition and networking with other teams worldwide.</p>
+                <div class="btn-group"><a href="https://immchallenge.org/?utm_source=chatgpt.com" class="btn-apply">Apply Now</a></div>
+            </div>
+                                    <!-- 5. Comp/STEM  -->
+            <div class="project-card" data-type="Competition" data-subject="Engineering" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Competition">Competition</div><div class="subject-label">Engineering</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">FIRST Robotics Competition (FRC)</h3>
+                <p class="meta-text mt-2">International</p>
+                <p class="card-desc">IMMC invites teams to apply mathematical modeling to solve real issues and demonstrate their approach in a written submission. The competition promotes mathematical applications across countries and levels of education. It culminates in international recognition and networking with other teams worldwide.</p>
+                <div class="btn-group"><a href="https://www.firstinspires.org/programs/frc/" class="btn-apply">Apply Now</a></div>
+            </div>
+
+                  <!-- 6. Comp/STEM  -->
+            <div class="project-card" data-type="Competition" data-subject="Physics" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Competition">Competition</div><div class="subject-label">Physics</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">United States Invitational Young Physicists Tournament (USIYPT)</h3>
+                <p class="meta-text mt-2">Varies yearly</p>
+                <p class="card-desc">USIYPT is a two-day physics research and debate competition where school teams prepare solutions to complex physics problems and then present and defend them in “physics fights.” This format emphasizes deep understanding, peer evaluation, and scientific communication. Teams work throughout the year to investigate problems before the competition weekend.</p>
+                <div class="btn-group"><a href="https://www.usaypt.org/" class="btn-apply">Apply Now</a></div>
+            </div>
+
+                              <!-- 7. Comp/STEM  -->
+            <div class="project-card" data-type="Competition" data-subject="STEM" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Competition">Competition</div><div class="subject-label">STEM</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Future City Competition (High School)</h3>
+                <p class="meta-text mt-2">Washington, D.C.</p>
+                <p class="card-desc">High school teams research, design, and engineer a vision of a future city that addresses real sustainability challenges. Teams create essays, models (physical or virtual), and presentations judged for creativity and technical merit. This competition strengthens teamwork, project planning, and STEM thinking.</p>
+                <div class="btn-group"><a href="https://www.usaypt.org/" class="btn-apply">Apply Now</a></div>
+            </div>
+
+                    <!-- 8. Comp/STEM  -->
+            <div class="project-card" data-type="Competition" data-subject="STEM" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Competition">Competition</div><div class="subject-label">STEM</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Regeneron Science Talent Search (STS)</h3>
+                <p class="meta-text mt-2">Finals in Washington, D.C.</p>
+                <p class="card-desc">One of the most prestigious U.S. research competitions, STS highlights original scientific research by high school seniors. Applicants submit a full research report, methods, results, and recommendations to be evaluated nationally. Top finalists earn significant scholarships and present live at the finals.</p>
+                <div class="btn-group"><a href="https://www.societyforscience.org/regeneron-sts/" class="btn-apply">Apply Now</a></div>
+            </div>
+
+                  <!-- 9. Comp/STEM  -->
+            <div class="project-card" data-type="Competition" data-subject="Biology" data-location="Remote">
+                <div class="pill-container"><div class="program-label label-Competition">Competition</div><div class="subject-label">Biology</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">RUSA Biolympiad (USABO)</h3>
+                <p class="meta-text mt-2">Remote</p>
+                <p class="card-desc">USABO is the premier biology competition in the United States, testing students on rigorous biology content and problem solving. Schools and students must register through their school, as individual registration is not permitted without a school sponsor. Competitors progress through multiple rounds including online exams, culminating in a national tournament and potential selection to the International Biology Olympiad team.</p>
+                <div class="btn-group"><a href="https://www.usabo-trc.org/" class="btn-apply">Apply Now</a></div>
+            </div>
+                              <!-- 10. Comp/STEM  -->
+            <div class="project-card" data-type="Competition" data-subject="Mathematics" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Competition">Competition</div><div class="subject-label">Mathematics</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">American Regions Mathematics League (ARML)</h3>
+                <p class="meta-text mt-2">Varies</p>
+                <p class="card-desc">ARML brings together teams from high schools nationwide to tackle difficult math problems in individual and team rounds. The competition includes power questions, relay rounds, and collaboration rounds over a full day. Its known for its community and highly challenging problems that push beyond standard curriculum.</p>
+                <div class="btn-group"><a href="https://arml3.com/" class="btn-apply">Apply Now</a></div>
+            </div>
+                              <!-- 11. Comp/STEM  -->
+            <div class="project-card" data-type="Competition" data-subject="Mathematics" data-location="Remote">
+                <div class="pill-container"><div class="program-label label-Competition">Competition</div><div class="subject-label">Mathematics</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">World Maths Day</h3>
+                <p class="meta-text mt-2">Remote</p>
+                <p class="card-desc">World Maths Day is one of the largest global online math competitions, inviting students to participate in timed math challenges and games. It attracts students from hundreds of countries and uses Mathletics gameplay to test speed and accuracy. The event fosters fun and global engagement with math.</p>
+                <div class="btn-group"><a href="https://www.3plearning.com/world-maths-day/" class="btn-apply">Apply Now</a></div>
+            </div>
+            <!-- 12. Comp/STEM -->
+            <div class="project-card" data-type="Competition" data-subject="STEM" data-location="United States">
+                <div class="pill-container"><div class="program-label label-Competition">Competition</div>
+              <div class="subject-label">STEM</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">
+                Siemens Competition in Math, Science & Technology
+                </h3>
+                <p class="meta-text mt-2">United States</p>
+                <p class="card-desc">
+                Formerly one of the most prestigious U.S. research competitions, the Siemens Competition recognized high school students for original research in math, science, and technology. Students competed individually or in teams and presented advanced research projects for national recognition and scholarships.
+                </p>
+                <div class="btn-group">
+                <a href="https://www.siemens-foundation.org/" class="btn-apply">Learn More</a>
                 </div>
             </div>
 
-            <div id="quizResults" class="hidden text-center py-6">
-                <p class="text-xs font-black text-pink-500 uppercase tracking-widest mb-2">Your Suggested Path</p>
-                <h4 id="resultTitle" class="text-4xl font-black text-purple-900 mb-6" style="font-family:'Outfit';"></h4>
-                <div class="bg-purple-50 p-6 rounded-3xl text-left border border-purple-100 mb-8">
-                    <p id="resultDesc" class="text-gray-700 leading-relaxed text-sm"></p>
+                <!-- 13. Comp/STEM -->
+            <div class="project-card" data-type="Competition" data-subject="STEM" data-location="International">
+                <div class="pill-container">
+                <div class="program-label label-Competition">Competition</div>
+                <div class="subject-label">STEM</div>
                 </div>
-                <button onclick="closeModal()" class="btn-nav w-full py-4 mb-4">Start Exploring</button>
-                <button onclick="startQuiz()" class="text-pink-500 font-bold text-xs uppercase tracking-widest">Retake Quiz</button>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">
+                Google Science Fair
+                </h3>
+                <p class="meta-text mt-2">International</p>
+                <p class="card-desc">
+                Google Science Fair is a global online competition where students submit innovative science and engineering projects addressing real-world problems. Participants are judged on creativity, scientific rigor, and potential impact.
+                </p>
+                <div class="btn-group">
+                <a href="https://sciencefair.withgoogle.com/" class="btn-apply">Apply Now</a>
+                </div>
             </div>
+
+<!-- 14. Comp/Mathematics -->
+            <div class="project-card" data-type="Competition" data-subject="Mathematics" data-location="United States">
+               <div class="pill-container">
+               <div class="program-label label-Competition">Competition</div>
+               <div class="subject-label">Mathematics</div>
+               </div>
+               <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">
+               Modeling the Future Challenge
+               </h3>
+               <p class="meta-text mt-2">United States</p>
+               <p class="card-desc">
+               Modeling the Future Challenge is a mathematical modeling competition where teams use data and quantitative reasoning to solve real-world problems. Submissions emphasize clarity, assumptions, and practical application of mathematics.
+               </p>
+               <div class="btn-group">
+               <a href="https://m2challenge.org/" class="btn-apply">Apply Now</a>
+               </div>
+            </div>
+
+<!-- 15. Comp/Mathematics -->
+            <div class="project-card" data-type="Competition" data-subject="Mathematics" data-location="International">
+               <div class="pill-container">
+               <div class="program-label label-Competition">Competition</div>
+               <div class="subject-label">Mathematics</div>
+               </div>
+               <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">
+               Desafiando el Riesgo (Math Case Competition)
+               </h3>
+               <p class="meta-text mt-2">International</p>
+               <p class="card-desc">
+               Desafiando el Riesgo is an international math case competition where students analyze risk-based scenarios using mathematical modeling and data analysis. Teams submit written solutions demonstrating reasoning and real-world application.
+               </p>
+               <div class="btn-group">
+               <a href="#" class="btn-apply">Apply Now</a>
+               </div>
+            </div>
+
+<!-- 16. Comp/Engineering -->
+            <div class="project-card" data-type="Competition" data-subject="Engineering" data-location="International">
+               <div class="pill-container">
+               <div class="program-label label-Competition">Competition</div>
+               <div class="subject-label">Engineering</div>
+               </div>
+               <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">
+               World Robot Olympiad (WRO)
+               </h3>
+               <p class="meta-text mt-2">International</p>
+               <p class="card-desc">
+               World Robot Olympiad is a global robotics competition that challenges students to design, build, and program robots to solve themed tasks. The competition emphasizes teamwork, creativity, and engineering skills.
+               </p>
+               <div class="btn-group">
+               <a href="https://wro-association.org/" class="btn-apply">Apply Now</a>
+               </div>
+            </div>
+
+<!-- 17. Comp/Engineering -->
+            <div class="project-card" data-type="Competition" data-subject="Engineering" data-location="United States">
+               <div class="pill-container">
+               <div class="program-label label-Competition">Competition</div>
+               <div class="subject-label">Engineering</div>
+               </div>
+               <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">
+               Rube Goldberg Machine Contest
+               </h3>
+               <p class="meta-text mt-2">United States</p>
+               <p class="card-desc">
+               The Rube Goldberg Machine Contest challenges students to design overly complex machines that perform a simple task. The competition highlights creativity, mechanical design, and problem-solving.
+               </p>
+               <div class="btn-group">
+               <a href="https://www.rubegoldberg.com/" class="btn-apply">Apply Now</a>
+               </div>
+            </div>
+
+<!-- 18. Comp/STEM -->
+            <div class="project-card" data-type="Competition" data-subject="STEM" data-location="United States">
+               <div class="pill-container">
+               <div class="program-label label-Competition">Competition</div>
+               <div class="subject-label">STEM</div>
+               </div>
+               <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">
+               Samsung Solve for Tomorrow
+               </h3>
+               <p class="meta-text mt-2">United States</p>
+               <p class="card-desc">
+               Samsung Solve for Tomorrow is a national competition where students propose STEM-based solutions to real community challenges. Teams develop innovative ideas and pitch their concepts for funding and recognition.
+               </p>
+               <div class="btn-group">
+               <a href="https://www.samsung.com/solvefortomorrow/" class="btn-apply">Apply Now</a>
+               </div>
+            </div>
+
+<!-- 19. Comp/Robotics -->
+            <div class="project-card" data-type="Competition" data-subject="Robotics" data-location="International">
+               <div class="pill-container">
+               <div class="program-label label-Competition">Competition</div>
+               <div class="subject-label">Robotics</div>
+               </div>
+               <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">
+               Zero Robotics Tournaments
+               </h3>
+               <p class="meta-text mt-2">International</p>
+               <p class="card-desc">
+               Zero Robotics is a programming competition where students write code to control satellites aboard the International Space Station. Finalist teams see their algorithms run in space during live tournaments.
+               </p>
+               <div class="btn-group">
+               <a href="https://zerorobotics.mit.edu/" class="btn-apply">Apply Now</a>
+               </div>
+            </div>
+
+<!-- 20. Comp/Social Science -->
+            <div class="project-card" data-type="Competition" data-subject="Social Science" data-location="International">
+               <div class="pill-container">
+               <div class="program-label label-Competition">Competition</div>
+               <div class="subject-label">Social Science</div>
+               </div>
+               <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">
+               Academic WorldQuest
+               </h3>
+               <p class="meta-text mt-2">International</p>
+               <p class="card-desc">
+               Academic WorldQuest is a team-based quiz competition focused on global affairs, economics, history, and international relations. Teams compete at regional levels before advancing to the national finals.
+               </p>
+               <div class="btn-group">
+               <a href="https://www.worldaffairscouncils.org/academic-worldquest" class="btn-apply">Apply Now</a>
+               </div>
+            </div>
+
+
+            <div id="noResults" class="hidden col-span-full text-center py-20 text-gray-400 font-bold">No projects match your search criteria.</div>
         </div>
     </div>
 
     <script>
-        const quizData = [
-            {
-                question: "What activities make you feel most energized?",
-                options: [
-                    { text: "Successfully dissecting a complex historical event or math proof.", category: "Academic" },
-                    { text: "Finishing a painting, composing a song, or performing a scene.", category: "Creative" },
-                    { text: "Spending time directly mentoring someone or helping a neighbor.", category: "Service" },
-                    { text: "Leading a meeting and delegating tasks to a motivated team.", category: "Leadership" },
-                    { text: "Building a functional object or debugging a piece of code.", category: "Technical" },
-                ]
-            },
-            {
-                question: "When approaching a new problem, your first instinct is to...",
-                options: [
-                    { text: "Go to the library or database to research existing theories.", category: "Academic" },
-                    { text: "Brainstorm unique ways to visualize the solution.", category: "Creative" },
-                    { text: "Identify who is most affected and seek their input.", category: "Service" },
-                    { text: "Organize a plan, assign roles, and set a strict deadline.", category: "Leadership" },
-                    { text: "Break it down into its smallest logical components.", category: "Technical" },
-                ]
-            },
-            {
-                question: "Which high school subject interests you most?",
-                options: [
-                    { text: "Literature, History, or Philosophy.", category: "Academic" },
-                    { text: "Visual Arts, Drama, or Music Theory.", category: "Creative" },
-                    { text: "Sociology or Psychology.", category: "Service" },
-                    { text: "Economics, Business, or Government.", category: "Leadership" },
-                    { text: "Computer Science, Engineering, or Physics.", category: "Technical" },
-                ]
-            },
-            {
-                question: "Which of these titles appeals to you most?",
-                options: [
-                    { text: "The Scholar", category: "Academic" },
-                    { text: "The Designer", category: "Creative" },
-                    { text: "The Mentor", category: "Service" },
-                    { text: "The Founder", category: "Leadership" },
-                    { text: "The Engineer", category: "Technical" },
-                ]
-            },
-            {
-                question: "How do you prefer to spend your summer break?",
-                options: [
-                    { text: "Taking a university-level course or reading list.", category: "Academic" },
-                    { text: "Working on a portfolio or attending an arts camp.", category: "Creative" },
-                    { text: "Volunteering for a local non-profit or mission.", category: "Service" },
-                    { text: "Starting a small business or managing a local project.", category: "Leadership" },
-                    { text: "Coding an app or fixing machines.", category: "Technical" },
-                ]
-            }
-        ];
+        const activeFilters = { keyword: '', location: 'All', tags: new Set() };
 
-        let currentIdx = 0;
-        let selections = [];
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        });
 
-        function openModal() {
-            document.getElementById('resourceModal').classList.add('show');
-            document.body.style.overflow = 'hidden';
+        function toggleDropdown(id) {
+            const menu = document.getElementById(id);
+            const isShow = menu.classList.contains('show');
+            closeDropdowns();
+            if (!isShow) menu.classList.add('show');
         }
 
-        function closeModal() {
-            document.getElementById('resourceModal').classList.remove('show');
-            document.body.style.overflow = 'auto';
+        function closeDropdowns() {
+            document.querySelectorAll('.dropdown-menu, .location-dropdown').forEach(m => m.classList.remove('show'));
         }
 
-        function startQuiz() {
-            currentIdx = 0;
-            selections = [];
-            document.getElementById('quizStart').classList.add('hidden');
-            document.getElementById('quizResults').classList.add('hidden');
-            document.getElementById('quizQuestions').classList.remove('hidden');
-            document.getElementById('quizArrows').classList.remove('hidden');
-            loadQuestion();
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const icon = content.previousElementSibling.querySelector('svg');
+            content.classList.toggle('open');
+            icon.classList.toggle('rotate-180');
         }
 
-        function loadQuestion() {
-            const q = quizData[currentIdx];
-            document.getElementById('currentQNum').textContent = currentIdx + 1;
-            document.getElementById('questionText').textContent = q.question;
-            
-            // Progress logic updated for 5 questions
-            const progress = ((currentIdx + 1) / 5) * 100;
-            document.getElementById('progressFill').style.width = `${progress}%`;
-            
-            const container = document.getElementById('optionsContainer');
-            container.innerHTML = '';
-            
-            q.options.forEach(opt => {
-                const btn = document.createElement('button');
-                btn.className = "quiz-option";
-                if (selections[currentIdx]?.text === opt.text) btn.classList.add('selected');
-                btn.textContent = opt.text;
-                btn.onclick = () => {
-                    document.querySelectorAll('.quiz-option').forEach(b => b.classList.remove('selected'));
-                    btn.classList.add('selected');
-                    selections[currentIdx] = opt;
-                    const nextBtn = document.getElementById('nextButton');
-                    nextBtn.disabled = false;
-                    nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-                };
-                container.appendChild(btn);
-            });
-
-            const nextBtn = document.getElementById('nextButton');
-            nextBtn.disabled = !selections[currentIdx];
-            if (nextBtn.disabled) nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
-            else nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-            nextBtn.textContent = currentIdx === 4 ? "Finish Quiz" : "Next →";
+        function selectLocation(loc) {
+            activeFilters.location = loc;
+            const label = document.getElementById('locationLabel');
+            const btn = document.getElementById('locBtn');
+            label.innerText = loc === 'All' ? 'Location' : loc;
+            btn.classList.toggle('active', loc !== 'All');
+            closeDropdowns();
+            applyFilters();
         }
 
-        function nextQuestion() {
-            if (currentIdx < 4) {
-                currentIdx++;
-                loadQuestion();
+        function toggleTag(el, name) {
+            const tagId = 'tag-' + name.replace(/\s+/g, '-').toLowerCase();
+            if (activeFilters.tags.has(name)) {
+                activeFilters.tags.delete(name);
+                el.classList.remove('active');
+                const bubble = document.getElementById(tagId);
+                if (bubble) bubble.remove();
             } else {
-                showResults();
+                activeFilters.tags.add(name);
+                el.classList.add('active');
+                const container = document.getElementById('activeTagRow');
+                const bubble = document.createElement('div');
+                bubble.className = 'tag-bubble';
+                bubble.id = tagId;
+                bubble.innerHTML = `${name} <span>&times;</span>`;
+                bubble.onclick = () => {
+                    el.classList.remove('active');
+                    activeFilters.tags.delete(name);
+                    bubble.remove();
+                    applyFilters();
+                };
+                container.appendChild(bubble);
             }
+            applyFilters();
         }
 
-        function prevQuestion() {
-            if (currentIdx > 0) {
-                currentIdx--;
-                loadQuestion();
-            }
+        document.getElementById('keywordSearch').addEventListener('input', (e) => {
+            activeFilters.keyword = e.target.value.toLowerCase();
+            applyFilters();
+        });
+
+        function applyFilters() {
+            const cards = document.querySelectorAll('.project-card');
+            const noResults = document.getElementById('noResults');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const type = card.dataset.type;
+                const subject = card.dataset.subject;
+                const location = card.dataset.location;
+                const text = card.innerText.toLowerCase();
+
+                const matchLoc = activeFilters.location === 'All' || location === activeFilters.location || (activeFilters.location === 'Remote' && location === 'Remote');
+                const matchKey = text.includes(activeFilters.keyword);
+                
+                // If no tags selected, show all. If tags selected, card must match at least one (Type OR Subject)
+                let matchTags = activeFilters.tags.size === 0 || activeFilters.tags.has(type) || activeFilters.tags.has(subject);
+
+                if (matchLoc && matchKey && matchTags) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+            noResults.classList.toggle('hidden', visibleCount > 0);
         }
 
-        function showResults() {
-            const scores = {};
-            selections.forEach(s => scores[s.category] = (scores[s.category] || 0) + 1);
-            const top = Object.keys(scores).reduce((a, b) => (scores[a] || 0) > (scores[b] || 0) ? a : b);
-
-            const recs = {
-                Academic: { title: "The Scholar", desc: "You thrive on knowledge and deep analysis. Suggested ECs: Debate Club, Math Olympiad, Model UN, or Independent Research." },
-                Creative: { title: "The Creator", desc: "Imagination is your tool. Suggested ECs: Theater, Visual Arts Collective, School Magazine, or Media Production." },
-                Service: { title: "The Advocate", desc: "You care about social responsibility. Suggested ECs: Mentoring, Community Organizing, or Food Drive coordination." },
-                Leadership: { title: "The Founder", desc: "You are a natural manager. Suggested ECs: Student Council, Business Club, or founding your own non-profit." },
-                Technical: { title: "The Engineer", desc: "You love how systems work. Suggested ECs: Robotics, Coding Club, App Development, or Science Fair." }
-            };
-
-            document.getElementById('quizQuestions').classList.add('hidden');
-            document.getElementById('quizArrows').classList.add('hidden');
-            document.getElementById('quizResults').classList.remove('hidden');
-            document.getElementById('resultTitle').textContent = recs[top].title;
-            document.getElementById('resultDesc').textContent = recs[top].desc;
+        window.onclick = function(event) {
+            if (!event.target.closest('.action-btn') && !event.target.closest('.dropdown-menu') && !event.target.closest('.location-dropdown')) {
+                closeDropdowns();
+            }
         }
     </script>
 </body>
-</html>

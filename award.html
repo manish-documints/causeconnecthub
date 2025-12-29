@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>Funding | CauseConnects</title>
+    <title>CauseConnectHub</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -59,7 +60,80 @@
             background: var(--hero-gradient); color: white; padding: 10px 22px;
             border-radius: 50px; font-weight: 700; text-decoration: none; transition: 0.2s;
         }
+        /* --- MOBILE MENU STYLES --- */
+    .mobile-hamburger {
+        display: none;
+        cursor: pointer;
+        z-index: 1100;
+        width: 30px;
+        height: 20px;
+        flex-direction: column;
+        justify-content: space-between;
+    }
 
+    .mobile-hamburger span {
+        display: block;
+        height: 3px;
+        width: 100%;
+        background-color: white;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+    }
+
+    .nav-bar.scrolled .mobile-hamburger span {
+        background-color: var(--vibrant-orange);
+    }
+
+    /* Mobile Drawer */
+    @media (max-width: 991px) {
+        .mobile-hamburger {
+            display: flex;
+        }
+
+        .nav-links {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            height: 100vh;
+            width: 80%;
+            max-width: 300px;
+            background: white;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+            z-index: 1050;
+        }
+
+        .nav-links.active {
+            right: 0;
+        }
+
+        .nav-links a {
+            color: var(--text-dark) !important;
+            font-size: 1.2rem;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+
+        .desktop-btn {
+            display: none;
+        }
+
+        /* Hamburger Active State */
+        .mobile-hamburger.active span:nth-child(1) {
+            transform: translateY(8.5px) rotate(45deg);
+            background-color: var(--vibrant-orange) !important;
+        }
+        .mobile-hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .mobile-hamburger.active span:nth-child(3) {
+            transform: translateY(-8.5px) rotate(-45deg);
+            background-color: var(--vibrant-orange) !important;
+        }
+    }
         /* --- HERO SECTION --- */
         .hero-outer {
             padding-top: 120px;
@@ -102,13 +176,13 @@
         .action-btn:hover { background: #efeaff; }
         .action-btn.active { background: var(--primary-purple) !important; color: white !important; border-color: var(--primary-purple) !important; }
 
-        .shortlist-btn {
+        .liked-btn {
             background: #fff0f6;
             color: var(--vibrant-pink);
             border-color: #ffd6e7;
         }
-        .shortlist-btn:hover { background: #ffe3f0; }
-        .shortlist-btn.active {
+        .liked-btn:hover { background: #ffe3f0; }
+        .liked-btn.active {
             background: var(--vibrant-pink) !important;
             color: white !important;
             border-color: var(--vibrant-pink) !important;
@@ -133,10 +207,10 @@
         .checkbox-item.active { background: var(--vibrant-orange); color: white; border-color: var(--vibrant-orange); }
 
         /* Award Type Colors */
-        .type-Scholarship { background-color: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
-        .type-Grant { background-color: #dcfce7; color: #15803d; border-color: #bbf7d0; }
-        .type-Prize { background-color: #fce7f3; color: #be185d; border-color: #fbcfe8; }
-        .type-Fellowship { background-color: #fef3c7; color: #b45309; border-color: #fde68a; }
+        .type-Scholarship { background-color: #bae6fd; color: #0c4a6e; border-color: #bae6fd; }
+        .type-Grant { background-color: #fbcfe8; color: #831843; border-color: #bbf7d0; }
+        .type-Prize { background-color: #bbf7d0; color: #064e3b; border-color: #fbcfe8; }
+        .type-Fellowship { background-color: #fde68a; color: #78350f; border-color: #fde68a; }
 
         .type-pill {
             padding: 10px 22px; border-radius: 50px; font-weight: 800; font-size: 0.95rem;
@@ -186,7 +260,7 @@
             align-self: flex-start;
         }
 
-        .card-desc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; margin: 16px 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .card-desc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; margin: 16px 0; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
 
         .card-amount {
             font-family: 'Outfit', sans-serif;
@@ -327,7 +401,7 @@
 
 <nav class="nav-bar">
     <div class="nav-container">
-        <div class="nav-logo"><h1><span>Cause</span>Connects</h1></div>
+        <div class="nav-logo"><h1><span>Cause</span>Connect<span>Hub</span></h1></div>
         <div class="nav-links">
             <a href="index.html">Home</a>
             <a href="explore.html">Find Extracurriculars</a>
@@ -373,6 +447,7 @@
                             <div class="flex flex-wrap gap-2">
                                 <div class="checkbox-item" data-cat="Leadership" onclick="toggleCategory('Leadership')">Leadership</div>
                                 <div class="checkbox-item" data-cat="Community" onclick="toggleCategory('Community')">Community</div>
+                                <div class="checkbox-item" data-cat="Writing" onclick="toggleCategory('Writing')">Writing</div>
                             </div>
                         </div>
                     </div>
@@ -383,9 +458,9 @@
                 </div>
             </div>
 
-            <button id="shortlistBtn" class="action-btn shortlist-btn" onclick="toggleShortlistMode()">
+            <button id="liked" class="action-btn liked-btn" onclick="toggleLikedMode()">
                 <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748z"/></svg>
-                Shortlist (<span id="shortlistCount">0</span>)
+                Liked (<span id="likedCount">0</span>)
             </button>
         </div>
 
@@ -595,12 +670,614 @@
             cats: ['Community', 'Leadership'], 
             reqs: ['Michigan Resident', 'Academic Achievement','Community Involvement'],
             link: 'http://www.rosaparksscholarshipfoundation.org/'
-        }
-    ];
+        },
+        { 
+            id: '11', 
+            title: 'Horatio Alger State Scholarship', 
+            org: 'Horatio Alger Association', 
+            desc: 'Scholarship for students who have overcome significant personal adversity and demonstrated perseverance and integrity.', 
+            amount: '$10,000-$25,000', 
+            deadline: 'Mar 15', 
+            type: 'Scholarship', 
+            cats: ['Leadership', 'Community'], 
+            reqs: ['U.S. Citizen', 'Minimum 2.0 GPA', 'Financial Need', 'Adversity Background'],
+            link: 'https://horatioalger.org/scholarships/'
+        },  
+        {
+    
+            id: '12',
+            title: 'Prudential Spirit of Community Awards',
+            org: 'Prudential Financial',
+            desc: 'Recognizes middle and high school students who demonstrate outstanding volunteer service and commitment to their communities. Provides scholarships, national recognition, and opportunities to connect with like-minded peers and mentors to further their impact.',
+            amount: '$5,000',
+            deadline: 'Nov 7',
+            type: 'Grant',
+            cats: ['Community', 'Leadership'],
+            reqs: ['Grades 5-12', 'Volunteer Service', 'US Resident'],
+            link: 'https://spirit.prudential.com/'
+         },        
+         {
+            id: '13',
+            title: 'The Gloria Barron Prize for Young Heroes',
+            org: 'Barron Prize Foundation',
+            desc: 'Honors young leaders who have made a significant positive difference in their communities or the natural environment through service and innovation. Provides national recognition, financial awards, and opportunities to inspire others through leadership and continued impact.',
+            amount: '$10,000',
+            deadline: 'Apr 15',
+            type: 'Grant',
+            cats: ['Community', 'Leadership'],
+            reqs: ['Ages 8-18', 'Service Project Leadership'],
+            link: 'https://barronprize.org/'
+         },
+         {
+            id: '14',
+            title: 'Everyday Young Hero Grants',
+            org: 'Youth Service America',
+            desc: 'Recognizes young people who demonstrate courage, compassion, and leadership through acts that positively impact others. Provides grant funding to help recipients expand their initiatives and continue making meaningful change in their communities',
+            amount: '$500',
+            deadline: 'Rolling',
+            type: 'Grant',
+            cats: ['Community', 'Leadership'],
+            reqs: ['Ages 5-25', 'Service Project'],
+            link: 'https://ysa.org/grants/'
+         },
+         {
+            id: '15',
+            title: 'Lemelson-MIT Student Prize',
+            org: 'MIT School of Engineering',
+            desc: 'Honors student innovators who develop impactful technological inventions that address real-world problems. Provides significant financial awards, national recognition, and opportunities to advance inventions toward real-world application and entrepreneurship.',
+            amount: '$15,000',
+            deadline: 'Jan 12',
+            type: 'Grant',
+            cats: ['STEM', 'Leadership'],
+            reqs: ['High School Student', 'Original Invention'],
+            link: 'https://lemelson.mit.edu/student-prize'
+         },
+          {
+            id: '16',
+            title: 'National YoungArts Foundation Awards',
+            org: 'National YoungArts Foundation',
+            desc: 'Recognizes exceptionally talented young artists across multiple disciplines through a highly selective national competition. Provides winners with financial awards, mentorship opportunities, and access to professional development and artistic networks to support their creative growth.',
+            amount: '$10,000',
+            deadline: 'Oct 13',
+            type: 'Grant',
+            cats: ['Arts', 'Humanities'],
+            reqs: ['Grades 10-12 or Ages 15-18', 'Artistic Portfolio'],
+            link: 'https://youngarts.org/apply/'
+          },
+          {
+            id: '17',
+            title: 'Echoing Green Youth Microgrants',
+            org: 'Echoing Green',
+            desc: 'Provides early-stage funding to young leaders developing innovative solutions to pressing social and environmental challenges. Supports recipients with seed capital, guidance, and access to a global community to help turn promising ideas into sustainable initiatives.',
+            amount: '$1,000',
+            deadline: 'Rolling',
+            type: 'Grant',
+            cats: ['Leadership', 'Community'],
+            reqs: ['Ages 15-18', 'Social Impact Project'],
+            link: 'https://echoinggreen.org/youth/'
+          },
+          {
+            id: '18',
+            title: 'NCWIT Aspirations in Computing Award',
+            org: 'National Center for Women & Information Technology',
+            desc: 'Honors students who demonstrate outstanding aptitude and interest in computing, along with leadership and community involvement. Provides recognition, mentorship, and access to resources that support continued growth in technology and computing fields.',
+            amount: 'Varies',
+            deadline: 'Oct 16',
+            type: 'Grant',
+            cats: ['STEM', 'Leadership'],
+            reqs: ['Grades 9-12', 'Interest in Computing'],
+            link: 'https://www.aspirations.org/'
+          },
+          {
+            id: '19',
+            title: 'Ashoka Youth Changemaker Grant',
+            org: 'Ashoka',
+            desc: 'Supports young people who are leading initiatives that create positive social change in their communities and beyond. Provides funding, mentorship, and a global network to help youth-led projects grow sustainably and increase their impact.',
+            amount: 'Varies',
+            deadline: 'Rolling',
+            type: 'Grant',
+            cats: ['Community', 'Leadership'],
+            reqs: ['Ages 12-20', 'Demonstrated Social Impact'],
+            link: 'https://www.ashoka.org/en-us/young-changemakers'
+          },
+          {
+            id: '20',
+            title: 'Harvard Book Award',
+            org: 'Harvard Alumni Association',
+            desc: 'Awarded to a top high school student who displays excellence in scholarship, character, and achievement in other fields at select schools worldwide. Winners are recognized with a commemorative book often presented at graduation ceremonies. Theres no cash prize, but it is prestigious recognition of academic excellence.',
+            amount: 'Recognition',
+            deadline: 'Varies',
+            type: 'Prize',
+            cats: ['Humanities', 'Leadership', 'Academics'],
+            reqs: ['Strong academics','High character','Selected by school'],
+            link: 'https://en.wikipedia.org/wiki/Harvard_Book_Award'
+          },
+          {
+            id: '21',
+            title: 'MathWorks Math Modeling Challenge (M3 Challenge)',
+            org: 'Society for Industrial and Applied Mathematics (SIAM)',
+            desc: 'A nationwide mathematical modeling competition where teams solve real-world problems over a 14-hour period. Top teams receive scholarship prizes and travel to the final event in New York City. Overall award pool includes scholarship funding and media recognition for winners. :contentReference[oaicite:0]{index=0}',
+            amount: '$100,000+',
+            deadline: 'Annual',
+            type: 'Prize',
+            cats: ['STEM', 'Leadership'],
+            reqs: ['Team participation','High school enrollment','Problem solution write-up'],
+            link: 'https://m3challenge.siam.org/'
+          },
+          {
+            id: '22',
+            title: 'Stockholm Junior Water Prize',
+            org: 'Stockholm International Water Institute',
+            desc: 'International environmental award for outstanding water-related projects by young people. Each national winner competes at the global level, with the international winner receiving a scholarship and trophy. Projects focus on scientific, environmental, social, or technological water issues. :contentReference[oaicite:1]{index=1}',
+            amount: '$15,000',
+            deadline: 'Varies',
+            type: 'Prize',
+            cats: ['STEM', 'Community'],
+            reqs: ['Ages 15-20','Water-related project','National selection'],
+            link: 'https://en.wikipedia.org/wiki/Stockholm_Junior_Water_Prize'
+          },
+          {
+            id: '23',
+            title: 'The Earth Prize',
+            org: 'The Earth Foundation',
+            desc: 'The worlds largest environmental sustainability competition for students ages 13-19, offering mentorship and funding. Regional winners receive funding to implement environmental solutions, with a large global award decided by public vote. It incentivizes creative, practical initiatives addressing environmental challenges. :contentReference[oaicite:2]{index=2}',
+            amount: '$100,000',
+            deadline: 'Varies',
+            type: 'Prize',
+            cats: ['STEM', 'Community'],
+            reqs: ['Ages 13-19','Environmental sustainability project'],
+            link: 'https://theearthprize.org/'
+          },
+          {
+            id: '24',
+            title: 'Junior Science and Humanities Symposium (JSHS)',
+            org: 'U.S. Department of Defense & Sponsors',
+            desc: 'A national STEM research competition where high school students present original research at regional and national levels. Top national winners earn scholarship awards, and students gain experience presenting before STEM professionals. It encourages public communication and research excellence across STEM fields. :contentReference[oaicite:3]{index=3}',
+            amount: '$12,000',
+            deadline: 'Varies',
+            type: 'Prize',
+            cats: ['STEM', 'Leadership'],
+            reqs: ['Original research','High school student','Regional participation'],
+            link: 'https://www.jshs.org/'
+          },
+          {
+            id: '25',
+            title: 'Scholastic Art & Writing Awards',
+            org: 'Alliance for Young Artists & Writers',
+            desc: 'One of the most prestigious art and writing competitions for grades 7-12, recognizing excellence in creative work across multiple categories. Winners receive national medals, scholarships, and opportunities for publication or exhibition. Some awards include cash scholarships up to $10,000. :contentReference[oaicite:4]{index=4}',
+            amount: '$10,000',
+            deadline: 'Dec-Jan',
+            type: 'Prize',
+            cats: ['Arts', 'Humanities'],
+            reqs: ['Grades 7-12','Original visual art or writing submission'],
+            link: 'https://artandwriting.org/'
+          },
+          {
+            id: '26',
+            title: 'The Adroit Prizes for Poetry and Prose',
+            org: 'The Adroit Journal',
+            desc: 'National literary prizes awarding young poets and prose writers for exceptional work. Winners receive cash awards and publication or recognition in the Adroit Journal. Submissions are typically due each year in spring. :contentReference[oaicite:5]{index=5}',
+            amount: '$200',
+            deadline: 'April',
+            type: 'Prize',
+            cats: ['Arts','Humanities'],
+            reqs: ['High school or undergrad','Poetry or prose submission'],
+            link: 'https://www.adroit.org/prize'
+          },
+          {
+            id: '27',
+            title: 'Lumiere Scholars Essay Award',
+            org: 'Lumiere Scholars',
+            desc: 'Global essay competition open to high school students with cash prizes and scholarships in STEM, Humanities, and Social Sciences. Essays are judged by university professors and winners receive a share of over $20,000 in awards. It’s intended to recognize strong critical thinking and academic writing. :contentReference[oaicite:6]{index=6}',
+            amount: '$20,000',
+            deadline: 'Nov 2',
+            type: 'Prize',
+            cats: ['STEM','Humanities'],
+            reqs: ['High school enrollment','Essay submission'],
+            link: 'https://www.lumiere-education.com/'
+          },
+          {
+            id: '28',
+            title: 'AwardX High School Future Entrepreneur Competition',
+            org: 'AwardX',
+            desc: 'Entrepreneurship competition for high school students worldwide where teams pitch business ideas to judges. Top teams win cash prizes plus scholarships to programs like LaunchX, along with badges and recognition. It supports students at all stages of business development. :contentReference[oaicite:7]{index=7}',
+            amount: '$5,000',
+            deadline: 'Nov 12',
+            type: 'Prize',
+            cats: ['Leadership','STEM'],
+            reqs: ['Current high school student','Team entry','Business pitch'],
+            link: 'https://awardx.org/'
+          },
+          {
+            id: '29',
+            title: 'Earthwatch Student Fellowships - Ignite',
+            org: 'Earthwatch Institute',
+            desc: 'A hands-on environmental research fellowship where students participate in scientific fieldwork expeditions to study and protect the natural world. This program is fully funded and offers opportunities like Ignite or Girls in Science for motivated teens with a passion for science. Fellows join scientists in the field, gaining real research experience and mentorship.',
+            amount: 'Free Experience',
+            deadline: 'Varies',
+            type: 'Fellowship',
+            cats: ['STEM', 'Community'],
+            reqs: ['High school student','Passion for science','Application'],
+            link: 'https://earthwatch.org/education/education-fellowships/student-fellowships' 
+          },
+          {
+            id: '30',
+            title: 'Summit STEM Fellowship',
+            org: 'Summit STEM Fellowship Organization',
+            desc: 'A summer fellowship for ambitious students entering grades 9-12, offering mentorship from young professionals and sessions focused on STEM, leadership, and personal growth. The flexible 3-week program includes evening and weekend sessions, allowing fellows to balance other commitments. Participants build skills, connect with peers, and explore pathways in science and engineering. ',
+            amount: 'Varies',
+            deadline: 'Undecided',
+            type: 'Fellowship',
+            cats: ['STEM','Leadership'],
+            reqs: ['Entering 9th-12th grade','Motivation in STEM','Application interest form'],
+            link: 'https://www.summitstemfellowship.org/fellowship-overview'
+          },
+          {
+            id: '31',
+            title: 'The Veritas AI Fellowship',
+            org: 'Veritas AI',
+            desc: 'A fellowship program offering high school students structured, extended mentorship in artificial intelligence and research projects over a multi-week virtual cohort. Fellows work with mentors, engage in critical thinking, and build project experience applicable to academic research or future careers in AI. Participants develop AI competence and professional skills through seminars and collaborative work.',
+            amount: 'Varies',
+            deadline: 'Cohort-Based',
+            type: 'Fellowship',
+            cats: ['STEM','Leadership'],
+            reqs: ['High school student','Interest in AI/Research','Application for cohort'],
+            link: 'https://www.veritasai.com/'
+          },
+          {
+            id: '32',
+            title: 'Atlas Fellowship',
+            org: 'Atlas Fellowship Program',
+            desc: 'An intensive fellowship that combines academic inquiry, workshops, and seminars on topics such as artificial intelligence and intellectual exploration. Fellows receive a scholarship and participate in a fully funded multi‑day program in the San Francisco Bay Area designed to deepen academic curiosity with a cohort of peers. Past durations span about 11 days with daily intellectual sessions and activities.',
+            amount: '$10,000 + Program',
+            deadline: 'Varies',
+            type: 'Fellowship',
+            cats: ['STEM','Humanities','Leadership'],
+            reqs: ['Ages 13-19','High school student','Application submission'],
+            link: 'https://www.lumiere-education.com/post/10-fellowships-for-high-school-students'
+          },
+          {
+            id: '33',
+            title: 'Girls in Science Fellowship',
+            org: 'Earthwatch Institute',
+            desc: 'A fellowship specifically for female-identifying high school students to participate in field science with female experts, fostering confidence and research experience. Fellows join environmental science expeditions, collect data, and contribute to real conservation research projects. The program nurtures interests in science and offers a unique, collaborative field experience.',
+            amount: 'Fully Funded',
+            deadline: 'Feb 28',
+            type: 'Fellowship',
+            cats: ['STEM','Community'],
+            reqs: ['Ages 15-18','High school student','Application'],
+            link: 'https://earthwatch.org/education/education-fellowships/student-fellowships'
+          },
+          {
+            id: '34',
+            title: 'Young Founders Lab Fellowship',
+            org: 'Young Founders Lab',
+            desc: 'A virtual startup fellowship where high school students learn how to design, launch, and pitch impactful projects or ventures with guidance from entrepreneurs and industry professionals. Over multiple weeks, fellows engage in interactive workshops, real-world problem solving, and mentorship to turn ideas into actionable results. This experience builds leadership, innovation, and entrepreneurial skills.',
+            amount: 'Varies',
+            deadline: 'By Cohorts',
+            type: 'Fellowship',
+            cats: ['Leadership','STEM','Community'],
+            reqs: ['High school student','Application for cohort'],
+            link: 'https://www.youngfounderslab.org/blog/nonprofit-fellowships-for-high-school-students'
+          },
+          {
+            id: '35',
+            title: 'YouthBridge-NY Fellowship',
+            org: 'YouthBridge-New York',
+            desc: 'A fellowship that connects high school students with nonprofit organizations in New York City for project-based learning and social impact experience. Fellows support community initiatives, gain hands-on leadership experience, and receive mentorship from nonprofit professionals. Projects vary each year but aim to build civic engagement and real-world skills.',
+            amount: 'Varies',
+            deadline: 'Varies',
+            type: 'Fellowship',
+            cats: ['Leadership','Community'],
+            reqs: ['High school student','Interest in nonprofit/community work','Application'],
+            link: 'https://www.youngfounderslab.org/blog/nonprofit-fellowships-for-high-school-students'
+          },
+          { 
+            id: '36', 
+            title: 'Dell Scholars Program', 
+            org: 'Michael & Susan Dell Foundation', 
+            desc: 'Recognizes students who have overcome significant challenges and shown resilience and determination in pursuing higher education. Provides financial support and long-term resources to help recipients succeed and persist through college.', 
+            amount: '$20,000', 
+            deadline: 'Dec 1', 
+            type: 'Scholarship', 
+            cats: ['Leadership', 'Community'], 
+            reqs: ['Minimum 2.4 GPA', 'Financial Need', 'Participation in College Readiness Program'],
+            link: 'https://www.dellscholars.org/'
+          },
+          { 
+            id: '37', 
+            title: 'Ron Brown Scholar Program', 
+            org: 'Ron Brown Scholar Program', 
+            desc: 'Recognizes academically talented students who demonstrate leadership, service, and a strong commitment to making a positive impact in their communities. Provides substantial financial support and leadership development to support success in college and beyond.', 
+            amount: '$40,000', 
+            deadline: 'Jan 9', 
+            type: 'Scholarship', 
+            cats: ['Leadership', 'Community', 'Academic Excellence'], 
+            reqs: ['African American', 'U.S. Citizen or Permanent Resident', 'Leadership & Service'],
+            link: 'https://ronbrown.org/'
+          },
+          { 
+            id: '38', 
+            title: 'Hagan Scholarship', 
+            org: 'Hagan Scholarship Foundation', 
+            desc: 'Supports high-achieving students from low-income backgrounds who demonstrate strong work ethic, leadership, and perseverance. Provides financial assistance and developmental resources to help recipients successfully complete college.', 
+            amount: 'Up to $48,000', 
+            deadline: 'Dec 1', 
+            type: 'Scholarship', 
+            cats: ['Academic Excellence'], 
+            reqs: ['U.S. Citizen', 'Rural High School', 'Minimum 3.5 GPA', 'Financial Need'],
+            link: 'https://haganscholarships.org/'
+          },
+          { 
+            id: '39', 
+            title: 'Burger King Scholars Program', 
+            org: 'Burger King Foundation', 
+            desc: 'Provides scholarships to students who demonstrate academic achievement, work experience, leadership, and community involvement. Supports recipients in pursuing postsecondary education through financial assistance.', 
+            amount: '$1,000-$50,000', 
+            deadline: 'Dec 15', 
+            type: 'Scholarship', 
+            cats: ['Leadership', 'Community'], 
+            reqs: ['Minimum 2.5 GPA', 'Community Service', 'Work Experience Preferred'],
+            link: 'https://www.burgerkingfoundation.org/programs/burger-king-scholars/'
+          },
+        { 
+            id: '40', 
+            title: 'Cameron Impact Scholarship', 
+            org: 'Bryan Cameron Education Foundation', 
+            desc: 'Recognizes high-achieving students who demonstrate exceptional leadership, service, and positive impact in their communities. Provides a full-tuition scholarship to support recipients throughout their undergraduate education.', 
+            amount: 'Full-ride', 
+            deadline: 'May 24', 
+            type: 'Scholarship', 
+            cats: ['Leadership', 'Community'], 
+            reqs: ['U.S. Citizen', 'Minimum 3.7 GPA', 'Strong Leadership & Service'],
+            link: 'https://www.cameronimpactscholarship.org/'
+        },
+        { 
+            id: '41', 
+            title: 'Equitable Excellence Scholarship', 
+            org: 'Equitable Foundation', 
+            desc: 'Recognizes students who demonstrate leadership, community involvement, and resilience in overcoming challenges. Provides financial support to help recipients pursue higher education and long-term success.', 
+            amount: '$2,500-$20,000', 
+            deadline: 'Dec 18', 
+            type: 'Scholarship', 
+            cats: ['Leadership', 'Community'], 
+            reqs: ['U.S. Citizen or Resident', 'Minimum 2.5 GPA'],
+            ink: 'https://equitable.com/foundation/equitable-excellence-scholarship'
+        },        
+        { 
+            id: '42', 
+            title: 'Dream.US National Scholarship', 
+            org: 'TheDream.US', 
+            desc: 'Supports undocumented students with strong academic achievement and demonstrated financial need in pursuing higher education. Provides significant tuition assistance and guidance to help recipients complete college successfully.', 
+            amount: 'Up to $33,000', 
+            deadline: 'Feb 29', 
+            type: 'Scholarship', 
+            cats: ['Community'], 
+            reqs: ['Undocumented or DACA', 'Minimum 2.5 GPA', 'Financial Need'],
+            link: 'https://www.thedream.us/scholarships/'
+        },
+        { 
+            id: '43', 
+            title: 'Foot Locker Scholar Athletes Program', 
+            org: 'Foot Locker Foundation', 
+            desc: 'Recognizes student-athletes who demonstrate excellence in academics, sports, leadership, and community service. Provides financial support to help recipients pursue higher education while continuing to make a positive impact.', 
+            amount: '$20,000', 
+            deadline: 'Jan 30', 
+            type: 'Scholarship', 
+            cats: ['Leadership'], 
+            reqs: ['Student Athlete', 'Minimum 3.0 GPA', 'Leadership Experience'],
+            link: 'https://www.footlockerscholarathletes.com/'
+        },
+        { 
+            id: '44', 
+            title: 'APIASF General Scholarship', 
+            org: 'Asian & Pacific Islander American Scholarship Fund', 
+            desc: 'Supports students of Asian and Pacific Islander descent who demonstrate academic achievement, leadership, and financial need. Provides financial assistance to help recipients pursue and complete higher education.', 
+            amount: '$2,500-$20,000', 
+            deadline: 'Jan 11', 
+            type: 'Scholarship', 
+            cats: ['Community'], 
+            reqs: ['AAPI Heritage', 'Minimum 2.7 GPA', 'Financial Need'],
+            link: 'https://apiascholars.org/'
+        },
+        { 
+            id: '45', 
+            title: 'Davidson Fellows Scholarship', 
+            org: 'Davidson Institute', 
+            desc: 'Recognizes students under 18 who have completed significant and original work in science, technology, mathematics, literature, music, or philosophy. Provides substantial financial awards to support further education and development of their talents.', 
+            amount: '$10,000-$50,000', 
+            deadline: 'Feb 14', 
+            type: 'Scholarship', 
+            cats: ['STEM', 'Humanities'], 
+            reqs: ['Under 18', 'Exceptional Project or Research'],
+            link: 'https://www.davidsongifted.org/gifted-programs/fellows-scholarship/'
+        },
+        { 
+            id: '46', 
+            title: 'GE-Reagan Foundation Scholarship', 
+            org: 'Ronald Reagan Presidential Foundation', 
+            desc: 'Recognizes high school seniors who demonstrate leadership, drive, integrity, and citizenship. Provides financial support to help recipients pursue higher education and develop their potential as future leaders.', 
+            amount: '$40,000', 
+            deadline: 'Jan 5', 
+            type: 'Scholarship', 
+            cats: ['Leadership', 'Community'], 
+            reqs: ['U.S. Citizen', 'Minimum 3.0 GPA', 'Leadership Experience'],
+            link: 'https://www.reaganfoundation.org/education/scholarship-programs/'
+        },
+        { 
+            id: '47', 
+            title: 'Buick Achievers Scholarship', 
+            org: 'General Motors Foundation', 
+            desc: 'Supports students pursuing education and careers in engineering, technology, or design. Provides substantial financial awards to help recipients complete their college education.', 
+            amount: '$25,000/year', 
+            deadline: 'Feb 27', 
+            type: 'Scholarship', 
+            cats: ['STEM'], 
+            reqs: ['STEM Major', 'Minimum 3.0 GPA'],
+            link: 'https://www.buickachievers.com/'
+        },
+        {
+            id: '48',
+            title: 'National YoungArts Winner',
+            org: 'YoungArts',
+            desc: 'Recognizes exceptional young artists in visual, literary, and performing arts. Provides awards, mentorship, and performance or exhibition opportunities to help develop their talents.',
+            amount: 'Recognition',
+            deadline: 'Oct',
+            type: 'Prize',
+            cats: ['Arts', 'Writing'],
+            reqs: ['Grades 10-12 or age 15-18'],
+            link: 'https://youngarts.org/'
+        },
+        {
+            id: '49',
+            title: 'Bennington Young Writers Award',
+            org: 'Bennington College',
+            desc: 'Honors outstanding high school writers in fiction, poetry, and nonfiction. Provides recognition and opportunities to showcase their work and develop their writing skills.',
+            amount: 'Recognition',
+            deadline: 'Nov',
+            type: 'Prize',
+            cats: ['Humanities', 'Writing'],
+            reqs: ['High School Student'],
+            link: 'https://www.bennington.edu/events/young-writers-awards'
+        },
+        {
+          id: '50',
+          title: 'John Locke Essay Prize',
+          org: 'John Locke Institute',
+            desc: 'Recognizes high school students who produce outstanding essays in philosophy, politics, economics, history, or law. Provides awards and opportunities to showcase critical thinking and writing skills.',
+            amount: 'Recognition',
+            deadline: 'June',
+            type: 'Prize',
+            cats: ['Humanities','Writing'],
+            reqs: ['Age 14-18'],
+            link: 'https://www.johnlockeinstitute.com/essay-competition'
+        },
+        {
+            id: '51',
+            title: 'Foyle Young Poets Prize',
+            org: 'The Poetry Society',
+            desc: 'Honors young poets for exceptional creative work in poetry. Provides recognition and opportunities to publish and showcase their writing.',
+            amount: 'Recognition',
+            deadline: 'July',
+            type: 'Prize',
+            cats: ['Arts', 'Writing'],
+            reqs: ['Age 11-17'],
+            link: 'https://poetrysociety.org.uk/competitions/foyle-young-poets-of-the-year-award/'
+        },
+        {
+            id: '52',
+            title: 'New York Times Student Contest Winner',
+            org: 'The New York Times',
+            desc: 'Recognizes students for excellence in journalism, opinion, and creative writing. Provides awards and opportunities to showcase their work to a wider audience.',
+            amount: 'Recognition',
+            deadline: 'Varies',
+            type: 'Prize',
+            cats: ['Humanities', 'Writing'],
+            reqs: ['Middle or High School Student'],
+            link: 'https://www.nytimes.com/spotlight/learning-contests'
+        },
+        {
+            id: '53',
+            title: 'Princeton Ten-Minute Play Prize',
+            org: 'Princeton University',
+            desc: 'Honors high school students for outstanding short plays. Provides recognition and opportunities to showcase their work in theatrical settings.',
+            amount: 'Recognition',
+            deadline: 'Dec',
+            type: 'Prize',
+            cats: ['Arts', 'Humanities'],
+            reqs: ['Grades 11-12'],
+            link: 'https://arts.princeton.edu/about/opportunities/high-school-contests/'
+        },
+        {
+            id: '54',
+            title: 'Ocean Awareness Prize',
+            org: 'Bow Seat Ocean Awareness Programs',
+            desc: 'Recognizes young people creating projects that raise awareness about ocean conservation. Provides awards and opportunities to showcase creative and academic work addressing environmental issues.',
+            amount: 'Varies',
+            deadline: 'Jun',
+            type: 'Prize',
+            cats: ['Arts'],
+            reqs: ['Age 11-18'],
+           link: 'https://bowseat.org/programs/ocean-awareness-contest/'
+        },
+        {
+            id: '55',
+            title: 'Diamond Challenge Winner',
+            org: 'University of Delaware',
+            desc: 'Recognizes high school students who develop innovative entrepreneurial ventures. Provides awards, mentorship, and resources to help bring their business ideas to life.',
+            amount: '$100,000',
+            deadline: 'Jan',
+            type: 'Prize',
+            cats: ['Leadership'],
+            reqs: ['High School Student'],
+            link: 'https://diamondchallenge.org/'
+        },
+        {
+            id: '56',
+            title: 'Conrad Innovator Award',
+            org: 'Conrad Foundation',
+            desc: 'Honors students who create innovative solutions to global challenges. Provides awards, mentorship, and resources to support the development and implementation of their projects.',
+            amount: 'Varies',
+            deadline: 'Oct',
+            type: 'Prize',
+            cats: ['STEM', 'Leadership'],
+            reqs: ['Age 13-18'],
+            link: 'https://www.conradchallenge.org/'
+        },
+        {
+            id: '57',
+            title: 'Blue Ocean Student Prize',
+            org: 'Blue Ocean Entrepreneurship',
+            desc: 'Recognizes students developing socially impactful business or innovation projects. Provides awards and support to help bring their ideas to life and create positive change.',
+            amount: 'Varies',
+            deadline: 'Apr',
+            type: 'Prize',
+            cats: ['Leadership'],
+            reqs: ['High School or College Student'],
+            link: 'https://www.blueoceancompetition.org/'
+        },
+        {
+            id: '58',
+            title: 'MIT THINK Scholar',
+            org: 'MIT THINK',
+            desc: 'Supports high school students pursuing original research or innovation projects. Provides funding, mentorship, and resources to help develop and implement their ideas.',
+            amount: 'Funding & Mentorship',
+            deadline: 'Jan',
+            type: 'Prize',
+            cats: ['STEM', 'Leadership'],
+            reqs: ['High School Student'],
+            link: 'https://think.mit.edu/'
+        },
+        {
+            id: '59',
+            title: 'Moonshot Pitch Prize',
+            org: 'Moonshot Platform',
+            desc: 'Awards student-led teams for developing bold, scalable solutions to real-world problems through innovation and entrepreneurship. Recognizes impactful ideas with funding, mentorship, and exposure to help projects grow beyond the initial concept stage.',
+            amount: 'Varies',
+            deadline: 'Varies',
+            type: 'Prize',
+            cats: ['Leadership'],
+            reqs: ['Student Entrepreneur'],
+            link: 'https://www.moonshotplatform.com/'
+        },        
+        {
+            id: '60',
+            title: 'Wharton Global Youth Prize',
+            org: 'University of Pennsylvania (Wharton)',
+            desc: 'Recognizes high school teams that create and launch innovative business or social impact ventures addressing real-world challenges. Provides winners with mentorship, global recognition, and opportunities to further develop and scale their ventures.',
+            amount: 'Recognition',
+            deadline: 'Dec',
+            type: 'Prize',
+            cats: ['Leadership'],
+            reqs: ['High School Student'],
+            link: 'https://globalyouth.wharton.upenn.edu/'
+}
+
+              ];
 
     let filters = { search: '', types: [], cats: [] };
     let saved = new Set();
-    let showShortlistOnly = false;
+    let showLikedOnly = false;
     let currentIdx = -1;
     let filteredItems = [];
 
@@ -614,7 +1291,7 @@
                                  item.org.toLowerCase().includes(filters.search);
             const matchesType = filters.types.length === 0 || filters.types.includes(item.type);
             const matchesCat = filters.cats.length === 0 || item.cats.some(c => filters.cats.includes(c));
-            const isSaved = !showShortlistOnly || saved.has(item.id);
+            const isSaved = !showLikedOnly || saved.has(item.id);
             return matchesSearch && matchesType && matchesCat && isSaved;
         });
 
@@ -622,11 +1299,11 @@
             let emptyMsg = "Nothing meets your current criteria.";
             let emptySub = "Try adjusting your search or filters to discover more opportunities.";
             
-            if (showShortlistOnly && saved.size === 0) {
+            if (showLikedOnly && saved.size === 0) {
                 emptyMsg = "Nothing has been liked yet.";
                 emptySub = "Heart your favorite opportunities to save them here for later!";
-            } else if (showShortlistOnly && filteredItems.length === 0) {
-                emptyMsg = "No matches in your shortlist.";
+            } else if (showLikedOnly && filteredItems.length === 0) {
+                emptyMsg = "No matches in your liked list.";
                 emptySub = "None of your saved items match the current search or filters.";
             }
 
@@ -684,7 +1361,7 @@
         e.stopPropagation();
         if (saved.has(id)) saved.delete(id);
         else saved.add(id);
-        document.getElementById('shortlistCount').textContent = saved.size;
+        document.getElementById('likedCount').textContent = saved.size;
         render();
     }
 
@@ -764,14 +1441,14 @@
     function clearAllFilters() {
         filters = { search: '', types: [], cats: [] };
         document.getElementById('searchInput').value = '';
-        showShortlistOnly = false;
-        document.getElementById('shortlistBtn').classList.remove('active');
+        showLikedOnly = false;
+        document.getElementById('likedBtn').classList.remove('active');
         render();
     }
 
-    function toggleShortlistMode() {
-        showShortlistOnly = !showShortlistOnly;
-        document.getElementById('shortlistBtn').classList.toggle('active', showShortlistOnly);
+    function toggleLikedMode() {
+        showLikedOnly = !showLikedOnly;
+        document.getElementById('likedBtn').classList.toggle('active', showLikedOnly);
         render();
     }
 

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resources | CauseConnectHub</title>
+    <title>CauseConnectHub</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -55,6 +56,80 @@
             border-radius: 50px; font-weight: 700; text-decoration: none; transition: 0.2s;
             cursor: pointer; border: none;
         }
+    /* --- MOBILE MENU STYLES --- */
+    .mobile-hamburger {
+        display: none;
+        cursor: pointer;
+        z-index: 1100;
+        width: 30px;
+        height: 20px;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .mobile-hamburger span {
+        display: block;
+        height: 3px;
+        width: 100%;
+        background-color: white;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+    }
+
+    .nav-bar.scrolled .mobile-hamburger span {
+        background-color: var(--vibrant-orange);
+    }
+
+    /* Mobile Drawer */
+    @media (max-width: 991px) {
+        .mobile-hamburger {
+            display: flex;
+        }
+
+        .nav-links {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            height: 100vh;
+            width: 80%;
+            max-width: 300px;
+            background: white;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+            z-index: 1050;
+        }
+
+        .nav-links.active {
+            right: 0;
+        }
+
+        .nav-links a {
+            color: var(--text-dark) !important;
+            font-size: 1.2rem;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+
+        .desktop-btn {
+            display: none;
+        }
+
+        /* Hamburger Active State */
+        .mobile-hamburger.active span:nth-child(1) {
+            transform: translateY(8.5px) rotate(45deg);
+            background-color: var(--vibrant-orange) !important;
+        }
+        .mobile-hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .mobile-hamburger.active span:nth-child(3) {
+            transform: translateY(-8.5px) rotate(-45deg);
+            background-color: var(--vibrant-orange) !important;
+        }
+    }
 
         /* --- HERO SECTION --- */
         .hero-outer {
@@ -113,6 +188,12 @@
             border-radius: 50px; font-weight: 700; font-size: 0.85rem; transition: 0.2s;
             border: none; cursor: pointer;
         }
+        .btn-secondary {
+            background: #f1f5f9; color: var(--text-muted); padding: 10px 24px;
+            border-radius: 50px; font-weight: 700; font-size: 0.85rem; transition: 0.2s;
+            border: none; cursor: pointer;
+        }
+        .btn-secondary:hover { background: #e2e8f0; color: var(--text-dark); }
 
         /* --- MODAL --- */
         #resourceModal {
@@ -124,6 +205,7 @@
         #modalContent {
             position: relative; width: 100%; max-width: 600px; background: white; border-radius: 40px;
             padding: 40px; z-index: 2001; animation: modalIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-height: 90vh; overflow-y: auto;
         }
         @keyframes modalIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
@@ -138,29 +220,18 @@
         .progress-bar { height: 8px; border-radius: 10px; background: #f1f5f9; overflow: hidden; margin-bottom: 20px; }
         .progress-fill { height: 100%; background: var(--hero-gradient); transition: 0.3s; }
 
-        .nav-arrow {
-            position: absolute; top: 50%; transform: translateY(-50%);
-            width: 44px; height: 44px; border-radius: 50%; background: white;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #f1f5f9;
-            display: flex; align-items: center; justify-content: center; cursor: pointer;
-            transition: 0.2s; color: var(--primary-purple);
-        }
-        .nav-arrow:hover { background: var(--vibrant-pink); color: white; }
-        .nav-arrow.left { left: -22px; }
-        .nav-arrow.right { right: -22px; }
-
     </style>
 </head>
 <body>
 
     <nav class="nav-bar">
         <div class="nav-container">
-            <div class="nav-logo"><h1><span>Cause</span>Connects</h1></div>
+            <div class="nav-logo"><h1><span>Cause</span>Connect<span>Hub</span></h1></div>
             <div class="nav-links">
-          <a href="index.html">Home</a> 
-          <a href="explore.html">Find Extracurriculars</a> 
-          <a href="award.html">Awards & Scholarships</a> 
-          <a href="resource.html"class="active">Resources</a>
+                <a href="index.html">Home</a> 
+                <a href="explore.html">Find Extracurriculars</a> 
+                <a href="award.html">Awards & Scholarships</a> 
+                <a href="resource.html" class="active">Resources</a>
             </div>
             <a href="project.html" class="btn-nav">Add Your Project</a>
         </div>
@@ -175,8 +246,8 @@
 
     <div class="content-wrap">
         <div class="cards-grid">
-            <!-- Quiz Card -->
-            <div class="resource-card" onclick="openModal()">
+            <!-- EC INTEREST FINDER -->
+            <div class="resource-card" onclick="openModal('ec')">
                 <div class="icon-box">
                     <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22V10m0 0l8.58 3.832a2 2 0 011.66 0L22 10 12 5 2 10l1.66 3.832a2 2 0 011.66 0L12 10z"/></svg>
                 </div>
@@ -187,7 +258,19 @@
                 </div>
             </div>
 
-            <!-- Tracker Card (Coming Soon) -->
+            <!-- FUTURE MAJOR QUIZ -->
+            <div class="resource-card" onclick="openModal('major')">
+                <div class="icon-box">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V5A2.5 2.5 0 0 1 6.5 2.5H20v14.5"/></svg>
+                </div>
+                <h3>Future Major Quiz</h3>
+                <p>Find your academic calling. Answer 8 quick questions about your skills and interests to see which college majors fit you best.</p>
+                <div class="card-footer">
+                    <button class="btn-action">Find My Major</button>
+                </div>
+            </div>
+
+            <!-- ACTIVITY TRACKER (COMING SOON) -->
             <div class="resource-card opacity-70 cursor-default">
                 <div class="icon-box" style="background: #f1f5f9; color: #94a3b8;">
                     <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4m-4 5h4"/></svg>
@@ -201,7 +284,7 @@
         </div>
     </div>
 
-    <!-- Modal Implementation -->
+    <!-- MODAL -->
     <div id="resourceModal">
         <div id="modalOverlay" onclick="closeModal()"></div>
         <div id="modalContent">
@@ -209,34 +292,32 @@
                 <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
 
-            <!-- Quiz Arrows -->
-            <div id="quizArrows" class="hidden">
-                <button onclick="prevQuestion()" class="nav-arrow left">
-                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
-                </button>
-                <button id="arrowNext" onclick="nextQuestion()" class="nav-arrow right">
-                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
-                </button>
-            </div>
-
+            <!-- Start View -->
             <div id="quizStart" class="text-center py-10">
-                <h3 class="text-3xl font-black text-purple-900 mb-4" style="font-family:'Outfit';">Find Your Path</h3>
-                <p class="text-gray-500 mb-8">This short quiz helps categorize your interests to suggest relevant activities.</p>
-                <button onclick="startQuiz()" class="btn-nav py-4 px-10 inline-block">Start 5-Question Quiz</button>
+                <h3 id="startTitle" class="text-3xl font-black text-purple-900 mb-4" style="font-family:'Outfit';">Find Your Path</h3>
+                <p id="startDesc" class="text-gray-500 mb-8">Discover if you're a future doctor, engineer, advocate, or creator.</p>
+                <button onclick="startQuiz()" class="btn-nav py-4 px-10 inline-block">Start Quiz</button>
             </div>
 
+            <!-- Questions View -->
             <div id="quizQuestions" class="hidden">
-                <p class="text-[11px] font-black text-pink-500 uppercase tracking-widest mb-2">Question <span id="currentQNum">1</span> of 5</p>
+                <p class="text-[11px] font-black text-pink-500 uppercase tracking-widest mb-2">Question <span id="currentQNum">1</span> of <span id="totalQNum">5</span></p>
                 <div class="progress-bar"><div id="progressFill" class="progress-fill" style="width: 20%"></div></div>
                 <h4 id="questionText" class="text-xl font-bold text-purple-900 mb-6" style="font-family:'Outfit';"></h4>
                 <div id="optionsContainer"></div>
-                <div class="mt-8 flex justify-end">
-                    <button id="nextButton" onclick="nextQuestion()" disabled class="btn-action px-10 opacity-50 cursor-not-allowed">Next →</button>
+                
+                <div class="mt-8 flex justify-between items-center">
+                    <button id="backButton" onclick="prevQuestion()" class="btn-secondary">Back</button>
+                    <div class="flex gap-3">
+                        <button id="skipButton" onclick="skipQuestion()" class="text-gray-400 font-bold text-xs uppercase hover:text-gray-600">Skip</button>
+                        <button id="nextButton" onclick="nextQuestion()" disabled class="btn-action px-10 opacity-50 cursor-not-allowed">Next →</button>
+                    </div>
                 </div>
             </div>
 
+            <!-- Results View -->
             <div id="quizResults" class="hidden text-center py-6">
-                <p class="text-xs font-black text-pink-500 uppercase tracking-widest mb-2">Your Suggested Path</p>
+                <p class="text-xs font-black text-pink-500 uppercase tracking-widest mb-2">Your Suggested Result</p>
                 <h4 id="resultTitle" class="text-4xl font-black text-purple-900 mb-6" style="font-family:'Outfit';"></h4>
                 <div class="bg-purple-50 p-6 rounded-3xl text-left border border-purple-100 mb-8">
                     <p id="resultDesc" class="text-gray-700 leading-relaxed text-sm"></p>
@@ -248,22 +329,22 @@
     </div>
 
     <script>
-        const quizData = [
+        const ecQuiz = [
             {
                 question: "What activities make you feel most energized?",
                 options: [
+                    { text: "Shadowing a physician or learning about human biology.", category: "Medicine" },
                     { text: "Successfully dissecting a complex historical event or math proof.", category: "Academic" },
-                    { text: "Finishing a painting, composing a song, or performing a scene.", category: "Creative" },
                     { text: "Spending time directly mentoring someone or helping a neighbor.", category: "Service" },
-                    { text: "Leading a meeting and delegating tasks to a motivated team.", category: "Leadership" },
-                    { text: "Building a functional object or debugging a piece of code.", category: "Technical" },
+                    { text: "Leading a meeting and delegating tasks to a team.", category: "Leadership" },
+                    { text: "Building a functional object or debugging code.", category: "Technical" },
                 ]
             },
             {
                 question: "When approaching a new problem, your first instinct is to...",
                 options: [
+                    { text: "Diagnose the root cause using clinical or scientific logic.", category: "Medicine" },
                     { text: "Go to the library or database to research existing theories.", category: "Academic" },
-                    { text: "Brainstorm unique ways to visualize the solution.", category: "Creative" },
                     { text: "Identify who is most affected and seek their input.", category: "Service" },
                     { text: "Organize a plan, assign roles, and set a strict deadline.", category: "Leadership" },
                     { text: "Break it down into its smallest logical components.", category: "Technical" },
@@ -272,8 +353,8 @@
             {
                 question: "Which high school subject interests you most?",
                 options: [
-                    { text: "Literature, History, or Philosophy.", category: "Academic" },
-                    { text: "Visual Arts, Drama, or Music Theory.", category: "Creative" },
+                    { text: "Biology, Chemistry, or Anatomy.", category: "Medicine" },
+                    { text: "Visual Arts, Drama, or Literature.", category: "Creative" },
                     { text: "Sociology or Psychology.", category: "Service" },
                     { text: "Economics, Business, or Government.", category: "Leadership" },
                     { text: "Computer Science, Engineering, or Physics.", category: "Technical" },
@@ -282,9 +363,9 @@
             {
                 question: "Which of these titles appeals to you most?",
                 options: [
+                    { text: "The Practitioner", category: "Medicine" },
                     { text: "The Scholar", category: "Academic" },
                     { text: "The Designer", category: "Creative" },
-                    { text: "The Mentor", category: "Service" },
                     { text: "The Founder", category: "Leadership" },
                     { text: "The Engineer", category: "Technical" },
                 ]
@@ -292,26 +373,120 @@
             {
                 question: "How do you prefer to spend your summer break?",
                 options: [
+                    { text: "Volunteering at a hospital or doing lab research.", category: "Medicine" },
                     { text: "Taking a university-level course or reading list.", category: "Academic" },
                     { text: "Working on a portfolio or attending an arts camp.", category: "Creative" },
-                    { text: "Volunteering for a local non-profit or mission.", category: "Service" },
                     { text: "Starting a small business or managing a local project.", category: "Leadership" },
                     { text: "Coding an app or fixing machines.", category: "Technical" },
                 ]
             }
         ];
 
+        const majorQuiz = [
+            {
+                question: "How do you prefer to express your ideas?",
+                options: [
+                    { text: "Through precise mathematical formulas or code.", category: "STEM" },
+                    { text: "Through compelling essays and storytelling.", category: "Humanities" },
+                    { text: "Through visual presentations and pitch decks.", category: "Business" },
+                    { text: "Through public speaking and debate.", category: "Social Science" }
+                ]
+            },
+            {
+                question: "If you were given $1,000 to start a project, you would...",
+                options: [
+                    { text: "Buy materials to build a prototype/robot.", category: "STEM" },
+                    { text: "Invest it to grow the capital.", category: "Business" },
+                    { text: "Fund a local community event or awareness campaign.", category: "Social Science" },
+                    { text: "Produce a short film or publish a zine.", category: "Arts" }
+                ]
+            },
+            {
+                question: "Which of these sounds like a fun weekend activity?",
+                options: [
+                    { text: "Visiting a tech museum or astronomy center.", category: "STEM" },
+                    { text: "Analyzing trends in the stock market or social media.", category: "Business" },
+                    { text: "Visiting an art gallery or a historical archive.", category: "Humanities" },
+                    { text: "Conducting a poll or studying group behavior.", category: "Social Science" }
+                ]
+            },
+            {
+                question: "When you look at a building, you wonder...",
+                options: [
+                    { text: "How is it physically standing up? (Engineering)", category: "STEM" },
+                    { text: "What is its historical and cultural significance?", category: "Humanities" },
+                    { text: "How much did it cost to build and what's the rent?", category: "Business" },
+                    { text: "How does this space affect the people living in it?", category: "Social Science" }
+                ]
+            },
+            {
+                question: "Which type of news interests you most?",
+                options: [
+                    { text: "A new breakthrough in quantum computing.", category: "STEM" },
+                    { text: "Changes in international trade laws.", category: "Business" },
+                    { text: "A newly discovered ancient manuscript.", category: "Humanities" },
+                    { text: "The impact of a new social policy on local families.", category: "Social Science" }
+                ]
+            },
+            {
+                question: "Pick a superpower:",
+                options: [
+                    { text: "Hyper-speed calculation and logic.", category: "STEM" },
+                    { text: "The ability to speak and write every language.", category: "Humanities" },
+                    { text: "Perfect intuition for market trends.", category: "Business" },
+                    { text: "The ability to influence people's opinions.", category: "Social Science" }
+                ]
+            },
+            {
+                question: "What's your favorite part of a group project?",
+                options: [
+                    { text: "Solving the technical problems.", category: "STEM" },
+                    { text: "Polishing the language and narrative.", category: "Humanities" },
+                    { text: "Managing the timeline and budget.", category: "Business" },
+                    { text: "Gathering data and interviewing experts.", category: "Social Science" }
+                ]
+            },
+            {
+                question: "Which tool would you rather master?",
+                options: [
+                    { text: "A Python IDE or a 3D Printer.", category: "STEM" },
+                    { text: "A sophisticated Camera or Editing software.", category: "Arts" },
+                    { text: "Data analysis software or Excel spreadsheets.", category: "Business" },
+                    { text: "Research databases and archives.", category: "Humanities" }
+                ]
+            }
+        ];
+
+        let activeQuizType = 'ec'; 
         let currentIdx = 0;
         let selections = [];
 
-        function openModal() {
-            document.getElementById('resourceModal').classList.add('show');
+        function openModal(type) {
+            activeQuizType = type;
+            const modal = document.getElementById('resourceModal');
+            
+            if (type === 'ec') {
+                document.getElementById('startTitle').innerText = "Find Your EC Path";
+                document.getElementById('startDesc').innerText = "Discover if you're a future doctor, engineer, advocate, or creator.";
+            } else {
+                document.getElementById('startTitle').innerText = "Find Your Future Major";
+                document.getElementById('startDesc').innerText = "Not sure what to study in college? Find the academic path that fits your skills.";
+            }
+
+            modal.classList.add('show');
             document.body.style.overflow = 'hidden';
+            resetToStart();
         }
 
         function closeModal() {
             document.getElementById('resourceModal').classList.remove('show');
             document.body.style.overflow = 'auto';
+        }
+
+        function resetToStart() {
+            document.getElementById('quizStart').classList.remove('hidden');
+            document.getElementById('quizResults').classList.add('hidden');
+            document.getElementById('quizQuestions').classList.add('hidden');
         }
 
         function startQuiz() {
@@ -320,17 +495,18 @@
             document.getElementById('quizStart').classList.add('hidden');
             document.getElementById('quizResults').classList.add('hidden');
             document.getElementById('quizQuestions').classList.remove('hidden');
-            document.getElementById('quizArrows').classList.remove('hidden');
             loadQuestion();
         }
 
         function loadQuestion() {
-            const q = quizData[currentIdx];
+            const data = activeQuizType === 'ec' ? ecQuiz : majorQuiz;
+            const q = data[currentIdx];
+            
+            document.getElementById('totalQNum').textContent = data.length;
             document.getElementById('currentQNum').textContent = currentIdx + 1;
             document.getElementById('questionText').textContent = q.question;
             
-            // Progress logic updated for 5 questions
-            const progress = ((currentIdx + 1) / 5) * 100;
+            const progress = ((currentIdx + 1) / data.length) * 100;
             document.getElementById('progressFill').style.width = `${progress}%`;
             
             const container = document.getElementById('optionsContainer');
@@ -345,22 +521,30 @@
                     document.querySelectorAll('.quiz-option').forEach(b => b.classList.remove('selected'));
                     btn.classList.add('selected');
                     selections[currentIdx] = opt;
-                    const nextBtn = document.getElementById('nextButton');
-                    nextBtn.disabled = false;
-                    nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    updateNavButtons();
                 };
                 container.appendChild(btn);
             });
 
+            updateNavButtons();
+        }
+
+        function updateNavButtons() {
+            const data = activeQuizType === 'ec' ? ecQuiz : majorQuiz;
             const nextBtn = document.getElementById('nextButton');
+            const backBtn = document.getElementById('backButton');
+            
             nextBtn.disabled = !selections[currentIdx];
             if (nextBtn.disabled) nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
             else nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-            nextBtn.textContent = currentIdx === 4 ? "Finish Quiz" : "Next →";
+            
+            nextBtn.textContent = currentIdx === (data.length - 1) ? "See Results" : "Next →";
+            backBtn.style.visibility = currentIdx === 0 ? 'hidden' : 'visible';
         }
 
         function nextQuestion() {
-            if (currentIdx < 4) {
+            const data = activeQuizType === 'ec' ? ecQuiz : majorQuiz;
+            if (currentIdx < (data.length - 1)) {
                 currentIdx++;
                 loadQuestion();
             } else {
@@ -375,24 +559,43 @@
             }
         }
 
+        function skipQuestion() {
+            selections[currentIdx] = null;
+            nextQuestion();
+        }
+
         function showResults() {
             const scores = {};
-            selections.forEach(s => scores[s.category] = (scores[s.category] || 0) + 1);
-            const top = Object.keys(scores).reduce((a, b) => (scores[a] || 0) > (scores[b] || 0) ? a : b);
+            selections.filter(s => s).forEach(s => scores[s.category] = (scores[s.category] || 0) + 1);
+            
+            const top = Object.keys(scores).length > 0 
+                ? Object.keys(scores).reduce((a, b) => (scores[a] || 0) > (scores[b] || 0) ? a : b)
+                : (activeQuizType === 'ec' ? "Academic" : "Humanities");
 
-            const recs = {
+            const ecResults = {
+                Medicine: { title: "The Medical Professional", desc: "You have a deep curiosity for biological systems. Suggested ECs: Hospital Volunteering, Pre-Med summer programs, Science Fair (Biology focus)." },
                 Academic: { title: "The Scholar", desc: "You thrive on knowledge and deep analysis. Suggested ECs: Debate Club, Math Olympiad, Model UN, or Independent Research." },
                 Creative: { title: "The Creator", desc: "Imagination is your tool. Suggested ECs: Theater, Visual Arts Collective, School Magazine, or Media Production." },
                 Service: { title: "The Advocate", desc: "You care about social responsibility. Suggested ECs: Mentoring, Community Organizing, or Food Drive coordination." },
                 Leadership: { title: "The Founder", desc: "You are a natural manager. Suggested ECs: Student Council, Business Club, or founding your own non-profit." },
-                Technical: { title: "The Engineer", desc: "You love how systems work. Suggested ECs: Robotics, Coding Club, App Development, or Science Fair." }
+                Technical: { title: "The Engineer", desc: "You love how systems work. Suggested ECs: Robotics, Coding Club, App Development, or Science Fair (Physics/Engineering)." }
             };
 
+            const majorResults = {
+                STEM: { title: "Engineering & Science", desc: "You think in systems and logic. Consider majors like Computer Science, Mechanical Engineering, Molecular Biology, or Physics." },
+                Humanities: { title: "Liberal Arts & Literature", desc: "You are a master of context and communication. Consider majors like English, History, Philosophy, or Comparative Literature." },
+                Business: { title: "Economics & Management", desc: "You have a sharp eye for value and strategy. Consider majors like Finance, Marketing, International Business, or Entrepreneurship." },
+                SocialScience: { title: "Society & Governance", desc: "You want to understand the 'Why' behind people. Consider majors like Psychology, Political Science, Sociology, or Anthropology." },
+                Arts: { title: "Visual & Performing Arts", desc: "You see the world through a creative lens. Consider majors like Graphic Design, Film Production, Architecture, or Fine Arts." }
+            };
+
+            const results = activeQuizType === 'ec' ? ecResults : majorResults;
+            const finalResult = results[top] || results[Object.keys(results)[0]];
+
             document.getElementById('quizQuestions').classList.add('hidden');
-            document.getElementById('quizArrows').classList.add('hidden');
             document.getElementById('quizResults').classList.remove('hidden');
-            document.getElementById('resultTitle').textContent = recs[top].title;
-            document.getElementById('resultDesc').textContent = recs[top].desc;
+            document.getElementById('resultTitle').textContent = finalResult.title;
+            document.getElementById('resultDesc').textContent = finalResult.desc;
         }
     </script>
 </body>
