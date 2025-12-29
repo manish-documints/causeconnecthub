@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Add Your Project | CauseConnectHub</title>
+  <link rel="icon" type="image/png" href="image/favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,13 +46,7 @@
     }
     .nav-container { width: 90%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; }
     .nav-logo h1 { font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--text-dark); margin: 0; }
-.nav-logo h1 span {
-    background: var(--hero-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -moz-background-clip: text; /* Firefox */
-    color: transparent;          /* Required for Firefox */
-}
+    .nav-logo h1 span { background: var(--hero-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     
     .nav-links a { color: var(--text-dark); text-decoration: none; font-weight: 500; font-size: 0.95rem; margin: 0 12px; }
     .nav-links a:hover { color: var(--vibrant-orange); }
@@ -61,6 +56,81 @@
         border-radius: 50px; font-weight: 700; text-decoration: none; transition: 0.2s;
     }
     .btn-nav:hover { transform: translateY(-2px); box-shadow: 0 5px 15px var(--aura-color); }
+        /* --- MOBILE MENU STYLES --- */
+    .mobile-hamburger {
+        display: none;
+        cursor: pointer;
+        z-index: 1100;
+        width: 30px;
+        height: 20px;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .mobile-hamburger span {
+        display: block;
+        height: 3px;
+        width: 100%;
+        background-color: white;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+    }
+
+    .nav-bar.scrolled .mobile-hamburger span {
+        background-color: var(--vibrant-orange);
+    }
+
+    /* Mobile Drawer */
+    @media (max-width: 991px) {
+        .mobile-hamburger {
+            display: flex;
+        }
+
+        .nav-links {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            height: 100vh;
+            width: 80%;
+            max-width: 300px;
+            background: white;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+            z-index: 1050;
+        }
+
+        .nav-links.active {
+            right: 0;
+        }
+
+        .nav-links a {
+            color: var(--text-dark) !important;
+            font-size: 1.2rem;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+
+        .desktop-btn {
+            display: none;
+        }
+
+        /* Hamburger Active State */
+        .mobile-hamburger.active span:nth-child(1) {
+            transform: translateY(8.5px) rotate(45deg);
+            background-color: var(--vibrant-orange) !important;
+        }
+        .mobile-hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .mobile-hamburger.active span:nth-child(3) {
+            transform: translateY(-8.5px) rotate(-45deg);
+            background-color: var(--vibrant-orange) !important;
+        }
+    }
+
 
     /* --- HERO SECTION --- */
     .hero-outer {
@@ -98,7 +168,7 @@
 
     .form-frame {
         width: 100%;
-        height: 1200px; /* High enough to prevent double scrolls */
+        height: 1200px; 
         border: none;
         border-radius: 20px;
         background: var(--soft-bg);
@@ -106,7 +176,7 @@
 
     .form-header {
         text-align: center;
-        margin-bottom: 40px;
+        margin-bottom: 30px;
     }
 
     .form-header h3 {
@@ -117,7 +187,6 @@
         margin-bottom: 10px;
     }
 
-    /* FOOTER/INFO DECORATION */
     .info-tag {
         display: inline-flex;
         align-items: center;
@@ -131,6 +200,37 @@
         margin-bottom: 30px;
     }
 
+    /* COMPACT URL BAR STYLES */
+    .mini-url-bar {
+        background: #f8fafc;
+        border: 1px solid #f1f5f9;
+        border-radius: 12px;
+        padding: 8px 16px;
+        max-width: 500px;
+        margin: 0 auto 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .copy-icon-btn {
+        padding: 4px;
+        color: #94a3b8;
+        transition: color 0.2s;
+        flex-shrink: 0;
+    }
+    .copy-icon-btn:hover { color: var(--vibrant-orange); }
+
+    .open-mini-btn {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--vibrant-orange);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        white-space: nowrap;
+    }
+
     @media (max-width: 768px) {
         .hero-box { padding: 60px 20px; }
         .form-wrapper { padding: 20px; width: 92%; }
@@ -141,14 +241,14 @@
 
   <nav class="nav-bar" id="navbar">
     <div class="nav-container">
-        <div class="nav-logo"><h1><a href="home.html"><span>Cause</span>Connects</a></h1></div>
+        <div class="nav-logo"><h1><a href="#"><span>Cause</span>Connect<span>Hub</span></a></h1></div>
         <div class="nav-links">
           <a href="index.html">Home</a> 
           <a href="explore.html">Find Projects</a> 
           <a href="award.html">Awards & Scholarships</a> 
           <a href="resource.html">Resources</a>
         </div>
-        <a href="project.html" class="btn-nav">Add Your Project</a>
+        <a href="project.html" class="btn-nav";style="font-weight: 800; color: var(--vibrant-orange);">Add Your Project</a>
     </div>
   </nav>
 
@@ -166,7 +266,21 @@
             Community Submission Form
         </div>
         <h3>Tell us about what you're <span style="color: var(--vibrant-orange)">looking for</span></h3>
-        <p class="text-gray-500 max-w-lg mx-auto">Fill out the details below. Once approved, your project will be featured in our exploration dashboard for students to see.</p>
+        <p class="text-gray-500 text-sm max-w-lg mx-auto mb-6">Fill out the details below. Once approved, your project will be featured in our exploration dashboard for students to see.</p>
+        
+        <!-- MINI APPLICATION LINK AREA -->
+        <div class="mini-url-bar">
+            <div class="flex items-center gap-2 overflow-hidden flex-grow">
+                <span id="formUrl" class="text-[10px] text-gray-400 font-medium truncate">https://docs.google.com/forms/d/e/1FAIpQLSdC8...</span>
+                <button onclick="copyFormLink()" class="copy-icon-btn" title="Copy link">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"/></svg>
+                </button>
+                <span id="copyFeedback" class="text-[10px] text-green-500 font-bold opacity-0 transition-opacity">Copied!</span>
+            </div>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdC8-tUzW1e9oia-YwwZasVt_LrBpNoHaO2P-dP27UmDJkrwQ/viewform?usp=dialog" target="_blank" class="open-mini-btn">
+                Open Full Form →
+            </a>
+        </div>
     </div>
 
     <!-- Google Form Embed -->
@@ -192,6 +306,21 @@
             nav.classList.remove('scrolled');
         }
     });
+
+    // Copy to clipboard function
+    function copyFormLink() {
+        const fullUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdC8-tUzW1e9oia-YwwZasVt_LrBpNoHaO2P-dP27UmDJkrwQ/viewform?usp=dialog";
+        const temp = document.createElement('textarea');
+        document.body.appendChild(temp);
+        temp.value = fullUrl;
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+
+        const feedback = document.getElementById('copyFeedback');
+        feedback.style.opacity = '1';
+        setTimeout(() => feedback.style.opacity = '0', 2000);
+    }
   </script>
 
 </body>
