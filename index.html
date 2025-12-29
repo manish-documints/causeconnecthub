@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>CauseConnectsHub - Vibrant & Rounded</title>
+  <title>CauseConnectsHub</title>
+  <link rel="icon" type="image/png" href="image/favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -112,7 +113,7 @@
       color: rgba(255, 255, 255, 0.9);
       text-decoration: none;
       font-weight: 500;
-      font-size: 0.95rem;S
+      font-size: 0.95rem;
       transition: color 0.2s;
     }
 
@@ -138,6 +139,80 @@
     .nav-bar.scrolled .btn-nav {
         background: var(--hero-gradient);
         color: white;
+    }
+    /* --- MOBILE MENU STYLES --- */
+    .mobile-hamburger {
+        display: none;
+        cursor: pointer;
+        z-index: 1100;
+        width: 30px;
+        height: 20px;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .mobile-hamburger span {
+        display: block;
+        height: 3px;
+        width: 100%;
+        background-color: white;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+    }
+
+    .nav-bar.scrolled .mobile-hamburger span {
+        background-color: var(--vibrant-orange);
+    }
+
+    /* Mobile Drawer */
+    @media (max-width: 991px) {
+        .mobile-hamburger {
+            display: flex;
+        }
+
+        .nav-links {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            height: 100vh;
+            width: 80%;
+            max-width: 300px;
+            background: white;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+            z-index: 1050;
+        }
+
+        .nav-links.active {
+            right: 0;
+        }
+
+        .nav-links a {
+            color: var(--text-dark) !important;
+            font-size: 1.2rem;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+
+        .desktop-btn {
+            display: none;
+        }
+
+        /* Hamburger Active State */
+        .mobile-hamburger.active span:nth-child(1) {
+            transform: translateY(8.5px) rotate(45deg);
+            background-color: var(--vibrant-orange) !important;
+        }
+        .mobile-hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .mobile-hamburger.active span:nth-child(3) {
+            transform: translateY(-8.5px) rotate(-45deg);
+            background-color: var(--vibrant-orange) !important;
+        }
     }
 
     /* --- HERO SECTION (NOW WITH ROUNDED EDGES) --- */
@@ -337,7 +412,7 @@
         margin-bottom: 25px;
     }
 
-    /* --- FAQ --- */
+    /* --- RE-DESIGNED FAQ --- */
     .faq-container {
         background: #fdfdfd;
         padding: 60px 0 100px;
@@ -350,40 +425,75 @@
     }
 
     .faq-item {
-        margin-bottom: 16px;
-        border-radius: 20px;
+        margin-bottom: 20px;
+        border-radius: 24px;
         background: white;
-        border: 1px solid #f0f0f0;
+        border: 1px solid #f1f1f1;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
         overflow: hidden;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .faq-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        border-color: #eee;
+    }
+
+    .faq-item.active {
+        box-shadow: 0 15px 35px rgba(255, 102, 51, 0.1);
+        border-color: rgba(255, 102, 51, 0.2);
     }
 
     .faq-trigger {
-        padding: 24px 30px;
+        padding: 28px 32px;
         font-weight: 700;
         cursor: pointer;
         display: flex;
         justify-content: space-between;
         align-items: center;
         background: white;
-        transition: background 0.2s;
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.15rem;
+        transition: color 0.3s;
     }
 
-    .faq-trigger:hover {
-        background: #fffcfb;
+    .faq-item.active .faq-trigger {
+        color: var(--vibrant-orange);
+    }
+
+    .faq-icon-box {
+        width: 32px;
+        height: 32px;
+        background: #f8f8f8;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+        font-size: 1.2rem;
+        color: #999;
+    }
+
+    .faq-item.active .faq-icon-box {
+        background: var(--vibrant-orange);
+        color: white;
+        transform: rotate(45deg);
     }
 
     .faq-body {
-        padding: 0 30px;
+        padding: 0 32px;
         max-height: 0;
         overflow: hidden;
-        transition: max-height 0.4s ease, padding 0.4s;
+        transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.5s;
         color: var(--text-muted);
-        line-height: 1.6;
+        line-height: 1.8;
+        font-size: 1.05rem;
     }
 
     .faq-item.active .faq-body {
-        max-height: 200px;
-        padding-bottom: 30px;
+        max-height: 300px;
+        padding-bottom: 32px;
     }
 
     @media (max-width: 768px) {
@@ -399,9 +509,9 @@
 
   <nav class="nav-bar">
     <div class="nav-container">
-        <div class="nav-logo"><h1>CauseConnects</h1></div>
+        <div class="nav-logo"><h1>CauseConnectHub</h1></div>
         <div class="nav-links">
-          <a href="index.html">Home</a> 
+          <a href="index.html"style="font-weight: 800">Home</a> 
           <a href="explore.html">Find Extracurriculars</a> 
           <a href="award.html">Awards & Scholarships</a> 
           <a href="resource.html">Resources</a>
@@ -414,10 +524,10 @@
     <section class="hero-container">
       <div class="hero-content">
           <h2>Your Passion, <br>Our Connection.</h2>
-          <p>The ultimate platform for high schoolers to discover youth-led initiatives, join impactful projects, and build a community of changemakers.</p>
+          <p>The ultimate platform for high school students to find scholarships, awards, competitions, and youth-led initiatives, connect with peers, and create meaningful impact together.</p>
           <div class="hero-btns">
               <a href="explore.html" class="btn-main">Find a Project</a>
-              <a href="project.html" class="btn-outline">Recruit Members</a>
+              <a href="award.html" class="btn-outline">Browse Awards</a>
           </div>
       </div>
     </section>
@@ -459,8 +569,8 @@
           <div class="about-text">
               <span class="tagline">Our Mission</span>
               <h2>Bridging the gap between ambition and action.</h2>
-              <p>Finding meaningful extracurricular opportunities shouldn’t be a scavenger hunt. We bring high-quality programs, awards, scholarships, and resources into one supportive hub, so students can explore their passions and take action with confidence.</p>
-              <p>Whether you want to lead, volunteer, or start something of your own, CauseConnects is here to help you succeed.</p>
+              <p>Finding meaningful extracurricular opportunities shouldn't feel like a scavenger hunt. We bring high-quality programs, awards, scholarships, and resources into one supportive hub, so students can explore their passions and take action with confidence.</p>
+              <p>Whether you want to lead, volunteer, earn awards and grants, or start something of your own, CauseConnects is here to help you succeed.</p>
           </div>
       </div>
   </section>
@@ -468,28 +578,52 @@
   <div class="faq-container">
     <div class="faq-inner">
         <h2 style="text-align: center; font-family: 'Outfit'; font-size: 2.5rem; margin-bottom: 40px;">Common Questions</h2>
+        
         <div class="faq-item">
-            <div class="faq-trigger" onclick="this.parentElement.classList.toggle('active')">What is CauseConnects? <span>+</span></div>
-            <div class="faq-body">CauseConnects is a platform that helps students discover extracurricular opportunities, awards, scholarships, and resources to start their own passion projects—all in one place.</div>
+            <div class="faq-trigger" onclick="this.parentElement.classList.toggle('active')">
+                What is Cause Connect Hub? 
+                <div class="faq-icon-box">+</div>
+            </div>
+            <div class="faq-body">Cause Connect Hub is a platform that helps students discover extracurricular opportunities, awards, scholarships, and resources to start their own passion projects—all in one place.</div>
         </div>
+
         <div class="faq-item">
-            <div class="faq-trigger" onclick="this.parentElement.classList.toggle('active')">Who can use CauseConnects? <span>+</span></div>
-            <div class="faq-body">CauseConnects is built for middle school and high school students who want to explore their passions, discover extracurricular opportunities, apply for awards and scholarships, and start their own initiatives.</div>
+            <div class="faq-trigger" onclick="this.parentElement.classList.toggle('active')">
+                Who can use Cause Connect Hub? 
+                <div class="faq-icon-box">+</div>
+            </div>
+            <div class="faq-body">Cause Connect Hub is built for middle school and high school students who want to explore their passions, discover extracurricular opportunities, apply for awards and scholarships, and start their own initiatives.</div>
         </div>
+
         <div class="faq-item">
-            <div class="faq-trigger" onclick="this.parentElement.classList.toggle('active')">Is there a cost involved? <span>+</span></div>
-            <div class="faq-body">Nope! CauseConnects is 100% free for students. Access to opportunities should never be a barrier.</div>
+            <div class="faq-trigger" onclick="this.parentElement.classList.toggle('active')">
+                Is there a cost involved? 
+                <div class="faq-icon-box">+</div>
+            </div>
+            <div class="faq-body">Nope! Cause Connect Hub is 100% free for students. Access to opportunities should never be a barrier.</div>
         </div>
+
         <div class="faq-item">
-            <div class="faq-trigger" onclick="this.parentElement.classList.toggle('active')">What kinds of opportunities can I find? <span>+</span></div>
+            <div class="faq-trigger" onclick="this.parentElement.classList.toggle('active')">
+                What kinds of opportunities can I find? 
+                <div class="faq-icon-box">+</div>
+            </div>
             <div class="faq-body">You can explore youth-led initiatives, volunteer roles, leadership opportunities, competitions, awards, scholarships, and resources to start your own extracurriculars.</div>
         </div>
+
         <div class="faq-item">
-            <div class="faq-trigger" onclick="this.parentElement.classList.toggle('active')">Do I need prior experience to join opportunities? <span>+</span></div>
-            <div class="faq-body">Not at all. CauseConnects is built for students at any stage, whether you’re just starting out or already deeply involved.</div>
+            <div class="faq-trigger" onclick="this.parentElement.classList.toggle('active')">
+                Do I need prior experience to join opportunities? 
+                <div class="faq-icon-box">+</div>
+            </div>
+            <div class="faq-body">Not at all. Cause Connect Hub is built for students at any stage, whether you're just starting out or already deeply involved.</div>
         </div>
+
         <div class="faq-item">
-            <div class="faq-trigger" onclick="this.parentElement.classList.toggle('active')">How do I list my organization? <span>+</span></div>
+            <div class="faq-trigger" onclick="this.parentElement.classList.toggle('active')">
+                How do I list my organization? 
+                <div class="faq-icon-box">+</div>
+            </div>
             <div class="faq-body">Click "Add Your Project" and fill out the form including information such as what you do and what your looking for. After about a week a confirmation email will be sent out!</div>
         </div>
     </div>
