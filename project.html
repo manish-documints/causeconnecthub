@@ -1,72 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Add Your Project | CauseConnectHub</title>
-  <link rel="icon" type="image/png" href="favicon.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-H74MT46HB1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <meta charset="UTF-8" />
+    <title>CauseConnectHub</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 
-  gtag('config', 'G-H74MT46HB1');
-</script>
+    <style>
+        :root {
+            --vibrant-pink: #ff3399;
+            --vibrant-orange: #ff6633;
+            --vibrant-yellow: #ffcc33;
+            --hero-gradient: linear-gradient(135deg, #ff3399 0%, #ff6633 50%, #ffcc33 100%);
+            --soft-bg: #fffcf9;
+            --text-dark: #1a1a1a;
+            --text-muted: #64748b;
+            --primary-purple: #4a0f66;
+            --soft-lavender: #f7f3ff;
+            --pastel-bg: #fdf2f8; 
+            --pastel-border: #f9c7d8; 
+            --aura-color: rgba(255, 51, 153, 0.12);
+        }
 
-  <style>
-    :root {
-        --vibrant-pink: #ff3399;
-        --vibrant-orange: #ff6633;
-        --vibrant-orange-hover: #e65526;
-        --hero-gradient: linear-gradient(135deg, #ff3399 0%, #ff6633 50%, #ffcc33 100%);
-        --soft-bg: #fffcf9;
-        --text-dark: #1a1a1a;
-        --primary-purple: #4a0f66;
-        --soft-lavender: #f7f3ff;
-        --aura-color: rgba(255, 102, 51, 0.15);
-    }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--soft-bg);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+        }
+        /* --- ADVANCED TRANSITIONS --- */
+        
+        /* Initial state for elements we want to reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
 
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--soft-bg);
-      color: var(--text-dark);
-      margin: 0;
-      padding: 0;
-    }
+        /* Visible state triggered by Intersection Observer */
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-    /* --- NAVIGATION --- */
-    .nav-bar {
-      position: fixed; top: 0; left: 0; width: 100%; 
-      display: flex; justify-content: center; z-index: 1000; padding: 20px 0;
-      transition: all 0.3s ease;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-    }
-    .nav-bar.scrolled {
-        padding: 12px 0;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-    }
-    .nav-container { width: 90%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; }
-    .nav-logo h1 { font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--text-dark); margin: 0; }
-    .nav-logo h1 span { background: var(--hero-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    
-    .nav-links a { color: var(--text-dark); text-decoration: none; font-weight: 500; font-size: 0.95rem; margin: 0 12px; }
-    .nav-links a:hover { color: var(--vibrant-orange); }
-    
-    .btn-nav {
-        background: var(--hero-gradient); color: white; padding: 10px 22px;
-        border-radius: 50px; font-weight: 700; text-decoration: none; transition: 0.2s;
-    }
-    .btn-nav:hover { transform: translateY(-2px); box-shadow: 0 5px 15px var(--aura-color); }
-        /* --- MOBILE MENU STYLES --- */
+        /* Staggered Entrance for Cards */
+        .stagger-card {
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .stagger-card.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Delay helper classes for staggered loading */
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        /* --- NAVIGATION --- */
+        .nav-bar {
+            position: fixed; top: 0; left: 0; width: 100%; 
+            display: flex; justify-content: center; z-index: 1000; padding: 20px 0;
+            transition: all 0.3s ease;
+        }
+        .nav-bar.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 12px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        .nav-container { width: 90%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo h1 { font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--text-dark); margin: 0; }
+        .nav-logo h1 span { background: var(--hero-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links a { color: var(--text-dark); text-decoration: none; font-weight: 500; font-size: 0.95rem; margin: 0 12px; }
+        .nav-links a.active { color: var(--vibrant-orange); font-weight: 700; }
+        .btn-nav {
+            background: var(--hero-gradient); color: white; padding: 10px 22px;
+            border-radius: 50px; font-weight: 700; text-decoration: none; transition: 0.2s;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero-outer { padding-top: 110px; display: flex; flex-direction: column; align-items: center; }
+        .hero-box {
+            width: 90%; max-width: 1200px; background: var(--hero-gradient);
+            padding: 100px 80px; text-align: center; color: white; border-radius: 40px;
+            position: relative; box-shadow: 0 20px 40px rgba(255, 102, 51, 0.15);
+        }
+        .hero-box h2 { font-family: 'Outfit', sans-serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; line-height: 1.1; margin-bottom: 12px; }
+        .hero-box p { font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+            /* --- MOBILE MENU STYLES --- */
     .mobile-hamburger {
         display: none;
         cursor: pointer;
@@ -142,196 +173,1022 @@
     }
 
 
-    /* --- HERO SECTION --- */
-    .hero-outer {
-        padding-top: 120px;
-        display: flex;
-        justify-content: center;
-        padding-bottom: 60px; 
-    }
+        /* --- SUBMIT BAR --- */
+        .submit-bar {
+            width: 90%; max-width: 1200px; margin-top: 27px;
+            background: white; border: 2px dashed var(--vibrant-orange);
+            border-radius: 20px; padding: 12px 30px; 
+            display: flex; justify-content: center; align-items: center; gap: 12px;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            cursor: pointer; text-decoration: none;
+        }
+        .submit-bar:hover {
+            background-color: var(--pastel-bg);
+            transform: scale(1.01);
+            border-style: solid;
+        }
+        .submit-text { font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--primary-purple); }
+        .submit-plus {
+            background: var(--hero-gradient); color: white; width: 26px; height: 26px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; font-weight: 800; box-shadow: 0 4px 10px rgba(255, 51, 153, 0.3);
+        }
 
-    .hero-box {
-      width: 95%; 
-      max-width: 1280px; 
-      background: var(--hero-gradient);
-      padding: 100px 60px; 
-      text-align: center;
-      color: white;
-      border-radius: 40px;
-      position: relative;
-      box-shadow: 0 20px 40px rgba(255, 102, 51, 0.15);
-    }
-    .hero-box h2 { font-family: 'Outfit', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 15px; }
-    .hero-box p { font-size: 1.1rem; opacity: 0.95; max-width: 650px; margin: 0 auto; }
+        /* --- FILTER DASHBOARD --- */
+        .filter-wrapper {
+            max-width: 1100px; margin: 15px auto 40px; padding: 25px;
+            background: white; border-radius: 35px; box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
+            position: relative; z-index: 10;
+        }
+        .search-bar { position: relative; flex-grow: 1; }
+        .search-bar input {
+            width: 100%; padding: 14px 20px 14px 50px; border: 1px solid var(--pastel-border);
+            border-radius: 20px; outline: none; font-weight: 500; background-color: var(--pastel-bg);
+        }
+        .search-bar svg { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--vibrant-pink); width: 20px; }
 
-    /* --- FORM CONTAINER --- */
-    .form-wrapper {
-        max-width: 1100px; 
-        margin: -40px auto 100px; 
-        padding: 40px;
-        background: white; 
-        border-radius: 35px; 
-        box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
-        position: relative; 
-        z-index: 10;
-    }
+        .action-btn {
+            display: flex; align-items: center; gap: 8px; background: var(--soft-lavender);
+            padding: 12px 24px; border-radius: 20px; cursor: pointer; color: var(--primary-purple);
+            font-weight: 700; transition: 0.2s; border: 1px solid var(--pastel-border); font-size: 0.9rem;
+        }
+        .action-btn.active { background: var(--primary-purple) !important; color: white !important; border-color: var(--primary-purple) !important; }
 
-    .form-frame {
-        width: 100%;
-        height: 1200px; 
-        border: none;
-        border-radius: 20px;
-        background: var(--soft-bg);
-    }
+        .dropdown-menu {
+            position: absolute; top: 120%; right: 0; width: 450px;
+            background: white; border-radius: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            padding: 25px; z-index: 500; display: none; border: 1px solid #f0f0f0;
+        }
+        .dropdown-menu.show { display: block; animation: slideIn 0.3s ease; }
 
-    .form-header {
-        text-align: center;
-        margin-bottom: 30px;
-    }
+        .accordion-item { border-bottom: 1px solid #f1f5f9; }
+        .accordion-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 0; cursor: pointer; font-weight: 700; color: var(--primary-purple);
+        }
+        .accordion-content { max-height: 0; overflow: hidden; transition: 0.3s ease; }
+        .accordion-content.open { max-height: 400px; padding: 5px 0 15px; }
 
-    .form-header h3 {
-        font-family: 'Outfit', sans-serif;
-        font-size: 1.8rem;
-        font-weight: 800;
-        color: var(--primary-purple);
-        margin-bottom: 10px;
-    }
+        .location-dropdown {
+            position: absolute; top: 110%; left: 0; background: white; 
+            border: 1px solid var(--pastel-border); border-radius: 12px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 180px; z-index: 50;
+            display: none; padding: 8px;
+        }
+        .location-dropdown.show { display: block; }
 
-    .info-tag {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: var(--soft-lavender);
-        color: var(--primary-purple);
-        padding: 10px 20px;
-        border-radius: 50px;
-        font-weight: 700;
-        font-size: 0.9rem;
-        margin-bottom: 30px;
-    }
+        /* Pills */
+        .type-pill {
+            padding: 10px 22px; border-radius: 50px; font-weight: 800; font-size: 0.85rem;
+            cursor: pointer; border: 2px solid transparent; opacity: 0.6; transition: 0.2s;
+            text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .type-pill.active { opacity: 1; border-color: currentColor; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        
+        .pill-Youth-led { background-color: #bae6fd; color: #0c4a6e; }
+        .pill-Startup { background-color: #fbcfe8; color: #831843; }
+        .pill-Research { background-color: #bbf7d0; color: #064e3b; }
+        .pill-Competition { background-color: #fde68a; color: #78350f; }
 
-    /* COMPACT URL BAR STYLES */
-    .mini-url-bar {
-        background: #f8fafc;
-        border: 1px solid #f1f5f9;
-        border-radius: 12px;
-        padding: 8px 16px;
-        max-width: 500px;
-        margin: 0 auto 30px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-    }
+        .subject-pill {
+            padding: 6px 14px; border-radius: 12px; background: #fafafa; border: 1px solid #eee;
+            cursor: pointer; font-size: 0.8rem; font-weight: 600; transition: 0.2s; color: #475569;
+        }
+        .subject-pill.active { background: var(--vibrant-pink); color: white; border-color: var(--vibrant-pink); }
 
-    .copy-icon-btn {
-        padding: 4px;
-        color: #94a3b8;
-        transition: color 0.2s;
-        flex-shrink: 0;
-    }
-    .copy-icon-btn:hover { color: var(--vibrant-orange); }
+        .tag-bubble {
+            padding: 4px 12px; border-radius: 20px; background-color: var(--soft-lavender);
+            color: var(--primary-purple); font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; gap: 5px; cursor: pointer;
+        }
 
-    .open-mini-btn {
-        font-size: 11px;
-        font-weight: 700;
-        color: var(--vibrant-orange);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        white-space: nowrap;
-    }
+        /* --- CARDS --- */
+        .content-wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px 100px; }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+        
+        .project-card {
+            background: white; padding: 35px; border-radius: 30px; border: 1px solid #f1f5f9; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s;
+            display: flex; flex-direction: column; position: relative;
+            /* Added min-height and height:auto to ensure text never overflows */
+            min-height: 420px; 
+            height: auto;
+        }
+        .project-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px var(--aura-color); }
 
-    @media (max-width: 768px) {
-        .hero-box { padding: 60px 20px; }
-        .form-wrapper { padding: 20px; width: 92%; }
-    }
-  </style>
+        .pill-container { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+
+        .program-label {
+            display: inline-flex; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; 
+            font-weight: 800; padding: 4px 12px; border-radius: 8px; border: 1px solid;
+            
+        }
+
+        .label-Youth-led { background-color: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
+        .label-Startup { background-color: #fce7f3; color: #be185d; border-color: #fbcfe8; }
+        .label-Research { background-color: #dcfce7; color: #15803d; border-color: #bbf7d0; }
+        .label-Competition { background-color: #fef3c7; color: #b45309; border-color: #fde68a; }
+
+        .subject-label {
+            display: inline-flex; font-size: 0.65rem; font-weight: 700; padding: 4px 10px; 
+            border-radius: 8px; background-color: var(--soft-lavender); color: var(--primary-purple);
+            border: 1px solid #e9e3ff;
+        }
+
+        .card-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; margin: 10px 0 20px; flex-grow: 1; }
+        
+        .card-info-box {
+            background: var(--soft-bg); border: 1px solid var(--pastel-border);
+            padding: 12px 15px; border-radius: 15px; margin-bottom: 10px;
+        }
+        .box-label { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: var(--vibrant-pink); letter-spacing: 0.05em; display: block; margin-bottom: 4px; }
+        .box-text { font-size: 0.85rem; font-weight: 600; color: var(--primary-purple); }
+
+        .meta-text { font-size: 0.75rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
+        
+        .btn-group { display: flex; gap: 10px; width: 100%; margin-top: 15px; }
+        .btn-apply { 
+            flex: 4; background-color: var(--vibrant-orange); color: white; 
+            padding: 12px 15px; border-radius: 15px; font-size: 0.85rem; 
+            font-weight: 800; text-align: center; transition: 0.2s;
+            box-shadow: 0 4px 12px rgba(255, 51, 153, 0.2);
+        }
+        .btn-apply:hover { opacity: 0.9; transform: scale(1.02); }
+
+        .btn-insta { 
+            flex: 1; background-color: white; color: var(--text-dark); 
+            padding: 12px 10px; border-radius: 15px; font-size: 1.2rem; 
+            font-weight: 800; border: 1.5px solid #eee; display: flex;
+            align-items: center; justify-content: center; transition: 0.2s;
+        }
+        .btn-insta:hover { border-color: var(--vibrant-pink); color: var(--vibrant-pink); }
+
+        .hidden { display: none !important; }
+        .rotate-180 { transform: rotate(180deg); }
+
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
 <body>
 
-  <nav class="nav-bar" id="navbar">
-    <div class="nav-container">
-        <div class="nav-logo"><h1><a href="#"><span>Cause</span>Connect<span>Hub</span></a></h1></div>
-        <div class="nav-links">
-          <a href="index.html">Home</a> 
-          <a href="explore.html">Find Projects</a> 
-          <a href="award.html">Awards & Scholarships</a> 
-          <a href="resource.html">Resources</a>
-        </div>
-        <a href="project.html" class="btn-nav";style="font-weight: 800; color: var(--vibrant-orange);">Add Your Project</a>
-    </div>
-  </nav>
-
-  <div class="hero-outer">
-    <section class="hero-box">
-      <h2>Expand the Ecosystem.</h2>
-      <p>Submit your extracurricular initiative, club, or nonprofit. Help students find their next great opportunity and grow your impact.</p>
-    </section>
-  </div>
-
-  <main class="form-wrapper">
-    <div class="form-header">
-        <div class="info-tag">
-            <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/></svg>
-            Community Submission Form
-        </div>
-        <h3>Tell us about what you're <span style="color: var(--vibrant-orange)">looking for</span></h3>
-        <p class="text-gray-500 text-sm max-w-lg mx-auto mb-6">Fill out the details below. Once approved, your project will be featured in our exploration dashboard for students to see.</p>
-        
-        <!-- MINI APPLICATION LINK AREA -->
-        <div class="mini-url-bar">
-            <div class="flex items-center gap-2 overflow-hidden flex-grow">
-                <span id="formUrl" class="text-[10px] text-gray-400 font-medium truncate">https://docs.google.com/forms/d/e/1FAIpQLSdC8...</span>
-                <button onclick="copyFormLink()" class="copy-icon-btn" title="Copy link">
-                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"/></svg>
-                </button>
-                <span id="copyFeedback" class="text-[10px] text-green-500 font-bold opacity-0 transition-opacity">Copied!</span>
+    <nav class="nav-bar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo"><h1><span>Cause</span>Connect<span>Hub</span></h1></div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="explore.html" class="active">Find Extracurriculars</a>
+                <a href="award.html">Awards & Scholarships</a>
+                <a href="resource.html">Resources</a>
             </div>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdC8-tUzW1e9oia-YwwZasVt_LrBpNoHaO2P-dP27UmDJkrwQ/viewform?usp=dialog" target="_blank" class="open-mini-btn">
-                Open Full Form →
-            </a>
+            <a href="project.html" class="btn-nav">Add Your Project</a>
+        </div>
+    </nav>
+
+    <div class="hero-outer">
+        <section class="hero-box">
+            <h2>Find Your Perfect Project</h2>
+            <p>Connect with student-led initiatives, research programs, and global competitions designed for high schoolers.</p>
+        </section>
+
+        <a href="project.html" class="submit-bar">
+            <div class="submit-plus">+</div>
+            <span class="submit-text">Submit Your Project</span>
+        </a>
+    </div>
+
+    <div class="content-wrap">
+        <div class="filter-wrapper ">
+            <div class="flex flex-col md:flex-row gap-4 mb-6">
+                <div class="search-bar">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                    <input type="text" id="keywordSearch" placeholder="Search by name, role, or keywords...">
+                </div>
+                
+                <div class="relative">
+                    <button class="action-btn" id="locBtn" onclick="toggleDropdown('locDropdown')">
+                        <span id="locationLabel">Location</span>
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>
+                    </button>
+                    <div id="locDropdown" class="location-dropdown">
+                        <div class="px-3 py-2 text-[10px] font-black text-gray-400 uppercase">Region</div>
+                        <div class="cursor-pointer px-3 py-2 text-sm font-bold hover:bg-pink-50 rounded-lg" onclick="selectLocation('Remote')">Remote</div>
+                        <div class="cursor-pointer px-3 py-2 text-sm font-bold hover:bg-pink-50 rounded-lg" onclick="selectLocation('In-Person')">In-Person</div>
+                        <div class="cursor-pointer px-3 py-2 text-sm font-bold hover:bg-pink-50 rounded-lg" onclick="selectLocation('Both')">Both</div>
+                        <div class="cursor-pointer px-3 py-2 text-sm font-bold hover:bg-pink-50 rounded-lg border-t mt-1" onclick="selectLocation('All')">All</div>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <button id="filterToggleBtn" class="action-btn" onclick="toggleDropdown('subjectDropdown')">
+                        Subject Filters
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>
+                    </button>
+                    <div id="subjectDropdown" class="dropdown-menu">
+                        <!-- STEM -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion('stem-content')">
+                                <span>STEM Subjects</span>
+                                <svg class="transition-transform" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/></svg>
+                            </div>
+                            <div class="accordion-content" id="stem-content">
+                                <div class="flex flex-wrap gap-2">
+                                   <div class="subject-pill" onclick="toggleTag(this, 'STEM')">STEM</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Computer Science')">Computer Science</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Biology')">Biology</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Mathematics')">Mathematics</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Engineering')">Engineering</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Physics')">Physics</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Environmental')">Environmental</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Social Sciences -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion('social-content')">
+                                <span>Social Sciences</span>
+                                <svg class="transition-transform" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/></svg>
+                            </div>
+                            <div class="accordion-content" id="social-content">
+                                <div class="flex flex-wrap gap-2">
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Economics')">Economics</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Psychology')">Psychology</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Politics')">Politics</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Sociology')">Sociology</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Law')">Law</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Arts & Humanities -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion('arts-content')">
+                                <span>Arts & Humanities</span>
+                                <svg class="transition-transform" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/></svg>
+                            </div>
+                            <div class="accordion-content" id="arts-content">
+                                <div class="flex flex-wrap gap-2">
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Art')">Art</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Design')">Design</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Literature')">Literature</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Visual Arts')">Visual Arts</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Music')">Music</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'History')">History</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Philosophy')">Philosophy</div>
+                                </div>
+                            </div>
+                        </div>
+                         <!-- Community Service  -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion('community-content')">
+                                <span>Community Service</span>
+                                <svg class="transition-transform" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/></svg>
+                            </div>
+                            <div class="accordion-content" id="community-content">
+                                <div class="flex flex-wrap gap-2">
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Education Access')">Education Access </div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Mental Health')">Mental Health</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Equity & Rights')">Equity & Rights</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Community Support')">Community Support</div>
+                                    <div class="subject-pill" onclick="toggleTag(this, 'Youth Empowerment')">Youth Empowerment</div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="mt-6 pt-4 border-t flex justify-end">
+                            <button class="bg-[#ff3399] text-white px-8 py-2.5 rounded-full text-xs font-extrabold shadow-md hover:opacity-90" onclick="closeDropdowns()">APPLY FILTERS</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="activeTagRow" class="flex flex-wrap gap-2 mb-6 min-h-[20px]"></div>
+
+            <div class="flex items-center gap-6 border-t pt-6">
+                <span class="text-[11px] font-black text-gray-400 uppercase tracking-[0.15em]">Program Type:</span>
+                <div class="flex flex-wrap gap-3">
+                    <div class="type-pill pill-Youth-led" data-type="Youth-led" onclick="toggleTag(this, 'Youth-led')">Youth-led</div>
+                    <div class="type-pill pill-Startup" data-type="Startup" onclick="toggleTag(this, 'Startup')">Startup</div>
+                    <div class="type-pill pill-Research" data-type="Research" onclick="toggleTag(this, 'Research')">Research</div>
+                    <div class="type-pill pill-Competition" data-type="Competition" onclick="toggleTag(this, 'Competition')">Competition</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="projectGrid" class="cards-grid">
+                      <!-- 0.1.  / Youth-led -->
+            <div class="project-card" data-type="Youth-led" data-subject="Pre-med, Chemistry" data-location="Both">
+                <div class="pill-container"><div class="program-label label-Youth-led">Youth-led</div><div class="subject-label">Pre-med & Chemistry</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Fearless at Heart</h3>
+                <p class="meta-text mt-2">Both</p>
+                <p class="card-desc">A CHD youth-led organization with multiple chapters that raises awareness for heart health and supports heart patients through service projects. We currently have chapters in Smithfield and West Warwick and partner with the Leukemia & Lymphoma Foundation in Nevada to promote both heart health and cancer awareness. Founded in 2024, we’ve hosted town halls, library events, and more. Upcoming plans include an AHA Heart Walk, blood drives, and care packages for Hasbro patients. With 500+ Instagram followers, we offer middle and high school students opportunities to start chapters, volunteer, and get involved.</p>
+                <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text"> Chapter Leaders, Blog Writers, Head Members</span></div>
+                <div class="btn-group"><a href=" https://docs.google.com/forms/d/13KmxoAeglWHigut39ZCik-bSmXVS35AgUuBnN0lQj8Y/edit?usp=drivesdk" class="btn-apply">Apply Now</a><a href="https://www.instagram.com/befearlessatheart/" class="btn-insta"><svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04 1.8.196 1.412.39 1.914.247.525.567.973.923 1.417.444.356.892.676 1.417.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.765-.893.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.282.11-.705.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg></a></div>
+            </div>
+
+            <!-- 0.2.  / Youth-led -->
+            <div class="project-card" data-type="Youth-led" data-subject="Engineering, STEM" data-location="Remote">
+                <div class="pill-container"><div class="program-label label-Youth-led">Youth-led</div><div class="subject-label">Engineering & STEM, </div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Designforplay</h3>
+                <p class="meta-text mt-2">Remote</p>
+                <p class="card-desc">We are a youth-led initiative applying engineering and problem solving principles to essentially distribute STEM toys and cognitive games to kids and seniors. We partner with with libraries, daycares, pediatric units, and senior/dementia centers to make this possible. We plan to expand this idea and our support across multiple states and countries. So far we have organized a Christmas drive for a women’s and children’s shelter and have more to come! </p>
+                <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text">Digital Card Creator, Community Donor, STEM Advocate, Global Participant </span></div>
+                <div class="btn-group"><a href="https://linktr.ee/ayeshaxcz?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnnzl_FwCCMdxqV7MQokwv_7xiDmQFK4q0M6hv0M1iVs1Hd5Q_ciG18IvXmfo_aem_X4Xtrmgc1QAK3SLjIx1frQ" class="btn-apply">Apply Now</a><a href="https://www.instagram.com/designforplay.initiative/" class="btn-insta"><svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04 1.8.196 1.412.39 1.914.247.525.567.973.923 1.417.444.356.892.676 1.417.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.765-.893.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.282.11-.705.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg></a></div>
+            </div>
+
+            <!-- 0.3.  / Youth-led -->
+            <div class="project-card" data-type="Youth-led" data-subject="Government, Politics" data-location="Remote">
+                <div class="pill-container"><div class="program-label label-Youth-led">Youth-led</div><div class="subject-label">Government & Politics </div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Online MUN</h3>
+                <p class="meta-text mt-2">Remote</p>
+                <p class="card-desc">United students forum is now organizing its second event and it's an MUN in collaboration with INYOUTH! With a huge success of over 50+ participants in our last event of a fellowship we look forward to active participation as we take up a new category of events, deadline is 6th February 2026.</p>
+                <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text">Delegates, Chairs</span></div>
+                <div class="btn-group"><a href="https://forms.gle/VdpfZAhpPG6cuUbG9 , chair: https://docs.google.com/forms/d/e/1FAIpQLSf-9-4bWy2MJ5lUpT8H9rFo9u90BUD5BAnjHds__k5Xy_lYJA/viewform?usp=publish-editor" class="btn-apply">Apply Now</a><a href="https://www.instagram.com/unitedstudents._forum?igsh=cnB1eWowdnkxY3B4" class="btn-insta"><svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04 1.8.196 1.412.39 1.914.247.525.567.973.923 1.417.444.356.892.676 1.417.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.765-.893.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.282.11-.705.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg></a></div>
+            </div>
+            <!-- 0.4.  / Youth-led -->
+            <div class="project-card" data-type="Youth-led" data-subject="Psychology, Mental Health" data-location="Both">
+                <div class="pill-container"><div class="program-label label-Youth-led">Youth-led</div><div class="subject-label">Psychology & Mental Health</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Sound of Mind and Awareness (SOMA)</h3>
+                <p class="meta-text mt-2">Both</p>
+                <p class="card-desc">We aim to raise awareness for those with neurological conditions through learning, volunteering, and documenting. Chapter leaders have the opportunity to recruit volunteers, connect them to local care facilities, and host virtual programming. Participants also have the opportunity to enrol in our free 10-week program to prepare for meaningful engagement through awareness and connect with passionate peers from around the globe. We currently have chapters in six countries.</p>
+                <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text">Chapter Leaders, Social Media Content Creators</span></div>
+                <div class="btn-group"><a href="https://forms.gle/b4woConSyQHm2SWw7" class="btn-apply">Apply Now</a><a href="https://www.instagram.com/somawareness_official" class="btn-insta"><svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04 1.8.196 1.412.39 1.914.247.525.567.973.923 1.417.444.356.892.676 1.417.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.765-.893.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.282.11-.705.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg></a></div>
+            </div>
+
+             <!-- 0.5.  / Youth-led -->
+            <div class="project-card" data-type="Youth-led" data-subject="Pre-med, Youth Empowerment" data-location="In-person">
+                <div class="pill-container"><div class="program-label label-Youth-led">Youth-led</div><div class="subject-label">Pre-med & Youth Empowerment</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Melanin Minds In Medicine</h3>
+                <p class="meta-text mt-2">Atlanta, Georgia</p>
+                <p class="card-desc">Melanin Minds in Medicine is a youth-led program designed to increase representation and equity in healthcare by guiding minority students toward medical and health science careers. Through mentorship, scholarships, research-based projects, and hands-on workshops, participants gain exposure to real-world medicine and advocacy. Recent outcomes include growing partnerships with local hospitals and community health organizations, as well as the launch of student-led health education and career exploration initiative.</p>
+                <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text">Student Interest, Minority Highschoolers interested in joining . </span></div>
+                <div class="btn-group"><a href="https://sites.google.com/view/melaninmindsinmedicine/home?authuser=0" class="btn-apply">Apply Now</a><a href="https://www.instagram.com/melaninminds_inmedicine/" class="btn-insta"><svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04 1.8.196 1.412.39 1.914.247.525.567.973.923 1.417.444.356.892.676 1.417.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.765-.893.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.282.11-.705.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg></a></div>
+            </div>      
+              <!-- 0.6.  / Youth-led -->
+            <div class="project-card" data-type="Youth-led" data-subject="Mental Health, Youth Empowerment" data-location="Remote">
+                <div class="pill-container"><div class="program-label label-Youth-led">Youth-led</div><div class="subject-label">Mental Health & Youth Empowerment</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">MindBridge</h3>
+                <p class="meta-text mt-2">Remote</p>
+                <p class="card-desc">MindBridge is a youth-led mental health organization focused on creating safe, supportive spaces for young people to learn, share, and grow. Through guest speaker sessions, community discussions, collaborations, and resource sharing, we promote mental health awareness and personal development. Recently, we’ve expanded our volunteer and leadership opportunities and hosted weekly speaker sessions to support students globally.</p>
+                <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text">Volunteers </span></div>
+                <div class="btn-group"><a href="https://bridgingminds.base44.app/JoinUs" class="btn-apply">Apply Now</a><a href="https://www.instagram.com/mindbridgeproject/" class="btn-insta"><svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04 1.8.196 1.412.39 1.914.247.525.567.973.923 1.417.444.356.892.676 1.417.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.765-.893.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.282.11-.705.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg></a></div>
+            </div>               
+              <!-- 0.7.  / Youth-led -->
+            <div class="project-card" data-type="Youth-led" data-subject="Community Support, Youth Empowerment" data-location="Both">
+                <div class="pill-container"><div class="program-label label-Youth-led">Youth-led</div><div class="subject-label">Community Support & Youth Empowerment</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Hands in Hope</h3>
+                <p class="meta-text mt-2">Both</p>
+                <p class="card-desc">Hands in Hope is a youth-led nonprofit organization dedicated to supporting people experiencing homelessness by providing care, dignity, and compassion. As of now, Hands in Hope has successfully hosted two service events, and has positively impacted many individuals around the Fairfax area in Virginia. Hands in Hope has also raised several hundred dollars, partnered with other organizations such as Second Story, and has expanded its outreach to many different high schools. </p>
+                <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text">Chapter Leaders, Donations </span></div>
+                <div class="btn-group"><a href="https://www.instagram.com/handsinhopeorg/" class="btn-apply">Apply Now</a><a href="https://www.instagram.com/handsinhopeorg/" class="btn-insta"><svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04 1.8.196 1.412.39 1.914.247.525.567.973.923 1.417.444.356.892.676 1.417.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.765-.893.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.282.11-.705.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg></a></div>
+            </div>   
+              <!-- 0.8.  / Youth-led -->
+            <div class="project-card" data-type="Youth-led" data-subject="Community Support, Youth Empowerment" data-location="Remote">
+                <div class="pill-container"><div class="program-label label-Youth-led">Youth-led</div><div class="subject-label">Pre-med & Writing</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">The Unseen Patient</h3>
+                <p class="meta-text mt-2">Remote</p>
+                <p class="card-desc">The Unseen Patient is an online blog to educate and inspire others about medicine. With it focusing on short educational posts and article writings of medical topics. The goal is to make easy read lessons and make medical education accessible and creative. As well with others have the opportunity to share their knowledge and learn more as they make work with staff.</p>
+                <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text">Graphic designers, Literary Editors, Substack Writers, Instagram Writers, Content Creators, Marketing Officers, Outreach Officers</span></div>
+                <div class="btn-group"><a href="https://linktr.ee/theunseenpatient?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPNTY3MDY3MzQzMzUyNDI3AAGnlW6_hbgILCGUF-FyTboVgMRXJtn1iiAcNa-ViGh5V2DMrqujiNnDhYcXhqE_aem_iVvxGKaGYWXFjyU6n61TrQ" class="btn-apply">Apply Now</a><a href="https://www.instagram.com/theunseenpatient?igsh=MzRlODBiNWFlZA==" class="btn-insta"><svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04 1.8.196 1.412.39 1.914.247.525.567.973.923 1.417.444.356.892.676 1.417.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.765-.893.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.282.11-.705.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg></a></div>
+            </div> 
+              <!-- 0.9.  / Youth-led -->
+            <div class="project-card" data-type="Youth-led" data-subject="Business, Equity & Rights" data-location="In-person">
+                <div class="pill-container"><div class="program-label label-Youth-led">Youth-led</div><div class="subject-label">Business & Equity & Rights</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Wilderness Welfare</h3>
+                <p class="meta-text mt-2">In person</p>
+                <p class="card-desc">We support animals in-need, and we work with organizations such as animal shelters who may need support. Our international research team is currently being developed too! We have raised $500+ dollars and have chapters in Austin and LA.</p>
+                <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text">Chapters In Austin + LA chapters. </span></div>
+                <div class="btn-group"><a href="https://www.instagram.com/wildernesswelfare/" class="btn-apply">Apply Now</a><a href="https://www.instagram.com/wildernesswelfare/" class="btn-insta"><svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04 1.8.196 1.412.39 1.914.247.525.567.973.923 1.417.444.356.892.676 1.417.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.765-.893.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.282.11-.705.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg></a></div>
+            </div>
+                          <!-- 0.10.  / Youth-led -->
+            <div class="project-card" data-type="Youth-led" data-subject="Pre-med, Mental Health" data-location="Both">
+                <div class="pill-container"><div class="program-label label-Youth-led">Youth-led</div><div class="subject-label">Pre-med & Mental Health</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Heart of Health</h3>
+                <p class="meta-text mt-2">Both</p>
+                <p class="card-desc">Our nonprofit focuses on health access and equity, with the goal of ensuring that everyone has fair access to essential health resources, education, and support. We work to raise awareness about health disparities, support underserved communities, and create meaningful, real world impact. All funds we raise are donated to project HOPE, a larger organization that provides global health care, disaster relief, and health education. By partnering with Project HOPE, we aim to amplify our impact and contribute to sustainable health solutions for our community and further more!</p>
+                <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text">Members, and chapters opening.</span></div>
+                <div class="btn-group"><a href="https://linktr.ee/heartofhealth?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAdGRleAPrlDhleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAacP447EelLRcjGgGsbClO4VZ-4FBgInm7SQAHdaqRlCUsk13WBBv-vm1YUZYQ_aem_YeusH5F-m3uIrrTNcO4L2g" class="btn-apply">Apply Now</a><a href="https://www.instagram.com/heartofhealth6?igsh=dGg4Y3h3bWJrc2I1&utm_source=qr" class="btn-insta"><svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04 1.8.196 1.412.39 1.914.247.525.567.973.923 1.417.444.356.892.676 1.417.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.765-.893.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.282.11-.705.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg></a></div>
+            </div>
+            <!-- 0.11.  / Youth-led -->
+            <div class="project-card" data-type="Youth-led" data-subject="Business, Finance "  data-location="Remote">
+                <div class="pill-container"><div class="program-label label-Youth-led">Youth-led</div><div class="subject-label">Business & Finance</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">FinAcademy</h3>
+                <p class="meta-text mt-2">Remote</p>
+                <p class="card-desc">Finacademy is a digital financial research think tank for high schoolers. We help high schoolers conduct financial research in any topic of intreset through mentors, materials, ideas, a summer program, and more. We hope to make financial research more accessible and streamline the process for high schoolers. We have created a structured summer program for 8 weeks this summer and are looking for applicants!</p>
+                <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text">Student Researchers, Volunteers, Marketing Team, Outreach Director, Chapter Leadership </span></div>
+                <div class="btn-group"><a href="finacademyresearch.com" class="btn-apply">Apply Now</a></div>
+            </div>
+
+            <!-- 1.  / Youth-led -->
+            <div class="project-card" data-type="Youth-led" data-subject="Equity & Rights" data-location="Remote">
+                <div class="pill-container"><div class="program-label label-Youth-led">Youth-led</div><div class="subject-label">Equity & Rights</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Project EquiFlow</h3>
+                <p class="meta-text mt-2">Remote</p>
+                <p class="card-desc">Project: EquiFlow’s mission is to empower young women worldwide by promoting equitable access to menstrual products and comprehensive women’s health resources, while actively working to remove barriers to education caused by period poverty and health inequities. This initiative was inspired by the recognition that millions of young women miss school, experience stigma, or face health risks simply because they lack access to essential menstrual care. EquiFlow aims to break the cycle of disadvantage.</p>
+                <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text"> Marketing Director, Social Media Manger</span></div>
+                <div class="btn-group"><a href="https://docs.google.com/forms/d/e/1FAIpQLScWna4eCEz8d1K9ekpxZppTkpYnTzY47qi8JI4XTCaVUeegtA/viewform?usp=dialog" class="btn-apply">Apply Now</a><a href="https://www.instagram.com/projectequiflow/" class="btn-insta"><svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04 1.8.196 1.412.39 1.914.247.525.567.973.923 1.417.444.356.892.676 1.417.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.765-.893.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.282.11-.705.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg></a></div>
+            </div>
+
+            <!-- 2.  / Youth-led -->
+            <div class="project-card" data-type="Youth-led" data-subject="Art" data-subject="Design" data-location="Remote">
+                <div class="pill-container"><div class="program-label label-Youth-led">Youth-led</div><div class="subject-label">Art & Design</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Arts for Impact</h3>
+                <p class="meta-text mt-2">Remote</p>
+                <p class="card-desc">The goal of ArtsForImpact is to make arts and crafts to spread joy to others. We also have goals of improving accessibility to art supplies and bridge this economic barrier for artists globally! This was fueled by the recognition that many artists around the world face barriers that limit their ability to create work and express themselves. We want to improve accessibility to art supplies and resources, aiming to empower artists from all backgrounds and to build a global community where artistic expression will not be restricted by financial limitations.</p>
+                <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text">Volunteers!</span></div>
+                <div class="btn-group"><a href="https://docs.google.com/forms/d/1DrrETJbVJpnpYhGk7MNBsutyMcCiXG44eMLFOdN2hY0/edit" class="btn-apply">Apply Now</a></div>
+            </div>
+
+                        <!-- 3.  / Youth-led -->
+            <div class="project-card" data-type="Youth-led" data-subject="Community Support" data-subject="Youth Empowerment" data-location="Remote">
+                <div class="pill-container"><div class="program-label label-Youth-led">Youth-led</div><div class="subject-label">Community Support & Youth Empowerment</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Crafted For A Cause</h3>
+                <p class="meta-text mt-2">Remote</p>
+                <p class="card-desc">Crafted For A Cause is a student-led 501(c)(3) nonprofit that raises funds for charities through volunteer creativity. Our goal is to engage youth in service while bridging the gap of educational equity. We’ve raised over $800 so far, supported multiple causes, and are expanding through regional chapters and community-driven fundraisers. </p>
+                <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text">Chapter Leaders, Regional Directors</span></div>
+                <div class="btn-group"><a href="https://forms.gle/d4ZDktMdwtUYnjcr8" class="btn-apply">Apply Now</a><a href="https://www.instagram.com/craftedforacause/" class="btn-insta"><svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04 1.8.196 1.412.39 1.914.247.525.567.973.923 1.417.444.356.892.676 1.417.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.765-.893.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.282.11-.705.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg></a></div>
+            </div>
+
+            <!-- 4.  / Youth-led -->
+            <div class="project-card" data-type="Youth-led" data-subject="Business" data-location="Remote">
+                <div class="pill-container"><div class="program-label label-Youth-led">Youth-led</div><div class="subject-label">Business</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">GYIA</h3>
+                <p class="meta-text mt-2">Remote</p>
+                <p class="card-desc">Participants of GYIA Online will expand their understanding of investing through case studies that explore creative, real-world solutions. No prior experience is required—this competition rewards skills like critical thinking, analytical reasoning, and public speaking. Students may register in teams of three or individually and be placed on a team. This is a great opportunity to collaborate with peers from around the world. GYIA Online is open to middle and high school students globally and is completely free. Sign up through our Google Form and join us for an exciting competition on March 20, 2026!</p>
+                <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text"> Students to participate </span></div>
+                <div class="btn-group"><a href="https://docs.google.com/forms/d/e/1FAIpQLSdQCav51e7anaOqoyVAYSz78LAgRpx7UYZA26mog40DO3Wa7A/viewform?usp=header" class="btn-apply">Apply Now</a><a href="https://www.instagram.com/_gyia__/" class="btn-insta"><svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04 1.8.196 1.412.39 1.914.247.525.567.973.923 1.417.444.356.892.676 1.417.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.765-.893.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.282.11-.705.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg></a></div>
+            </div>
+
+            <!-- 5.  / Youth-led -->
+            <div class="project-card" data-type="Youth-led" data-subject="Pre-med, Equity & Rights" data-location="Both">
+                <div class="pill-container"><div class="program-label label-Youth-led">Youth-led</div><div class="subject-label">Pre-med & Equity & Rights</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Northville Period Poverty</h3>
+                <p class="meta-text mt-2">Remote</p>
+                <p class="card-desc">Northville Period Poverty is a student-led organization dedicated to providing free menstrual products to those in need and reducing stigma surrounding period health. Our goal is to promote equity and education through donation drives, school bathroom supply stations, and awareness events. So far, we have organized product collections that have helped thousands and educated our community on women’s health and menstrual health. </p>
+                <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text"> Volunteers, Chapter Members,Community Partners to support donation drives and awareness events.</span></div>
+                <div class="btn-group"><a href="https://docs.google.com/forms/d/e/1FAIpQLSdQCav51e7anaOqoyVAYSz78LAgRpx7UYZA26mog40DO3Wa7A/viewform?usp=header" class="btn-apply">Apply Now</a></div>
+            </div>
+                        <!-- 6.  / Youth-led -->
+            <div class="project-card" data-type="Youth-led" data-subject="Pre-med, Youth Empowerment" data-location="Both">
+                <div class="pill-container"><div class="program-label label-Youth-led">Youth-led</div><div class="subject-label">Pre-med & Youth Empowerment</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Care Circle Collective </h3>
+                <p class="meta-text mt-2">Remote</p>
+                <p class="card-desc">Care Circle Collective is a student-led nonprofit dedicated to bringing comfort, joy, and hope to children facing hospitalization. Through heartfelt care packages filled with handmade items, books, toys, and letters, we empower volunteers to make an impact in the lives of children and their families. </p>
+                <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text"> Volunteers, Donators </span></div>
+                <div class="btn-group"><a href="https://docs.google.com/forms/d/e/1FAIpQLScs2vZPioF72oScrYM0zyZWmJyhCquwmZtJSxfGyZvQ32n4gQ/viewform?fbclid=PAVERFWAPblutleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAacMaA4dtjCOxA4QWj9NWpd4qD162BzaVsw6YeQu6dmb3jnICLkzx2UGyy4c4w_aem_GRT2OGxAGySV7UkCPfIb5g" class="btn-apply">Apply Now</a></div>
+            </div>
+
+
+                 <!-- 1. Reseach/ STEM -->
+            <div class="project-card" data-type="Research" data-subject="STEM" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Research">Research</div><div class="subject-label">STEM</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Research Science Institute (RSI)</h3>
+                <p class="meta-text mt-2">MIT - Cambridge, MA</p>
+                <p class="card-desc">One of the most prestigious summer research programs for high school students worldwide. RSI combines a week of intensive STEM coursework with five weeks of original research mentored by scientists, culminating in a research paper and symposium presentation.</p>
+                <div class="btn-group"><a href="https://www.cee.org/programs/apply-rsi?utm_source=chatgpt.com" class="btn-apply">Apply Now</a></div>
+            </div>
+
+                  <!-- 2. Reseach/ STEM -->
+            <div class="project-card" data-type="Research" data-subject="STEM" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Research">Research</div><div class="subject-label">STEM</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Stanford Institutes of Medicine Summer Research Program (SIMR)</h3>
+                <p class="meta-text mt-2">Stanford University, Stanford, CA</p>
+                <p class="card-desc">A highly selective 8-week summer research internship where high school juniors and seniors work in real medical research labs under Stanford mentors, attend seminars, and present their work at a poster session.</p>
+                <div class="btn-group"><a href="https://simr.slideroom.com/?utm_source=chatgpt.com#/Login" class="btn-apply">Apply Now</a></div>
+            </div>
+
+                  <!-- 3. Reseach/ STEM -->
+            <div class="project-card" data-type="Research" data-subject="Environmental" data-subject="Biology" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Research">Research</div><div class="subject-label">Environmental</div> <div class="subject-label">Biology</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Boyce Thompson Institute (BTI) High School Research Internships</h3>
+                <p class="meta-text mt-2">Cornell University, Ithaca, NY</p>
+                <p class="card-desc">A 6-week summer research experience where students work with researchers on plant biology and biotechnology projects, gaining lab experience and presenting at a scientific symposium.</p>
+                <div class="btn-group"><a href="https://btiscience.org/education-outreach/high-school-research-internships/" class="btn-apply">Apply Now</a></div>
+            </div>
+              <!-- 4. Reseach/ STEM -->
+            <div class="project-card" data-type="Research" data-subject="Biology" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Research">Research</div><div class="subject-label">Biology</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Heithoff-Brody High School Scholars Program (Salk Institute)</h3>
+                <p class="meta-text mt-2">Salk Institute - La Jolla, CA</p>
+                <p class="card-desc">Paid summer internship where students are mentored by Salk researchers, learn lab techniques, and conduct hands-on research in cutting-edge life sciences.</p>
+                <div class="btn-group"><a href="https://www.salk.edu/about/education-outreach/programs/high-school-scholars/" class="btn-apply">Apply Now</a></div>
+            </div>
+              <!-- 5. Reseach/Bio  -->
+            <div class="project-card" data-type="Research" data-subject="Biology" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Research">Research</div><div class="subject-label">Biology</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Worldwide Youth in Science and Engineering (WYSE) High School Research</h3>
+                <p class="meta-text mt-2">University of Illinois Urbana-Champaign - Champaign, IL</p>
+                <p class="card-desc">A 6-week non-residential research program pairing rising high school juniors and seniors with faculty mentors to conduct hands-on STEM research.</p>
+                <div class="btn-group"><a href="https://wyse.grainger.illinois.edu/summer-programs/young-scholars-summer-research" class="btn-apply">Apply Now</a></div>
+            </div>
+                  <!-- 6. Reseach/STEM  -->
+            <div class="project-card" data-type="Research" data-subject="STEM" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Research">Research</div><div class="subject-label">STEM</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Summer Science Program (SSP)</h3>
+                <p class="meta-text mt-2">Multiple campuses</p>
+                <p class="card-desc">A ~39-day immersive summer research experience where students work in small teams to solve real scientific problems, combining classroom learning with laboratory/field research.</p>
+                <div class="btn-group"><a href="https://ssp.org/" class="btn-apply">Apply Now</a></div>
+            </div>
+                              <!-- 7. Reseach/STEM  -->
+            <div class="project-card" data-type="Research" data-subject="STEM" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Research">Research</div><div class="subject-label">STEM</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Notre Dame QuarkNet Center</h3>
+                <p class="meta-text mt-2">University of Notre Dame</p>
+                <p class="card-desc">A summer research experience pairing high school students with university faculty and research groups in STEM, particularly physics and high-energy science.</p>
+                <div class="btn-group"><a href="https://physics.nd.edu/research/quarknet/" class="btn-apply">Apply Now</a></div>
+            </div>
+              <!-- 8. Reseach/STEM  -->
+            <div class="project-card" data-type="Research" data-subject="STEM" data-location="In-Person"data-location="remote">
+                <div class="pill-container"><div class="program-label label-Research">Research</div><div class="subject-label">STEM</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">UCSB Research Mentorship Program </h3>
+                <p class="meta-text mt-2">University of California, Santa Barbara or Remote</p>
+                <p class="card-desc">A ~39-day immersive summer research experience where students work in small teams to solve real scientific problems, combining classroom learning with laboratory/field research.</p>
+                <div class="btn-group"><a href="https://www.summer.ucsb.edu/programs/research-mentorship-program/overview" class="btn-apply">Apply Now</a></div>
+            </div>
+                <!-- 9. Reseach/STEM  -->
+            <div class="project-card" data-type="Research" data-subject="STEM" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Research">Research</div><div class="subject-label">STEM</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">COSMOS - California State Summer School for Mathematics and Science</h3>
+                <p class="meta-text mt-2">UC campuses in California</p>
+                <p class="card-desc">A four-week residential summer program with research projects, lectures, and lab work across STEM fields for motivated high school students.</p>
+                <div class="btn-group"><a href="https://cosmos-ucop.ucdavis.edu/app/main" class="btn-apply">Apply Now</a></div>
+            </div>
+                <!-- 10. Reseach/STEM  -->
+            <div class="project-card" data-type="Research" data-subject="STEM" data-location="Virtual">
+                <div class="pill-container">
+                <div class="program-label label-Research">Research</div>
+                <div class="subject-label">STEM</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Lumiere Research Scholar Program</h3>
+                <p class="meta-text mt-2">Lumiere Education — Virtual</p>
+                <p class="card-desc">Mentored 1:1 research program where students conduct independent research in STEM, social science, or humanities under PhD-level mentors, culminating in a paper or project.</p>
+                <div class="btn-group"><a href="https://www.lumiere-education.com/" class="btn-apply">Apply Now</a></div>
+            </div>
+                <!-- 11. Reseach/STEM  -->
+            <div class="project-card" data-type="Research" data-subject="STEM" data-location="Virtual">
+                <div class="pill-container">
+                <div class="program-label label-Research">Research</div>
+                <div class="subject-label">STEM</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Polygence Research Program</h3>
+                <p class="meta-text mt-2">Polygence — Virtual</p>
+                <p class="card-desc">Project-based research experience pairing students with expert mentors to explore original research questions in STEM, humanities, or CS.</p>
+                <div class="btn-group"><a href="https://www.polygence.org/" class="btn-apply">Apply Now</a></div>
+            </div>
+                <!-- 12. Reseach/STEM  -->
+            <div class="project-card" data-type="Research" data-subject="STEM" data-location="In-Person">
+                <div class="pill-container">
+                <div class="program-label label-Research">Research</div>
+                <div class="subject-label">STEM</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">UCSC Science Internship Program (SIP)</h3>
+                <p class="meta-text mt-2">University of California</p>
+                <p class="card-desc">Hands-on summer research internship placing high school students in real university labs across biology, chemistry, engineering, and computer science.</p>
+                <div class="btn-group"><a href="https://sip.ucsc.edu/" class="btn-apply">Apply Now</a></div>
+            </div>
+                <!-- 13. Reseach/STEM  -->
+            <div class="project-card" data-type="Research" data-subject="STEM" data-location="In-Person">
+                <div class="pill-container">
+                <div class="program-label label-Research">Research</div>
+                <div class="subject-label">STEM</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Clark Scholars Program</h3>
+                <p class="meta-text mt-2">Texas Tech University — Lubbock, TX</p>
+                <p class="card-desc">Highly selective, fully funded 7-week summer research program allowing students to conduct intensive research with Texas Tech faculty mentors.</p>
+                <div class="btn-group"><a href="https://www.depts.ttu.edu/honors/academicsandenrichment/affiliatedandhighschool/clarks/" class="btn-apply">Apply Now</a></div>
+            </div>
+                <!-- 14. Reseach/STEM  -->
+            <div class="project-card" data-type="Research" data-subject="Social Science" data-location="Hybrid">
+                <div class="pill-container">
+                <div class="program-label label-Research">Research</div>
+                <div class="subject-label">Social Science</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Stanford SPICE Research Internships</h3>
+                <p class="meta-text mt-2">Stanford University — Palo Alto, CA</p>
+                <p class="card-desc">Research internship focused on international relations, education, and public policy through curriculum development and policy research.</p>
+                <div class="btn-group"><a href="https://spice.fsi.stanford.edu/" class="btn-apply">Apply Now</a></div>
+            </div>
+                <!-- 15. Reseach/Politics  -->
+            <div class="project-card" data-type="Research" data-subject="Politics" data-location="Virtual">
+                <div class="pill-container">
+                <div class="program-label label-Research">Research</div>
+                <div class="subject-label">Politics</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Civics Unplugged Fellowship</h3>
+                <p class="meta-text mt-2">Civics Unplugged — Virtual</p>
+                <p class="card-desc">Selective fellowship engaging students in research, policy writing, and civic innovation focused on democracy, technology, and social impact.</p>
+                <div class="btn-group"><a href="https://www.civicsunplugged.org/" class="btn-apply">Apply Now</a></div>
+            </div>
+                <!-- 16. Reseach/Literature  -->
+            <div class="project-card" data-type="Research" data-subject="Literature" data-location="In-Person">
+                <div class="pill-container">
+                <div class="program-label label-Research">Research</div>
+                <div class="subject-label">Literature</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Library of Congress High School Internship</h3>
+                <p class="meta-text mt-2">Library of Congress — Washington, DC</p>
+                <p class="card-desc">Archival research internship allowing students to work with primary historical documents and develop original humanities research.</p>
+                <div class="btn-group"><a href="https://www.loc.gov/item/internships/" class="btn-apply">Apply Now</a></div>
+            </div>
+                <!-- 17. Reseach/Computer Science  -->
+            <div class="project-card" data-type="Research" data-subject="Computer Science" data-location="Virtual">
+                <div class="pill-container">
+                <div class="program-label label-Research">Research</div>
+                <div class="subject-label">Computer Science</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">AI4ALL Research Pathways</h3>
+                <p class="meta-text mt-2">AI4ALL — Virtual</p>
+                <p class="card-desc">AI research and ethics program introducing students to machine learning, data science, and socially responsible AI research.</p>
+                <div class="btn-group"><a href="https://ai-4-all.org/" class="btn-apply">Apply Now</a></div>
+            </div>
+                <!-- 18. Reseach/Computer Science - AI  -->
+            <div class="project-card" data-type="Research" data-subject="Computer Science" data-location="Virtual">
+                <div class="pill-container">
+                 <div class="program-label label-Research">Research</div>
+                <div class="subject-label">Computer Science</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Google CSSI Extension Programs</h3>
+                <p class="meta-text mt-2">Google — Virtual</p>
+                <p class="card-desc">Advanced follow-on programs from Google's CSSI that include applied CS projects, mentorship, and collaborative research-style problem solving.</p>
+                <div class="btn-group"><a href="https://buildyourfuture.withgoogle.com/programs/computer-science-summer-institute" class="btn-apply">Apply Now</a></div>
+            </div>
+                <!-- 19. Reseach/Biology - biomedical   -->
+            <div class="project-card" data-type="Research" data-subject="Biology" data-location="In-Person">
+                <div class="pill-container">
+                <div class="program-label label-Research">Research</div>
+                <div class="subject-label">Biology</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">NIH High School Summer Internship Program</h3>
+                <p class="meta-text mt-2">National Institutes of Health — Bethesda, MD</p>
+                <p class="card-desc">Paid biomedical research internship where students work alongside NIH scientists on cutting-edge medical research projects.</p>
+                <div class="btn-group"><a href="https://www.training.nih.gov/programs/hs-sip" class="btn-apply">Apply Now</a></div>
+            </div>
+                <!-- 20. Reseach/STEM  -->
+            <div class="project-card" data-type="Research" data-subject="STEM" data-location="Virtual">
+                <div class="pill-container">
+                <div class="program-label label-Research">Research</div>
+                <div class="subject-label">STEM</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Max Planck Institute Summer Programs</h3>
+                <p class="meta-text mt-2">Max Planck Society — Virtual / Germany</p>
+                <p class="card-desc">International research opportunities offering students exposure to advanced scientific research in physics, biology, and neuroscience.</p>
+                <div class="btn-group"><a href="https://www.mpg.de/en" class="btn-apply">Apply Now</a></div>
+            </div>
+                            <!-- 1. Comp/STEM  -->
+            <div class="project-card" data-type="Competition" data-subject="STEM" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Competition">Competition</div><div class="subject-label">STEM</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Regeneron International Science & Engineering Fair (ISEF)</h3>
+                <p class="meta-text mt-2">Phoenix, Arizona (national finals for 2026)</p>
+                <p class="card-desc">ISEF is the largest international pre-college science competition, bringing students from dozens of countries to present original research projects. Participants qualify through affiliated regional and state science fairs and showcase their work to professional judges. Winners receive scholarships, internships, and awards, and top projects often gain national scientific recognition.</p>
+                <div class="btn-group"><a href="https://findafair.societyforscience.org/?utm_source=chatgpt.com" class="btn-apply">Apply Now</a></div>
+            </div>
+                            <!-- 2. Comp/STEM  -->
+            <div class="project-card" data-type="Competition" data-subject="STEM" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Competition">Competition</div><div class="subject-label">STEM</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">National Science Bowl (NSB)</h3>
+                <p class="meta-text mt-2">Regional competitions across the U.S</p>
+                <p class="card-desc">Sponsored by the U.S. Department of Energy, this team quiz competition tests students on quick recall and deep understanding of science and math topics. Teams of high school students compete in fast-paced matches, with top teams advancing to the national finals. Its one of the largest academic competitions in the country.</p>
+                <div class="btn-group"><a href="https://science.osti.gov/wdts/nsb/Regional-Competitions/High-School-Regionals?utm_source=chatgpt.com" class="btn-apply">Apply Now</a></div>
+            </div>
+            <!-- 3. Comp/STEM  -->
+            <div class="project-card" data-type="Competition" data-subject="Mathematics" data-location="Remote">
+                <div class="pill-container"><div class="program-label label-Competition">Competition</div><div class="subject-label">Mathematics</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">MathWorks Math Modeling Challenge (M3 Challenge)</h3>
+                <p class="meta-text mt-2">Remote</p>
+                <p class="card-desc">Teams of high school juniors and seniors use math and data to solve real-world problems in a continuous 14-hour challenge window. There are no participation fees, and top teams can earn scholarships and present their work in person at the final event. Its ideal for students who excel in applied math and collaborative problem solving.</p>
+                <div class="btn-group"><a href="https://m3challenge.siam.org/?utm_source=chatgpt.com" class="btn-apply">Apply Now</a></div>
+            </div>
+                        <!-- 4. Comp/STEM  -->
+            <div class="project-card" data-type="Competition" data-subject="Mathematics" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Competition">Competition</div><div class="subject-label">Mathematics</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">International Mathematical Modeling Challenge (IMMC)</h3>
+                <p class="meta-text mt-2">International</p>
+                <p class="card-desc">IMMC invites teams to apply mathematical modeling to solve real issues and demonstrate their approach in a written submission. The competition promotes mathematical applications across countries and levels of education. It culminates in international recognition and networking with other teams worldwide.</p>
+                <div class="btn-group"><a href="https://immchallenge.org/?utm_source=chatgpt.com" class="btn-apply">Apply Now</a></div>
+            </div>
+                                    <!-- 5. Comp/STEM  -->
+            <div class="project-card" data-type="Competition" data-subject="Engineering" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Competition">Competition</div><div class="subject-label">Engineering</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">FIRST Robotics Competition (FRC)</h3>
+                <p class="meta-text mt-2">International</p>
+                <p class="card-desc">IMMC invites teams to apply mathematical modeling to solve real issues and demonstrate their approach in a written submission. The competition promotes mathematical applications across countries and levels of education. It culminates in international recognition and networking with other teams worldwide.</p>
+                <div class="btn-group"><a href="https://www.firstinspires.org/programs/frc/" class="btn-apply">Apply Now</a></div>
+            </div>
+
+                  <!-- 6. Comp/STEM  -->
+            <div class="project-card" data-type="Competition" data-subject="Physics" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Competition">Competition</div><div class="subject-label">Physics</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">United States Invitational Young Physicists Tournament (USIYPT)</h3>
+                <p class="meta-text mt-2">Varies yearly</p>
+                <p class="card-desc">USIYPT is a two-day physics research and debate competition where school teams prepare solutions to complex physics problems and then present and defend them in “physics fights.” This format emphasizes deep understanding, peer evaluation, and scientific communication. Teams work throughout the year to investigate problems before the competition weekend.</p>
+                <div class="btn-group"><a href="https://www.usaypt.org/" class="btn-apply">Apply Now</a></div>
+            </div>
+
+                              <!-- 7. Comp/STEM  -->
+            <div class="project-card" data-type="Competition" data-subject="STEM" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Competition">Competition</div><div class="subject-label">STEM</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Future City Competition (High School)</h3>
+                <p class="meta-text mt-2">Washington, D.C.</p>
+                <p class="card-desc">High school teams research, design, and engineer a vision of a future city that addresses real sustainability challenges. Teams create essays, models (physical or virtual), and presentations judged for creativity and technical merit. This competition strengthens teamwork, project planning, and STEM thinking.</p>
+                <div class="btn-group"><a href="https://www.usaypt.org/" class="btn-apply">Apply Now</a></div>
+            </div>
+
+                    <!-- 8. Comp/STEM  -->
+            <div class="project-card" data-type="Competition" data-subject="STEM" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Competition">Competition</div><div class="subject-label">STEM</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Regeneron Science Talent Search (STS)</h3>
+                <p class="meta-text mt-2">Finals in Washington, D.C.</p>
+                <p class="card-desc">One of the most prestigious U.S. research competitions, STS highlights original scientific research by high school seniors. Applicants submit a full research report, methods, results, and recommendations to be evaluated nationally. Top finalists earn significant scholarships and present live at the finals.</p>
+                <div class="btn-group"><a href="https://www.societyforscience.org/regeneron-sts/" class="btn-apply">Apply Now</a></div>
+            </div>
+
+                  <!-- 9. Comp/STEM  -->
+            <div class="project-card" data-type="Competition" data-subject="Biology" data-location="Remote">
+                <div class="pill-container"><div class="program-label label-Competition">Competition</div><div class="subject-label">Biology</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">RUSA Biolympiad (USABO)</h3>
+                <p class="meta-text mt-2">Remote</p>
+                <p class="card-desc">USABO is the premier biology competition in the United States, testing students on rigorous biology content and problem solving. Schools and students must register through their school, as individual registration is not permitted without a school sponsor. Competitors progress through multiple rounds including online exams, culminating in a national tournament and potential selection to the International Biology Olympiad team.</p>
+                <div class="btn-group"><a href="https://www.usabo-trc.org/" class="btn-apply">Apply Now</a></div>
+            </div>
+                              <!-- 10. Comp/STEM  -->
+            <div class="project-card" data-type="Competition" data-subject="Mathematics" data-location="In-Person">
+                <div class="pill-container"><div class="program-label label-Competition">Competition</div><div class="subject-label">Mathematics</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">American Regions Mathematics League (ARML)</h3>
+                <p class="meta-text mt-2">Varies</p>
+                <p class="card-desc">ARML brings together teams from high schools nationwide to tackle difficult math problems in individual and team rounds. The competition includes power questions, relay rounds, and collaboration rounds over a full day. Its known for its community and highly challenging problems that push beyond standard curriculum.</p>
+                <div class="btn-group"><a href="https://arml3.com/" class="btn-apply">Apply Now</a></div>
+            </div>
+                              <!-- 11. Comp/STEM  -->
+            <div class="project-card" data-type="Competition" data-subject="Mathematics" data-location="Remote">
+                <div class="pill-container"><div class="program-label label-Competition">Competition</div><div class="subject-label">Mathematics</div></div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">World Maths Day</h3>
+                <p class="meta-text mt-2">Remote</p>
+                <p class="card-desc">World Maths Day is one of the largest global online math competitions, inviting students to participate in timed math challenges and games. It attracts students from hundreds of countries and uses Mathletics gameplay to test speed and accuracy. The event fosters fun and global engagement with math.</p>
+                <div class="btn-group"><a href="https://www.3plearning.com/world-maths-day/" class="btn-apply">Apply Now</a></div>
+            </div>
+            <!-- 12. Comp/STEM -->
+            <div class="project-card" data-type="Competition" data-subject="STEM" data-location="United States">
+                <div class="pill-container"><div class="program-label label-Competition">Competition</div>
+              <div class="subject-label">STEM</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">
+                Siemens Competition in Math, Science & Technology
+                </h3>
+                <p class="meta-text mt-2">United States</p>
+                <p class="card-desc">
+                Formerly one of the most prestigious U.S. research competitions, the Siemens Competition recognized high school students for original research in math, science, and technology. Students competed individually or in teams and presented advanced research projects for national recognition and scholarships.
+                </p>
+                <div class="btn-group">
+                <a href="https://www.siemens-foundation.org/" class="btn-apply">Learn More</a>
+                </div>
+            </div>
+
+                <!-- 13. Comp/STEM -->
+            <div class="project-card" data-type="Competition" data-subject="STEM" data-location="International">
+                <div class="pill-container">
+                <div class="program-label label-Competition">Competition</div>
+                <div class="subject-label">STEM</div>
+                </div>
+                <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">
+                Google Science Fair
+                </h3>
+                <p class="meta-text mt-2">International</p>
+                <p class="card-desc">
+                Google Science Fair is a global online competition where students submit innovative science and engineering projects addressing real-world problems. Participants are judged on creativity, scientific rigor, and potential impact.
+                </p>
+                <div class="btn-group">
+                <a href="https://sciencefair.withgoogle.com/" class="btn-apply">Apply Now</a>
+                </div>
+            </div>
+
+<!-- 14. Comp/Mathematics -->
+            <div class="project-card" data-type="Competition" data-subject="Mathematics" data-location="United States">
+               <div class="pill-container">
+               <div class="program-label label-Competition">Competition</div>
+               <div class="subject-label">Mathematics</div>
+               </div>
+               <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">
+               Modeling the Future Challenge
+               </h3>
+               <p class="meta-text mt-2">United States</p>
+               <p class="card-desc">
+               Modeling the Future Challenge is a mathematical modeling competition where teams use data and quantitative reasoning to solve real-world problems. Submissions emphasize clarity, assumptions, and practical application of mathematics.
+               </p>
+               <div class="btn-group">
+               <a href="https://m2challenge.org/" class="btn-apply">Apply Now</a>
+               </div>
+            </div>
+
+<!-- 15. Comp/Mathematics -->
+            <div class="project-card" data-type="Competition" data-subject="Mathematics" data-location="International">
+               <div class="pill-container">
+               <div class="program-label label-Competition">Competition</div>
+               <div class="subject-label">Mathematics</div>
+               </div>
+               <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">
+               Desafiando el Riesgo (Math Case Competition)
+               </h3>
+               <p class="meta-text mt-2">International</p>
+               <p class="card-desc">
+               Desafiando el Riesgo is an international math case competition where students analyze risk-based scenarios using mathematical modeling and data analysis. Teams submit written solutions demonstrating reasoning and real-world application.
+               </p>
+               <div class="btn-group">
+               <a href="#" class="btn-apply">Apply Now</a>
+               </div>
+            </div>
+
+<!-- 16. Comp/Engineering -->
+            <div class="project-card" data-type="Competition" data-subject="Engineering" data-location="International">
+               <div class="pill-container">
+               <div class="program-label label-Competition">Competition</div>
+               <div class="subject-label">Engineering</div>
+               </div>
+               <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">
+               World Robot Olympiad (WRO)
+               </h3>
+               <p class="meta-text mt-2">International</p>
+               <p class="card-desc">
+               World Robot Olympiad is a global robotics competition that challenges students to design, build, and program robots to solve themed tasks. The competition emphasizes teamwork, creativity, and engineering skills.
+               </p>
+               <div class="btn-group">
+               <a href="https://wro-association.org/" class="btn-apply">Apply Now</a>
+               </div>
+            </div>
+
+<!-- 17. Comp/Engineering -->
+            <div class="project-card" data-type="Competition" data-subject="Engineering" data-location="United States">
+               <div class="pill-container">
+               <div class="program-label label-Competition">Competition</div>
+               <div class="subject-label">Engineering</div>
+               </div>
+               <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">
+               Rube Goldberg Machine Contest
+               </h3>
+               <p class="meta-text mt-2">United States</p>
+               <p class="card-desc">
+               The Rube Goldberg Machine Contest challenges students to design overly complex machines that perform a simple task. The competition highlights creativity, mechanical design, and problem-solving.
+               </p>
+               <div class="btn-group">
+               <a href="https://www.rubegoldberg.com/" class="btn-apply">Apply Now</a>
+               </div>
+            </div>
+
+<!-- 18. Comp/STEM -->
+            <div class="project-card" data-type="Competition" data-subject="STEM" data-location="United States">
+               <div class="pill-container">
+               <div class="program-label label-Competition">Competition</div>
+               <div class="subject-label">STEM</div>
+               </div>
+               <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">
+               Samsung Solve for Tomorrow
+               </h3>
+               <p class="meta-text mt-2">United States</p>
+               <p class="card-desc">
+               Samsung Solve for Tomorrow is a national competition where students propose STEM-based solutions to real community challenges. Teams develop innovative ideas and pitch their concepts for funding and recognition.
+               </p>
+               <div class="btn-group">
+               <a href="https://www.samsung.com/solvefortomorrow/" class="btn-apply">Apply Now</a>
+               </div>
+            </div>
+
+<!-- 19. Comp/Robotics -->
+            <div class="project-card" data-type="Competition" data-subject="Robotics" data-location="International">
+               <div class="pill-container">
+               <div class="program-label label-Competition">Competition</div>
+               <div class="subject-label">Robotics</div>
+               </div>
+               <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">
+               Zero Robotics Tournaments
+               </h3>
+               <p class="meta-text mt-2">International</p>
+               <p class="card-desc">
+               Zero Robotics is a programming competition where students write code to control satellites aboard the International Space Station. Finalist teams see their algorithms run in space during live tournaments.
+               </p>
+               <div class="btn-group">
+               <a href="https://zerorobotics.mit.edu/" class="btn-apply">Apply Now</a>
+               </div>
+            </div>
+
+<!-- 20. Comp/Social Science -->
+            <div class="project-card" data-type="Competition" data-subject="Social Science" data-location="International">
+               <div class="pill-container">
+               <div class="program-label label-Competition">Competition</div>
+               <div class="subject-label">Social Science</div>
+               </div>
+               <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">
+               Academic WorldQuest
+               </h3>
+               <p class="meta-text mt-2">International</p>
+               <p class="card-desc">
+               Academic WorldQuest is a team-based quiz competition focused on global affairs, economics, history, and international relations. Teams compete at regional levels before advancing to the national finals.
+               </p>
+               <div class="btn-group">
+               <a href="https://www.worldaffairscouncils.org/academic-worldquest" class="btn-apply">Apply Now</a>
+               </div>
+            </div>
+
+
+            <div id="noResults" class="hidden col-span-full text-center py-20 text-gray-400 font-bold">No projects match your search criteria.</div>
         </div>
     </div>
 
-    <!-- Google Form Embed -->
-    <iframe 
-        src="https://docs.google.com/forms/d/e/1FAIpQLSdC8-tUzW1e9oia-YwwZasVt_LrBpNoHaO2P-dP27UmDJkrwQ/viewform?usp=dialog" 
-        class="form-frame"
-        frameborder="0" 
-        marginheight="0" 
-        marginwidth="0"
-        title="Project Submission Form"
-    >
-        Loading…
-    </iframe>
-  </main>
+    <script>
+        const activeFilters = { keyword: '', location: 'All', tags: new Set() };
 
-  <script>
-    // Handle navbar background change on scroll
-    window.addEventListener('scroll', () => {
-        const nav = document.getElementById('navbar');
-        if (window.scrollY > 50) {
-            nav.classList.add('scrolled');
-        } else {
-            nav.classList.remove('scrolled');
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        });
+
+        function toggleDropdown(id) {
+            const menu = document.getElementById(id);
+            const isShow = menu.classList.contains('show');
+            closeDropdowns();
+            if (!isShow) menu.classList.add('show');
         }
-    });
 
-    // Copy to clipboard function
-    function copyFormLink() {
-        const fullUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdC8-tUzW1e9oia-YwwZasVt_LrBpNoHaO2P-dP27UmDJkrwQ/viewform?usp=dialog";
-        const temp = document.createElement('textarea');
-        document.body.appendChild(temp);
-        temp.value = fullUrl;
-        temp.select();
-        document.execCommand('copy');
-        document.body.removeChild(temp);
+        function closeDropdowns() {
+            document.querySelectorAll('.dropdown-menu, .location-dropdown').forEach(m => m.classList.remove('show'));
+        }
 
-        const feedback = document.getElementById('copyFeedback');
-        feedback.style.opacity = '1';
-        setTimeout(() => feedback.style.opacity = '0', 2000);
-    }
-  </script>
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const icon = content.previousElementSibling.querySelector('svg');
+            content.classList.toggle('open');
+            icon.classList.toggle('rotate-180');
+        }
 
+        function selectLocation(loc) {
+            activeFilters.location = loc;
+            const label = document.getElementById('locationLabel');
+            const btn = document.getElementById('locBtn');
+            label.innerText = loc === 'All' ? 'Location' : loc;
+            btn.classList.toggle('active', loc !== 'All');
+            closeDropdowns();
+            applyFilters();
+        }
+
+        function toggleTag(el, name) {
+            const tagId = 'tag-' + name.replace(/\s+/g, '-').toLowerCase();
+            if (activeFilters.tags.has(name)) {
+                activeFilters.tags.delete(name);
+                el.classList.remove('active');
+                const bubble = document.getElementById(tagId);
+                if (bubble) bubble.remove();
+            } else {
+                activeFilters.tags.add(name);
+                el.classList.add('active');
+                const container = document.getElementById('activeTagRow');
+                const bubble = document.createElement('div');
+                bubble.className = 'tag-bubble';
+                bubble.id = tagId;
+                bubble.innerHTML = `${name} <span>&times;</span>`;
+                bubble.onclick = () => {
+                    el.classList.remove('active');
+                    activeFilters.tags.delete(name);
+                    bubble.remove();
+                    applyFilters();
+                };
+                container.appendChild(bubble);
+            }
+            applyFilters();
+        }
+
+        document.getElementById('keywordSearch').addEventListener('input', (e) => {
+            activeFilters.keyword = e.target.value.toLowerCase();
+            applyFilters();
+        });
+
+        function applyFilters() {
+            const cards = document.querySelectorAll('.project-card');
+            const noResults = document.getElementById('noResults');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const type = card.dataset.type;
+                const subject = card.dataset.subject;
+                const location = card.dataset.location;
+                const text = card.innerText.toLowerCase();
+
+                const matchLoc = activeFilters.location === 'All' || location === activeFilters.location || (activeFilters.location === 'Remote' && location === 'Remote');
+                const matchKey = text.includes(activeFilters.keyword);
+                
+                // If no tags selected, show all. If tags selected, card must match at least one (Type OR Subject)
+                let matchTags = activeFilters.tags.size === 0 || activeFilters.tags.has(type) || activeFilters.tags.has(subject);
+
+                if (matchLoc && matchKey && matchTags) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+            noResults.classList.toggle('hidden', visibleCount > 0);
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.closest('.action-btn') && !event.target.closest('.dropdown-menu') && !event.target.closest('.location-dropdown')) {
+                closeDropdowns();
+            }
+        }
+    </script>
 </body>
 </html>
