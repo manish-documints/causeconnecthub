@@ -152,6 +152,14 @@
         background: var(--hero-gradient);
         color: white;
     }
+
+    .mobile-add-project {
+        display: none;
+    }
+
+    .desktop-btn {
+        display: block;
+    }
     /* --- MOBILE MENU STYLES --- */
     .mobile-hamburger {
         display: none;
@@ -207,6 +215,17 @@
             font-size: 1.2rem;
             margin: 15px 0;
             font-weight: 600;
+        }
+
+        .nav-links .mobile-add-project {
+            background: var(--hero-gradient) !important;
+            color: white !important;
+            padding: 12px 28px !important;
+            border-radius: 50px !important;
+            font-weight: 700 !important;
+            margin-top: 20px !important;
+            display: inline-block !important;
+            text-decoration: none !important;
         }
 
         .desktop-btn {
@@ -522,13 +541,19 @@
   <nav class="nav-bar">
     <div class="nav-container">
         <div class="nav-logo"><h1>CauseConnectHub</h1></div>
-        <div class="nav-links">
+        <div class="nav-links" id="navLinks">
           <a href="index.html"style="font-weight: 800">Home</a> 
           <a href="explore.html">Find Extracurriculars</a> 
           <a href="award.html">Awards & Scholarships</a> 
           <a href="resource.html">Resources</a>
+          <a href="project.html" class="mobile-add-project">Add Your Project</a>
         </div>
-        <a href="project.html" class="btn-nav">Add Your Project</a>
+        <a href="project.html" class="btn-nav desktop-btn">Add Your Project</a>
+        <div class="mobile-hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
     </div>
   </nav>
 
@@ -642,6 +667,22 @@
   </div>
 
   <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navLinks.classList.toggle('active');
+    });
+
+    // Close menu when a link is clicked
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navLinks.classList.remove('active');
+        });
+    });
+
     window.addEventListener('scroll', () => {
         const nav = document.querySelector('.nav-bar');
         if (window.scrollY > 50) nav.classList.add('scrolled');
