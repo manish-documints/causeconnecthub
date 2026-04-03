@@ -59,8 +59,11 @@
         .nav-logo h1 { font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--text-dark); margin: 0; }
         .nav-logo h1 span { background: var(--hero-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
+        .nav-links { display: flex; gap: 24px; }
         .nav-links a { color: var(--text-dark); text-decoration: none; font-weight: 500; font-size: 0.95rem; margin: 0 12px; transition: 0.2s; }
         .nav-links a.active { color: var(--vibrant-orange); font-weight: 800; }
+        .mobile-add-project { display: none; }
+        .desktop-btn { display: block; }
         
         .btn-nav {
             background: var(--hero-gradient); color: white; padding: 10px 22px;
@@ -82,7 +85,7 @@
         display: block;
         height: 3px;
         width: 100%;
-        background-color: white;
+        background-color: var(--vibrant-orange);
         border-radius: 3px;
         transition: all 0.3s ease;
     }
@@ -122,6 +125,17 @@
             font-size: 1.2rem;
             margin: 15px 0;
             font-weight: 600;
+        }
+
+        .nav-links .mobile-add-project {
+            background: var(--hero-gradient) !important;
+            color: white !important;
+            padding: 12px 28px !important;
+            border-radius: 50px !important;
+            font-weight: 700 !important;
+            margin-top: 20px !important;
+            display: inline-block !important;
+            text-decoration: none !important;
         }
 
         .desktop-btn {
@@ -235,16 +249,22 @@
 </head>
 <body>
 
-    <nav class="nav-bar">
+    <nav class="nav-bar" id="navbar">
         <div class="nav-container">
             <div class="nav-logo"><h1><span>Cause</span>Connect<span>Hub</span></h1></div>
-            <div class="nav-links">
+            <div class="nav-links" id="navLinks">
                 <a href="index.html">Home</a> 
                 <a href="explore.html">Find Extracurriculars</a> 
                 <a href="award.html">Awards & Scholarships</a> 
                 <a href="resource.html" class="active">Resources</a>
+                <a href="project.html" class="mobile-add-project">Add Your Project</a>
             </div>
-            <a href="project.html" class="btn-nav">Add Your Project</a>
+            <a href="project.html" class="btn-nav desktop-btn">Add Your Project</a>
+            <div class="mobile-hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </nav>
 
@@ -608,6 +628,25 @@
             document.getElementById('resultTitle').textContent = finalResult.title;
             document.getElementById('resultDesc').textContent = finalResult.desc;
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+
+            if (hamburger && navLinks) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
+
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        hamburger.classList.remove('active');
+                        navLinks.classList.remove('active');
+                    });
+                });
+            }
+        });
     </script>
 </body>
 </html>
