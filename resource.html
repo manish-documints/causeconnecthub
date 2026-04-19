@@ -293,6 +293,96 @@
         .progress-bar { height: 8px; border-radius: 10px; background: #f1f5f9; overflow: hidden; margin-bottom: 20px; }
         .progress-fill { height: 100%; background: var(--hero-gradient); transition: 0.3s; }
 
+        /* --- ESSAY / INITIATIVE MODALS --- */
+        .tool-modal {
+            position: fixed; inset: 0; z-index: 2000; display: none;
+            justify-content: center; align-items: center; padding: 20px;
+        }
+        .tool-modal.show { display: flex; }
+        .tool-modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); }
+        .tool-modal-content {
+            position: relative; width: 100%; max-width: 680px; background: white; border-radius: 40px;
+            padding: 44px 40px; z-index: 2001; animation: modalIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-height: 90vh; overflow-y: auto;
+        }
+        .tool-modal-close {
+            position: absolute; top: 20px; right: 20px; background: none; border: none;
+            color: #94a3b8; cursor: pointer; transition: 0.2s;
+        }
+        .tool-modal-close:hover { color: #475569; }
+
+        .essay-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+        .essay-tab {
+            padding: 8px 18px; border-radius: 50px; border: 2px solid #f1f5f9;
+            background: white; font-weight: 700; font-size: 0.8rem; cursor: pointer;
+            color: var(--text-muted); transition: 0.2s;
+        }
+        .essay-tab.active { background: var(--vibrant-orange); border-color: var(--vibrant-orange); color: white; }
+        .essay-panel { display: none; }
+        .essay-panel.active { display: block; }
+
+        .prompt-card {
+            background: var(--pastel-bg); border-radius: 18px; padding: 18px 20px;
+            margin-bottom: 12px; border-left: 4px solid var(--vibrant-orange);
+        }
+        .prompt-card h5 { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 0.8rem;
+            color: var(--vibrant-orange); margin: 0 0 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+        .prompt-card p { font-size: 0.88rem; color: #475569; margin: 0; line-height: 1.55; }
+
+        .structure-row {
+            display: flex; gap: 14px; align-items: flex-start;
+            padding: 14px 0; border-bottom: 1px solid #f1f5f9;
+        }
+        .structure-row:last-child { border-bottom: none; }
+        .structure-label {
+            min-width: 90px; font-family: 'Outfit', sans-serif; font-weight: 800;
+            font-size: 0.8rem; color: var(--vibrant-orange); padding-top: 2px;
+        }
+        .structure-desc { font-size: 0.88rem; color: #475569; line-height: 1.55; }
+
+        .tip-item {
+            display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; align-items: flex-start;
+        }
+        .tip-item:last-child { border-bottom: none; }
+        .tip-icon { font-size: 1.1rem; line-height: 1.4; flex-shrink: 0; }
+        .tip-text { font-size: 0.88rem; color: #475569; line-height: 1.55; }
+        .tip-text strong { color: var(--text-dark); }
+
+        .init-progress-wrap { margin-bottom: 28px; }
+        .init-progress-label {
+            display: flex; justify-content: space-between;
+            font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px;
+        }
+        .init-progress-bar { height: 10px; border-radius: 10px; background: #f1f5f9; overflow: hidden; }
+        .init-progress-fill { height: 100%; background: var(--hero-gradient); transition: 0.4s; width: 0%; }
+
+        .step-item {
+            display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid #f1f5f9;
+            align-items: flex-start; cursor: pointer;
+        }
+        .step-item:last-child { border-bottom: none; }
+        .step-check {
+            width: 26px; height: 26px; border-radius: 50%; border: 2.5px solid #e2e8f0;
+            flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+            transition: 0.2s; background: white; margin-top: 2px;
+        }
+        .step-item.done .step-check { background: var(--vibrant-orange); border-color: var(--vibrant-orange); }
+        .step-check svg { display: none; }
+        .step-item.done .step-check svg { display: block; }
+        .step-body { flex: 1; }
+        .step-num { font-size: 0.72rem; font-weight: 800; color: var(--vibrant-orange); text-transform: uppercase; letter-spacing: 0.07em; }
+        .step-title { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1rem; color: var(--primary-purple); margin: 2px 0 4px; }
+        .step-item.done .step-title { text-decoration: line-through; color: #94a3b8; }
+        .step-desc { font-size: 0.84rem; color: var(--text-muted); line-height: 1.5; }
+
+        .done-banner {
+            display: none; text-align: center; padding: 20px;
+            background: linear-gradient(135deg, #fff7ed, #ffedd5); border-radius: 20px; margin-top: 20px;
+        }
+        .done-banner.show { display: block; }
+        .done-banner p { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--vibrant-orange); margin: 0 0 6px; }
+        .done-banner span { font-size: 0.85rem; color: #92400e; }
+
     </style>
 </head>
 <body>
@@ -358,6 +448,30 @@
                 </div>
             </div>
 
+            <!-- APPLICATION ESSAY TOOLKIT -->
+            <div class="resource-card" onclick="openEssayModal()">
+                <div class="icon-box">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                </div>
+                <h3>Application Essay Toolkit</h3>
+                <p>Common prompts, structure guides, show-don't-tell tips, and real examples to help you write essays that get noticed.</p>
+                <div class="card-footer">
+                    <button class="btn-action">Open Toolkit</button>
+                </div>
+            </div>
+
+            <!-- INITIATIVE STARTER GUIDE -->
+            <div class="resource-card" onclick="openInitiativeModal()">
+                <div class="icon-box">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+                <h3>Initiative Starter Guide</h3>
+                <p>A 7-step interactive checklist for launching your own youth-led project — from naming it to tracking your impact.</p>
+                <div class="card-footer">
+                    <button class="btn-action">Start Checklist</button>
+                </div>
+            </div>
+
             <!-- ACTIVITY TRACKER (COMING SOON) -->
             <div class="resource-card opacity-70 cursor-default">
                 <div class="icon-box" style="background: #f1f5f9; color: #94a3b8;">
@@ -368,6 +482,214 @@
                 <div class="card-footer">
                     <span class="text-xs font-black uppercase text-gray-400 tracking-widest">Coming Soon</span>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- APPLICATION ESSAY TOOLKIT MODAL -->
+    <div id="essayModal" class="tool-modal">
+        <div class="tool-modal-overlay" onclick="closeEssayModal()"></div>
+        <div class="tool-modal-content">
+            <button class="tool-modal-close" onclick="closeEssayModal()">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            <p style="font-size:0.75rem;font-weight:800;color:var(--vibrant-orange);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Resource</p>
+            <h3 style="font-family:'Outfit';font-size:1.9rem;font-weight:800;color:var(--primary-purple);margin:0 0 24px;">Application Essay Toolkit</h3>
+
+            <div class="essay-tabs">
+                <button class="essay-tab active" onclick="switchTab('prompts')">Common Prompts</button>
+                <button class="essay-tab" onclick="switchTab('structure')">Structure Guide</button>
+                <button class="essay-tab" onclick="switchTab('tips')">Show, Don't Tell</button>
+                <button class="essay-tab" onclick="switchTab('mistakes')">Common Mistakes</button>
+            </div>
+
+            <!-- PROMPTS -->
+            <div class="essay-panel active" id="panel-prompts">
+                <div class="prompt-card">
+                    <h5>Challenge &amp; Growth</h5>
+                    <p>"Describe a challenge you faced. What did it teach you about yourself?"<br><span style="color:#94a3b8;font-size:0.82rem;">Focus on the internal change, not just the event.</span></p>
+                </div>
+                <div class="prompt-card">
+                    <h5>Leadership &amp; Impact</h5>
+                    <p>"Tell us about a time you led a group or initiative. What was the outcome?"<br><span style="color:#94a3b8;font-size:0.82rem;">Use real numbers — people reached, money raised, hours contributed.</span></p>
+                </div>
+                <div class="prompt-card">
+                    <h5>Community &amp; Identity</h5>
+                    <p>"What community do you belong to, and how has it shaped you?"<br><span style="color:#94a3b8;font-size:0.82rem;">Be specific — avoid generic statements about "diversity."</span></p>
+                </div>
+                <div class="prompt-card">
+                    <h5>Goals &amp; Motivation</h5>
+                    <p>"Why this school / major / program? Where do you see yourself in 10 years?"<br><span style="color:#94a3b8;font-size:0.82rem;">Connect your past experiences directly to your stated future goals.</span></p>
+                </div>
+                <div class="prompt-card">
+                    <h5>Influential Person or Work</h5>
+                    <p>"Who or what has most influenced your thinking?"<br><span style="color:#94a3b8;font-size:0.82rem;">The essay is about YOU — not them. What did YOU do with that influence?</span></p>
+                </div>
+                <div class="prompt-card">
+                    <h5>Open-Ended / Creative</h5>
+                    <p>"Share anything important to you that isn't reflected elsewhere in your application."<br><span style="color:#94a3b8;font-size:0.82rem;">Use this to fill gaps — unusual hobbies, unconventional paths, or a side of you that tests don't capture.</span></p>
+                </div>
+            </div>
+
+            <!-- STRUCTURE -->
+            <div class="essay-panel" id="panel-structure">
+                <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:18px;">Most strong essays (250–650 words) follow this four-part arc:</p>
+                <div class="structure-row">
+                    <div class="structure-label">Hook</div>
+                    <div class="structure-desc"><strong>First 1–3 sentences.</strong> Drop the reader into a vivid scene, a surprising statement, or an unexpected question. Avoid "I was born..." or dictionary definitions.</div>
+                </div>
+                <div class="structure-row">
+                    <div class="structure-label">Context</div>
+                    <div class="structure-desc"><strong>~20% of word count.</strong> Give just enough background so the conflict or situation makes sense. Don't over-explain — trust your reader.</div>
+                </div>
+                <div class="structure-row">
+                    <div class="structure-label">Core Story</div>
+                    <div class="structure-desc"><strong>~50% of word count.</strong> The heart of the essay. Show what you did, thought, and felt. Use specific details and sensory language. Let the tension breathe.</div>
+                </div>
+                <div class="structure-row">
+                    <div class="structure-label">Takeaway</div>
+                    <div class="structure-desc"><strong>Final ~25%.</strong> What changed? What do you now know or believe? Connect it forward — how does this shape who you're becoming? Avoid over-summarizing.</div>
+                </div>
+                <div style="background:#f8fafc;border-radius:16px;padding:16px 18px;margin-top:20px;">
+                    <p style="font-size:0.82rem;font-weight:700;color:var(--text-dark);margin:0 0 6px;">Word Count Tips</p>
+                    <p style="font-size:0.82rem;color:var(--text-muted);margin:0;line-height:1.6;">Common App: 650 words max — aim for 620–640 so you seem deliberate, not padded. Supplemental essays: 250 words is tight; every sentence must earn its place. Activity descriptions: 150 characters — lead with action verbs, use numerals.</p>
+                </div>
+            </div>
+
+            <!-- TIPS -->
+            <div class="essay-panel" id="panel-tips">
+                <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:18px;">Admissions readers see thousands of essays. The ones that stick are <em>specific and sensory</em> — not abstract and summarized.</p>
+                <div class="tip-item">
+                    <div class="tip-icon">❌</div>
+                    <div class="tip-text"><strong>Tell:</strong> "I was nervous before the competition."<br><strong>Show:</strong> "My hands wouldn't stop clicking the pen cap. I'd rehearsed the opening 40 times, but standing in the wings, I couldn't remember the first word."</div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-icon">❌</div>
+                    <div class="tip-text"><strong>Tell:</strong> "I learned the value of teamwork."<br><strong>Show:</strong> "At 11 PM, Maya still hadn't finished her section. Instead of presenting the deck without her slides, we rebuilt the whole thing together — and won."</div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-icon">❌</div>
+                    <div class="tip-text"><strong>Tell:</strong> "My community service changed my perspective."<br><strong>Show:</strong> "Mr. Reyes didn't need a can of soup. He needed someone to sit with him for twenty minutes and actually listen."</div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-icon">✅</div>
+                    <div class="tip-text"><strong>The test:</strong> After writing a paragraph, ask — "Could this sentence describe anyone? Or does it describe only me?" If it could describe anyone, rewrite with a detail only you could know.</div>
+                </div>
+            </div>
+
+            <!-- MISTAKES -->
+            <div class="essay-panel" id="panel-mistakes">
+                <div class="tip-item">
+                    <div class="tip-icon">⚠️</div>
+                    <div class="tip-text"><strong>Retelling your résumé.</strong> Admissions already has your activity list. Use the essay to reveal character, not repeat accomplishments.</div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-icon">⚠️</div>
+                    <div class="tip-text"><strong>Starting with "I have always..."</strong> or "Ever since I was young..." — overused openings that bury the reader in backstory before earning their attention.</div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-icon">⚠️</div>
+                    <div class="tip-text"><strong>The tragedy essay without growth.</strong> Hardship is valid — but readers want to see what you did with it, not just what happened to you.</div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-icon">⚠️</div>
+                    <div class="tip-text"><strong>Vague virtues.</strong> Saying you are "passionate," "driven," or "a natural leader" tells an admissions officer nothing. Show the behavior; let them draw the conclusion.</div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-icon">⚠️</div>
+                    <div class="tip-text"><strong>Copying a template.</strong> AI-generated or template essays flatten your voice. Write a messy first draft in your own words — polish it later.</div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-icon">⚠️</div>
+                    <div class="tip-text"><strong>Submitting without reading aloud.</strong> If you stumble when reading it out loud, a reader will stumble too. Your essay should sound like you at your best.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INITIATIVE STARTER GUIDE MODAL -->
+    <div id="initiativeModal" class="tool-modal">
+        <div class="tool-modal-overlay" onclick="closeInitiativeModal()"></div>
+        <div class="tool-modal-content">
+            <button class="tool-modal-close" onclick="closeInitiativeModal()">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            <p style="font-size:0.75rem;font-weight:800;color:var(--vibrant-orange);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Interactive Checklist</p>
+            <h3 style="font-family:'Outfit';font-size:1.9rem;font-weight:800;color:var(--primary-purple);margin:0 0 6px;">Initiative Starter Guide</h3>
+            <p style="font-size:0.88rem;color:var(--text-muted);margin:0 0 24px;">Check off each step as you complete it. Your progress is saved while this tab is open.</p>
+
+            <div class="init-progress-wrap">
+                <div class="init-progress-label">
+                    <span>Your Progress</span>
+                    <span id="initProgressText">0 of 7 complete</span>
+                </div>
+                <div class="init-progress-bar">
+                    <div class="init-progress-fill" id="initProgressFill"></div>
+                </div>
+            </div>
+
+            <div id="stepsContainer">
+                <div class="step-item" onclick="toggleStep(0)">
+                    <div class="step-check"><svg width="14" height="14" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+                    <div class="step-body">
+                        <div class="step-num">Step 1</div>
+                        <div class="step-title">Define Your Mission</div>
+                        <div class="step-desc">Write one sentence: who you help, what you do, and why it matters. Example: "I help middle schoolers in my district learn to code through free Saturday workshops."</div>
+                    </div>
+                </div>
+                <div class="step-item" onclick="toggleStep(1)">
+                    <div class="step-check"><svg width="14" height="14" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+                    <div class="step-body">
+                        <div class="step-num">Step 2</div>
+                        <div class="step-title">Name It &amp; Brand It</div>
+                        <div class="step-desc">Choose a clear, memorable name. Create a simple logo (Canva is free). Set up a free email address like yourinitiative@gmail.com to look professional.</div>
+                    </div>
+                </div>
+                <div class="step-item" onclick="toggleStep(2)">
+                    <div class="step-check"><svg width="14" height="14" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+                    <div class="step-body">
+                        <div class="step-num">Step 3</div>
+                        <div class="step-title">Build Your Core Team</div>
+                        <div class="step-desc">Recruit 2–4 committed peers with complementary skills — someone who can design, someone who can organize, someone who can communicate. Define each person's role in writing.</div>
+                    </div>
+                </div>
+                <div class="step-item" onclick="toggleStep(3)">
+                    <div class="step-check"><svg width="14" height="14" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+                    <div class="step-body">
+                        <div class="step-num">Step 4</div>
+                        <div class="step-title">Make It Official</div>
+                        <div class="step-desc">Register as a school club or find an adult advisor/sponsor. Set up a free Google Workspace or Notion workspace for your team. Document your founding date — it matters for applications.</div>
+                    </div>
+                </div>
+                <div class="step-item" onclick="toggleStep(4)">
+                    <div class="step-check"><svg width="14" height="14" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+                    <div class="step-body">
+                        <div class="step-num">Step 5</div>
+                        <div class="step-title">Set Your 30-Day Goal</div>
+                        <div class="step-desc">Pick one concrete, measurable outcome to hit in 30 days. Example: "Host our first workshop with at least 15 attendees by [date]." Write it down and share it with your team.</div>
+                    </div>
+                </div>
+                <div class="step-item" onclick="toggleStep(5)">
+                    <div class="step-check"><svg width="14" height="14" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+                    <div class="step-body">
+                        <div class="step-num">Step 6</div>
+                        <div class="step-title">Track Your Impact</div>
+                        <div class="step-desc">Start logging: people served, hours volunteered, funds raised, events held. Keep a simple spreadsheet. Quantifiable impact is what makes your application stand out.</div>
+                    </div>
+                </div>
+                <div class="step-item" onclick="toggleStep(6)">
+                    <div class="step-check"><svg width="14" height="14" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+                    <div class="step-body">
+                        <div class="step-num">Step 7</div>
+                        <div class="step-title">Apply for Recognition &amp; Funding</div>
+                        <div class="step-desc">Search our Awards &amp; Scholarships page for youth leadership grants. Look into DoSomething.org, NYLC, and local community foundations. Even a small grant validates your work.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="done-banner" id="doneBanner">
+                <p>You're ready to launch!</p>
+                <span>Every great initiative started exactly where you are right now. Go make it happen.</span>
             </div>
         </div>
     </div>
@@ -684,6 +1006,51 @@
             document.getElementById('quizResults').classList.remove('hidden');
             document.getElementById('resultTitle').textContent = finalResult.title;
             document.getElementById('resultDesc').textContent = finalResult.desc;
+        }
+
+        // --- ESSAY TOOLKIT ---
+        function openEssayModal() {
+            document.getElementById('essayModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+            switchTab('prompts');
+        }
+        function closeEssayModal() {
+            document.getElementById('essayModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+        function switchTab(tab) {
+            document.querySelectorAll('.essay-tab').forEach((t, i) => {
+                const tabs = ['prompts','structure','tips','mistakes'];
+                t.classList.toggle('active', tabs[i] === tab);
+            });
+            document.querySelectorAll('.essay-panel').forEach(p => {
+                p.classList.toggle('active', p.id === 'panel-' + tab);
+            });
+        }
+
+        // --- INITIATIVE GUIDE ---
+        const stepStates = Array(7).fill(false);
+
+        function openInitiativeModal() {
+            document.getElementById('initiativeModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+            renderSteps();
+        }
+        function closeInitiativeModal() {
+            document.getElementById('initiativeModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+        function toggleStep(idx) {
+            stepStates[idx] = !stepStates[idx];
+            renderSteps();
+        }
+        function renderSteps() {
+            const items = document.querySelectorAll('.step-item');
+            items.forEach((el, i) => el.classList.toggle('done', stepStates[i]));
+            const done = stepStates.filter(Boolean).length;
+            document.getElementById('initProgressFill').style.width = (done / 7 * 100) + '%';
+            document.getElementById('initProgressText').textContent = done + ' of 7 complete';
+            document.getElementById('doneBanner').classList.toggle('show', done === 7);
         }
 
         document.addEventListener('DOMContentLoaded', function() {
