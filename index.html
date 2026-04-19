@@ -95,11 +95,6 @@
         100% { opacity: 1; transform: translateX(0); }
     }
 
-    @keyframes highlightShine {
-        0% { opacity: 0; transform: translateX(-50px) scaleX(0.8); }
-        50% { opacity: 1; }
-        100% { opacity: 1; transform: translateX(0) scaleX(1); }
-    }
 
     @keyframes headingShine {
         0% { text-shadow: 0 0 0 rgba(255,255,255,0); }
@@ -327,40 +322,43 @@
         margin-bottom: 24px;
         font-weight: 800;
         letter-spacing: -2px;
-        animation: headingShine 2s ease-in-out 1.5s 1;
     }
 
     .hero-content h2 .word-1 {
         display: inline-block;
-        animation: slideUp 1s ease-out forwards;
+        animation: slideUp 1s ease-out 0.3s forwards;
         opacity: 0;
-        animation-delay: 0.3s;
+    }
+
+    @keyframes wordGlow {
+        0%   { text-shadow: none; }
+        40%  { text-shadow: 0 0 18px rgba(255,255,255,0.7), 0 0 40px rgba(255,180,60,0.35); }
+        100% { text-shadow: none; }
     }
 
     .hero-content h2 .word-2 {
         display: inline-block;
-        opacity: 0;
-        animation: wordTyping 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        animation-delay: 0.85s;
-        position: relative;
-    }
-
-    .hero-content h2 .word-2::before {
-        content: '';
-        position: absolute;
-        inset: -12px -16px;
-        background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.15) 40%, transparent 100%);
-        border-radius: 28px;
-        opacity: 0;
-        animation: highlightShine 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        animation-delay: 0.85s;
-        z-index: -1;
-        pointer-events: none;
-    }
-
-    .hero-content h2 .word-2:hover::before {
-        animation: none;
         opacity: 1;
+        position: relative;
+        animation: wordGlow 2s ease-in-out 2.1s 1;
+    }
+
+    .typing-cursor {
+        display: inline-block;
+        width: 3px;
+        background: currentColor;
+        margin-left: 2px;
+        vertical-align: baseline;
+        animation: cursorBlink 0.75s step-end infinite;
+        border-radius: 1px;
+        height: 0.85em;
+        position: relative;
+        top: 0.05em;
+    }
+
+    @keyframes cursorBlink {
+        0%, 100% { opacity: 1; }
+        50%       { opacity: 0; }
     }
 
     .hero-content p,
@@ -462,11 +460,18 @@
         padding: 40px;
         border-radius: 30px;
         box-shadow: 0 15px 40px rgba(0,0,0,0.06);
-        transition: transform 0.3s ease;
+        transition: transform 0.4s ease, box-shadow 0.4s ease, opacity 0.6s ease, translate 0.6s ease;
         border: 1px solid rgba(0,0,0,0.02);
+        opacity: 0;
+        translate: 0 40px;
     }
 
-    .card:hover { transform: translateY(-10px); }
+    .card.in-view {
+        opacity: 1;
+        translate: 0 0;
+    }
+
+    .card:hover { transform: translateY(-10px); box-shadow: 0 25px 60px rgba(0,0,0,0.12); }
 
     .card-icon {
         width: 60px;
@@ -634,9 +639,23 @@
     }
 
     @media (max-width: 768px) {
-        .hero-container { border-radius: 0 0 40px 40px; min-height: 70vh; }
-        .hero-content h2 { font-size: 3.2rem; }
-        .grid-cards { margin-top: -40px; }
+        .hero-container { border-radius: 0 0 40px 40px; min-height: 70vh; padding: 80px 20px 70px; }
+        .hero-content h2 { font-size: 2.6rem; letter-spacing: -1px; }
+        .hero-content p { font-size: 1rem; }
+        .hero-btns { flex-direction: column; align-items: center; gap: 12px; }
+        .hero-btns a { width: 100%; max-width: 260px; text-align: center; }
+        .grid-cards { margin-top: -30px; grid-template-columns: 1fr; gap: 16px; }
+        .card { padding: 28px 24px; }
+        .about-flex { gap: 24px; }
+        .about-image { min-width: 100%; height: 200px; border-radius: 24px; }
+        .about-text { min-width: 100%; }
+        .about-text h2 { font-size: 2rem; }
+        .section-wrap { padding: 40px 16px 20px; }
+        .faq-container { padding: 40px 0 60px; }
+        .faq-inner { padding: 0 16px; }
+    }
+    @media (max-width: 420px) {
+        .hero-content h2 { font-size: 1.9rem; }
     }
   </style>
 </head>
@@ -665,7 +684,7 @@
   <div class="hero-outer">
     <section class="hero-container">
       <div class="hero-content">
-          <h2><span class="word-1">Your Passion,</span><br><span class="word-2">Our Connection.</span></h2>
+          <h2><span class="word-1">Your Passion,</span><br><span class="word-2"><span class="typing-text"></span><span class="typing-cursor"></span></span></h2>
           <p>The ultimate platform for high school students to find scholarships, awards, competitions, and youth-led initiatives, connect with peers, and create meaningful impact together.</p>
           <div class="hero-btns">
               <a href="explore.html" class="btn-main">Find a Project</a>
@@ -797,6 +816,40 @@
             else nav.classList.remove('scrolled');
         });
     });
+  </script>
+
+  <script>
+    // Staggered card scroll-reveal
+    const cards = document.querySelectorAll('.card');
+    const cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const card = entry.target;
+          const i = [...cards].indexOf(card);
+          setTimeout(() => card.classList.add('in-view'), i * 120);
+          cardObserver.unobserve(card);
+        }
+      });
+    }, { threshold: 0.15 });
+    cards.forEach(c => cardObserver.observe(c));
+
+    (function () {
+      const text = 'Our Connection.';
+      const el = document.querySelector('.typing-text');
+      const cursor = document.querySelector('.typing-cursor');
+      let i = 0;
+      // Wait for word-1 animation to finish before typing
+      setTimeout(function type() {
+        if (i <= text.length) {
+          el.textContent = text.slice(0, i);
+          i++;
+          setTimeout(type, i === text.length + 1 ? 0 : 65);
+        } else {
+          // Hide cursor after a short pause
+          setTimeout(() => cursor.style.display = 'none', 1200);
+        }
+      }, 900);
+    })();
   </script>
 
 </body>

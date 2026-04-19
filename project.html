@@ -32,6 +32,32 @@
       padding: 0;
     }
 
+    /* --- BACKGROUND ORBS --- */
+    .bg-orbs { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .orb { position: absolute; mix-blend-mode: multiply; filter: blur(85px); will-change: transform; animation: orbDrift ease-in-out infinite, blobMorph ease-in-out infinite alternate; }
+    .orb-1 { width: 480px; height: 400px; top: -10%; left: -8%; background: radial-gradient(ellipse, rgba(255,205,40,0.52) 0%, rgba(255,180,20,0.15) 70%); border-radius: 62% 38% 70% 30% / 52% 64% 36% 68%; animation-duration: 26s, 9s; animation-delay: 0s, 0s; }
+    .orb-2 { width: 360px; height: 400px; top: 35%; right: -8%; background: radial-gradient(ellipse, rgba(255,85,25,0.48) 0%, rgba(255,60,10,0.14) 70%); border-radius: 44% 56% 32% 68% / 68% 34% 66% 42%; animation-duration: 32s, 12s; animation-delay: -10s, -4s; }
+    .orb-3 { width: 440px; height: 340px; bottom: -8%; left: 22%; background: radial-gradient(ellipse, rgba(255,158,75,0.50) 0%, rgba(255,135,55,0.15) 70%); border-radius: 38% 62% 55% 45% / 60% 44% 56% 40%; animation-duration: 28s, 14s; animation-delay: -15s, -7s; }
+    .orb-4 { width: 280px; height: 320px; top: 18%; left: 48%; background: radial-gradient(ellipse, rgba(255,112,0,0.46) 0%, rgba(245,90,0,0.13) 70%); border-radius: 55% 45% 40% 60% / 45% 60% 40% 55%; animation-duration: 22s, 8s; animation-delay: -5s, -2s; }
+    .orb-5 { width: 380px; height: 310px; top: 60%; left: 6%; background: radial-gradient(ellipse, rgba(255,178,22,0.48) 0%, rgba(255,155,10,0.14) 70%); border-radius: 70% 30% 50% 50% / 35% 65% 35% 65%; animation-duration: 36s, 16s; animation-delay: -20s, -9s; }
+    @keyframes orbDrift {
+        0%   { transform: translate(0px,   0px)   scale(1);    }
+        14%  { transform: translate(65px,  -85px)  scale(1.20); }
+        28%  { transform: translate(-55px,  60px)  scale(0.82); }
+        42%  { transform: translate(85px,   75px)  scale(1.15); }
+        57%  { transform: translate(-70px, -50px)  scale(0.86); }
+        71%  { transform: translate(45px,  100px)  scale(1.22); }
+        85%  { transform: translate(-80px,  25px)  scale(0.80); }
+        100% { transform: translate(0px,   0px)   scale(1);    }
+    }
+    @keyframes blobMorph {
+        0%   { border-radius: 60% 40% 68% 32% / 55% 62% 38% 65%; }
+        25%  { border-radius: 40% 60% 30% 70% / 72% 28% 68% 32%; }
+        50%  { border-radius: 70% 30% 55% 45% / 38% 68% 32% 62%; }
+        75%  { border-radius: 30% 70% 68% 32% / 62% 38% 60% 40%; }
+        100% { border-radius: 60% 40% 68% 32% / 55% 62% 38% 65%; }
+    }
+
     /* --- NAVIGATION --- */
     .nav-bar {
       position: fixed; top: 0; left: 0; width: 100%; 
@@ -252,6 +278,14 @@
   </style>
 </head>
 <body>
+
+  <div class="bg-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div>
+    <div class="orb orb-5"></div>
+  </div>
 
   <nav class="nav-bar" id="navbar">
     <div class="nav-container">
