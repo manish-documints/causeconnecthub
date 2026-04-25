@@ -337,12 +337,12 @@
 
     .word-1 {
         display: inline-block; opacity: 0;
-        animation: lineEnter 0.8s cubic-bezier(0.22,1,0.36,1) 0.25s forwards;
+        animation: lineEnter 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s forwards;
     }
     .word-2 {
         display: inline-block; opacity: 0;
-        animation: blurRise 0.9s cubic-bezier(0.22,1,0.36,1) 0.82s forwards,
-                   wordGlow 2.2s ease-in-out 2.3s 1;
+        animation: blurRise 0.5s cubic-bezier(0.22,1,0.36,1) 0.42s forwards,
+                   wordGlow 2s ease-in-out 1.5s 1;
     }
 
     /* White dot grid + diagonal shine on hero */
@@ -391,7 +391,7 @@
         max-width: 650px;
         margin-left: auto;
         margin-right: auto;
-        animation: heroFadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 1.85s forwards;
+        animation: heroFadeUp 0.4s cubic-bezier(0.22,1,0.36,1) 0.9s forwards;
     }
 
     .hero-btns {
@@ -399,7 +399,7 @@
         justify-content: center;
         gap: 16px;
         opacity: 0;
-        animation: slideUp 0.65s cubic-bezier(0.22,1,0.36,1) 2.2s forwards;
+        animation: slideUp 0.4s cubic-bezier(0.22,1,0.36,1) 1.2s forwards;
     }
 
     @keyframes btnRing {
@@ -664,7 +664,7 @@
         .hero-content h2 { font-size: 3.2rem; letter-spacing: -1px; }
         .hero-content p { font-size: 1rem; }
         .hero-btns { flex-direction: column; align-items: center; gap: 12px; }
-        .hero-btns a { width: 100%; max-width: 260px; text-align: center; }
+        .hero-btns a { width: 100%; max-width: 280px; text-align: center; justify-content: center; }
         .grid-cards { margin-top: -30px; grid-template-columns: 1fr; gap: 16px; }
         .card { padding: 28px 24px; }
         .about-flex { gap: 24px; }
