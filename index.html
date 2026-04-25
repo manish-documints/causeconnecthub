@@ -67,10 +67,9 @@
         to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes wordGlow {
-        0% { opacity: 0; transform: translateX(-30px) skewX(-12deg); filter: blur(4px); }
-        65% { opacity: 1; transform: translateX(8px) skewX(2deg); filter: blur(0); }
-        100% { opacity: 1; transform: translateX(0) skewX(0); filter: blur(0); }
+    @keyframes heroShine {
+        from { left: -70%; }
+        to   { left: 130%; }
     }
 
     @keyframes buttonFloat {
@@ -89,10 +88,10 @@
         50% { transform: scale(1.08); opacity: 0.5; }
     }
 
-    @keyframes wordTyping {
-        0% { opacity: 0; transform: translateX(-20px); }
-        50% { opacity: 0.7; }
-        100% { opacity: 1; transform: translateX(0); }
+    @keyframes blurRise {
+        0%   { opacity: 0; transform: translateY(36px); filter: blur(12px); }
+        60%  { opacity: 1; filter: blur(1px); }
+        100% { opacity: 1; transform: translateY(0); filter: blur(0); }
     }
 
 
@@ -312,7 +311,8 @@
 
     .hero-content {
         max-width: 850px;
-        animation: fadeIn 1s ease-out forwards;
+        position: relative;
+        z-index: 2;
     }
 
     .hero-content h2 {
@@ -324,41 +324,46 @@
         letter-spacing: -2px;
     }
 
-    .hero-content h2 .word-1 {
-        display: inline-block;
-        animation: slideUp 1s ease-out 0.3s forwards;
-        opacity: 0;
+    /* Hero line entrances */
+    @keyframes lineEnter {
+        0%   { opacity: 0; transform: translateY(34px); }
+        100% { opacity: 1; transform: translateY(0); }
     }
-
     @keyframes wordGlow {
         0%   { text-shadow: none; }
-        40%  { text-shadow: 0 0 18px rgba(255,255,255,0.7), 0 0 40px rgba(255,180,60,0.35); }
+        40%  { text-shadow: 0 0 22px rgba(255,255,255,0.8), 0 0 45px rgba(255,180,60,0.4); }
         100% { text-shadow: none; }
     }
 
-    .hero-content h2 .word-2 {
-        display: inline-block;
-        opacity: 1;
-        position: relative;
-        animation: wordGlow 2s ease-in-out 2.1s 1;
+    .word-1 {
+        display: inline-block; opacity: 0;
+        animation: lineEnter 0.8s cubic-bezier(0.22,1,0.36,1) 0.25s forwards;
+    }
+    .word-2 {
+        display: inline-block; opacity: 0;
+        animation: blurRise 0.9s cubic-bezier(0.22,1,0.36,1) 0.82s forwards,
+                   wordGlow 2.2s ease-in-out 2.3s 1;
     }
 
-    .typing-cursor {
-        display: inline-block;
-        width: 3px;
-        background: currentColor;
-        margin-left: 2px;
-        vertical-align: baseline;
-        animation: cursorBlink 0.75s step-end infinite;
-        border-radius: 1px;
-        height: 0.85em;
-        position: relative;
-        top: 0.05em;
+    /* White dot grid + diagonal shine on hero */
+    .hero-container { overflow: hidden; }
+    .hero-container::before {
+        content: '';
+        position: absolute; inset: 0;
+        background-image: radial-gradient(circle, rgba(255,255,255,0.22) 1.5px, transparent 1.5px);
+        background-size: 28px 28px;
+        mask-image: radial-gradient(ellipse 55% 55% at 50% 50%, transparent 25%, black 75%);
+        -webkit-mask-image: radial-gradient(ellipse 55% 55% at 50% 50%, transparent 25%, black 75%);
+        pointer-events: none; z-index: 0;
     }
-
-    @keyframes cursorBlink {
-        0%, 100% { opacity: 1; }
-        50%       { opacity: 0; }
+    .hero-container::after {
+        content: '';
+        position: absolute;
+        top: -20%; left: -70%;
+        width: 55%; height: 140%;
+        background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.13) 50%, transparent 70%);
+        animation: heroShine 1.6s cubic-bezier(0.4,0,0.2,1) 2.6s 1 forwards;
+        pointer-events: none; z-index: 1;
     }
 
     .hero-content p,
@@ -373,53 +378,68 @@
     }
 
 
+    @keyframes heroFadeUp {
+        from { opacity: 0; transform: translateY(22px); }
+        to   { opacity: 0.95; transform: translateY(0); }
+    }
+
     .hero-content p {
         font-size: 1.25rem;
         margin-bottom: 40px;
-        opacity: 0.95;
+        opacity: 0;
         line-height: 1.6;
         max-width: 650px;
         margin-left: auto;
         margin-right: auto;
+        animation: heroFadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 1.85s forwards;
     }
 
     .hero-btns {
         display: flex;
         justify-content: center;
         gap: 16px;
+        opacity: 0;
+        animation: slideUp 0.65s cubic-bezier(0.22,1,0.36,1) 2.2s forwards;
+    }
+
+    @keyframes btnRing {
+        0%   { box-shadow: 0 0 0 0 rgba(255,255,255,0.55), 0 12px 32px rgba(0,0,0,0.12); }
+        65%  { box-shadow: 0 0 0 18px rgba(255,255,255,0), 0 12px 32px rgba(0,0,0,0.12); }
+        100% { box-shadow: 0 0 0 0 rgba(255,255,255,0),   0 12px 32px rgba(0,0,0,0.12); }
+    }
+    @keyframes arrowNudge {
+        0%, 100% { transform: translateX(0); }
+        50%       { transform: translateX(5px); }
     }
 
     .btn-main {
         background: white;
         color: var(--vibrant-orange);
-        padding: 18px 36px;
+        padding: 18px 40px;
         border-radius: 16px;
-        font-weight: 700;
+        font-weight: 800;
         text-decoration: none;
-        font-size: 1.1rem;
+        font-size: 1.15rem;
         transition: all 0.3s ease;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1), 0 0 15px rgba(255, 102, 51, 0.15);
-        animation: buttonSoftPulse 3s ease-in-out infinite;
+        box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+        animation: btnRing 2.2s ease-out 2.8s infinite;
         position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
     }
 
-    .btn-main::before {
-        content: '';
-        position: absolute;
-        inset: -3px;
-        background: radial-gradient(circle, rgba(255, 102, 51, 0.2) 0%, transparent 70%);
-        border-radius: 16px;
-        opacity: 0;
-        animation: buttonSoftGlow 3s ease-in-out infinite;
-        pointer-events: none;
-        z-index: -1;
+    .btn-main .btn-arrow {
+        display: inline-block;
+        animation: arrowNudge 1.4s ease-in-out 3s infinite;
     }
 
     .btn-main:hover {
-        transform: translateY(-3px) scale(1.02);
-        box-shadow: 0 15px 40px rgba(0,0,0,0.15), 0 0 25px rgba(255, 102, 51, 0.3);
+        transform: translateY(-3px) scale(1.03);
+        box-shadow: 0 18px 44px rgba(0,0,0,0.16), 0 0 28px rgba(255,255,255,0.25);
         animation: none;
     }
+    .btn-main:hover .btn-arrow { animation: none; transform: translateX(4px); }
 
     .btn-outline {
         background: rgba(255,255,255,0.1);
@@ -445,6 +465,7 @@
         max-width: 1200px;
         margin: 0 auto;
     }
+
 
     .grid-cards {
         display: grid;
@@ -684,10 +705,10 @@
   <div class="hero-outer">
     <section class="hero-container">
       <div class="hero-content">
-          <h2><span class="word-1">Your Passion,</span><br><span class="word-2"><span class="typing-text"></span><span class="typing-cursor"></span></span></h2>
+          <h2><span class="word-1">Your Passion,</span><br><span class="word-2">Our Connection.</span></h2>
           <p>The ultimate platform for high school students to find scholarships, awards, competitions, and youth-led initiatives, connect with peers, and create meaningful impact together.</p>
           <div class="hero-btns">
-              <a href="explore.html" class="btn-main">Find a Project</a>
+              <a href="explore.html" class="btn-main">Find a Project <span class="btn-arrow">→</span></a>
               <a href="award.html" class="btn-outline">Browse Awards</a>
           </div>
       </div>
@@ -833,23 +854,6 @@
     }, { threshold: 0.15 });
     cards.forEach(c => cardObserver.observe(c));
 
-    (function () {
-      const text = 'Our Connection.';
-      const el = document.querySelector('.typing-text');
-      const cursor = document.querySelector('.typing-cursor');
-      let i = 0;
-      // Wait for word-1 animation to finish before typing
-      setTimeout(function type() {
-        if (i <= text.length) {
-          el.textContent = text.slice(0, i);
-          i++;
-          setTimeout(type, i === text.length + 1 ? 0 : 65);
-        } else {
-          // Hide cursor after a short pause
-          setTimeout(() => cursor.style.display = 'none', 1200);
-        }
-      }, 900);
-    })();
   </script>
 
 </body>
