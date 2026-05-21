@@ -678,6 +678,59 @@
     @media (max-width: 420px) {
         .hero-content h2 { font-size: 2.6rem; }
     }
+
+    /* --- THEME TOGGLE --- */
+    .theme-toggle {
+        width: 36px; height: 36px; border-radius: 50%; border: none; cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        color: white; background: rgba(255,255,255,0.18); backdrop-filter: blur(10px);
+        transition: background 0.3s, color 0.3s, transform 0.2s; flex-shrink: 0;
+    }
+    .theme-toggle:hover { transform: scale(1.1); }
+    .nav-bar.scrolled .theme-toggle { color: var(--text-dark); background: rgba(0,0,0,0.06); }
+    .theme-toggle .moon-icon { display: block; }
+    .theme-toggle .sun-icon  { display: none; }
+
+    /* --- DARK MODE --- */
+    [data-theme="dark"] {
+        --vibrant-pink: #d03f82;
+        --vibrant-orange: #cf5528;
+        --vibrant-yellow: #c99c28;
+        --hero-gradient: linear-gradient(135deg, #d03f82 0%, #cf5528 50%, #c99c28 100%);
+        --soft-bg: #13111e;
+        --text-dark: #ede9ff;
+        --text-muted: #9896b8;
+    }
+    [data-theme="dark"] body { background: var(--soft-bg); color: var(--text-dark); }
+    [data-theme="dark"] .nav-bar.scrolled {
+        background: rgba(19, 17, 30, 0.95) !important;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    [data-theme="dark"] .nav-bar.scrolled .nav-logo h1 {
+        background: var(--hero-gradient);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    [data-theme="dark"] .nav-bar.scrolled .nav-links a { color: var(--text-dark); }
+    [data-theme="dark"] .nav-bar.scrolled .theme-toggle { color: var(--text-dark); background: rgba(255,255,255,0.08); }
+    [data-theme="dark"] .theme-toggle .moon-icon { display: none; }
+    [data-theme="dark"] .theme-toggle .sun-icon  { display: block; }
+    [data-theme="dark"] .nav-links { background: #1a1728; }
+    [data-theme="dark"] .nav-links a { color: var(--text-dark) !important; }
+    [data-theme="dark"] .hero-outer { background: var(--soft-bg); }
+    [data-theme="dark"] .card { background: #1c1929; border-color: #2e2848; }
+    [data-theme="dark"] .card h3 { color: var(--text-dark); }
+    [data-theme="dark"] .card-icon.icon-pink { background: #2a1530; }
+    [data-theme="dark"] .card-icon.icon-orange { background: #2a1e20; }
+    [data-theme="dark"] .card-icon.icon-yellow { background: #2a2418; }
+    [data-theme="dark"] .about-text h2 { color: var(--text-dark); }
+    [data-theme="dark"] .tagline { background: #2a1e28; }
+    [data-theme="dark"] .faq-container { background: #0f0d19; }
+    [data-theme="dark"] .faq-item { background: #1c1929; border-color: #2e2848; }
+    [data-theme="dark"] .faq-trigger { background: #1c1929; color: var(--text-dark); }
+    [data-theme="dark"] .faq-body { color: var(--text-muted); }
+    [data-theme="dark"] .faq-icon-box { background: #251f38; color: #9896b8; }
+    [data-theme="dark"] .btn-main { color: var(--vibrant-orange); }
   </style>
 </head>
 
@@ -693,7 +746,13 @@
           <a href="resource.html">Resources</a>
           <a href="project.html" class="mobile-add-project">Add Your Project</a>
         </div>
-        <a href="project.html" class="btn-nav desktop-btn">Add Your Project</a>
+        <div style="display:flex;align-items:center;gap:10px;">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            </button>
+            <a href="project.html" class="btn-nav desktop-btn">Add Your Project</a>
+        </div>
         <div class="mobile-hamburger" id="hamburger">
           <span></span>
           <span></span>
@@ -854,6 +913,15 @@
     }, { threshold: 0.15 });
     cards.forEach(c => cardObserver.observe(c));
 
+  </script>
+
+  <script>
+    if (localStorage.getItem('theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    document.getElementById('themeToggle').addEventListener('click', function() {
+        var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        isDark ? document.documentElement.removeAttribute('data-theme') : document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    });
   </script>
 
 </body>
