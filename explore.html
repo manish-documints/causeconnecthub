@@ -33,6 +33,7 @@
             color: var(--text-dark);
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
         }
         /* --- ADVANCED TRANSITIONS --- */
         
@@ -232,6 +233,17 @@
         .hero-box p { font-size: 0.95rem; }
         .submit-bar { padding: 10px 20px; flex-wrap: wrap; gap: 8px; }
         .card-grid, .results-grid { grid-template-columns: 1fr !important; }
+
+        .filter-wrapper { padding: 16px; border-radius: 22px; margin: 12px 16px 30px; width: auto; }
+        .action-btn { padding: 10px 16px; font-size: 0.82rem; }
+        .dropdown-menu {
+            width: calc(100vw - 48px);
+            right: auto;
+            left: 0;
+            padding: 16px;
+        }
+        .location-dropdown { width: calc(100vw - 80px); }
+        .cards-grid { grid-template-columns: 1fr !important; }
     }
     @media (max-width: 480px) {
         .hero-box h2 { font-size: 2.2rem; }
@@ -263,6 +275,7 @@
             max-width: 1100px; margin: 15px auto 40px; padding: 25px;
             background: white; border-radius: 35px; box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
             position: relative; z-index: 10;
+            box-sizing: border-box; width: 100%;
         }
         .search-bar { position: relative; flex-grow: 1; }
         .search-bar input {
@@ -282,6 +295,7 @@
             position: absolute; top: 120%; right: 0; width: 450px;
             background: white; border-radius: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.15);
             padding: 25px; z-index: 500; display: none; border: 1px solid #f0f0f0;
+            max-width: calc(100vw - 40px);
         }
         .dropdown-menu.show { display: block; animation: slideIn 0.3s ease; }
 
@@ -326,7 +340,7 @@
         }
 
         /* --- CARDS --- */
-        .content-wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px 100px; }
+        .content-wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px 100px; box-sizing: border-box; width: 100%; }
         .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
         
         .project-card {
