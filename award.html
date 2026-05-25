@@ -37,6 +37,7 @@
             color: var(--text-dark);
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
         }
 
         /* --- BACKGROUND ORBS --- */
@@ -206,6 +207,7 @@
             max-width: 1100px; margin: -40px auto 40px; padding: 30px;
             background: white; border-radius: 35px; box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
             position: relative; z-index: 10;
+            box-sizing: border-box; width: 100%;
         }
         .search-bar { position: relative; flex-grow: 1; }
         .search-bar input {
@@ -238,6 +240,7 @@
             position: absolute; top: 120%; right: 0; width: 500px;
             background: white; border-radius: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.15);
             padding: 25px; z-index: 500; display: none; border: 1px solid #f0f0f0;
+            max-width: calc(100vw - 40px);
         }
         .dropdown-menu.show { display: block; animation: slideIn 0.3s ease; }
 
@@ -443,6 +446,9 @@
             .hero-box { padding: 60px 24px; border-radius: 24px; }
             .hero-box h2 { font-size: 2.6rem; }
             .hero-box p { font-size: 0.95rem; }
+            .filter-wrapper { padding: 16px; border-radius: 22px; margin: 12px 16px 30px; width: auto; }
+            .action-btn { padding: 10px 14px; font-size: 0.82rem; }
+            .dropdown-menu { width: calc(100vw - 48px); right: auto; left: 0; padding: 16px; }
         }
         @media (max-width: 600px) {
             .nav-arrow { display: none; }
