@@ -324,7 +324,7 @@
         .type-pill.active { opacity: 1; border-color: currentColor; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         
         .pill-Youth-led { background-color: #bae6fd; color: #0c4a6e; }
-        .pill-Startup { background-color: #fbcfe8; color: #831843; }
+        .pill-Business { background-color: #fbcfe8; color: #831843; }
         .pill-Research { background-color: #bbf7d0; color: #064e3b; }
         .pill-Competition { background-color: #fde68a; color: #78350f; }
 
@@ -362,7 +362,7 @@
         }
 
         .label-Youth-led { background-color: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
-        .label-Startup { background-color: #fce7f3; color: #be185d; border-color: #fbcfe8; }
+        .label-Business { background-color: #fce7f3; color: #be185d; border-color: #fbcfe8; }
         .label-Research { background-color: #dcfce7; color: #15803d; border-color: #bbf7d0; }
         .label-Competition { background-color: #fef3c7; color: #b45309; border-color: #fde68a; }
 
@@ -402,6 +402,16 @@
 
         .hidden { display: none !important; }
         .rotate-180 { transform: rotate(180deg); }
+
+        /* --- TRANSLATE BUTTON --- */
+        .btn-translate {
+            display: inline-flex; align-items: center; gap: 5px;
+            background: #f0f4ff; color: #3b5bdb; border: 1.5px solid #c5d3f7;
+            border-radius: 10px; padding: 6px 12px; font-size: 0.78rem;
+            font-weight: 700; cursor: pointer; transition: 0.2s; margin-bottom: 10px;
+        }
+        .btn-translate:hover { background: #e0e8ff; border-color: #93a8f5; }
+        [data-theme="dark"] .btn-translate { background: #1e2a4a; color: #93c5fd; border-color: #2d3f6b; }
 
         @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -631,7 +641,7 @@
                 <span class="text-[11px] font-black text-gray-400 uppercase tracking-[0.15em]">Program Type:</span>
                 <div class="flex flex-wrap gap-3">
                     <div class="type-pill pill-Youth-led" data-type="Youth-led" onclick="toggleTag(this, 'Youth-led')">Youth-led</div>
-                    <div class="type-pill pill-Startup" data-type="Startup" onclick="toggleTag(this, 'Startup')">Startup</div>
+                    <div class="type-pill pill-Business" data-type="Business" onclick="toggleTag(this, 'Business')">Business</div>
                     <div class="type-pill pill-Research" data-type="Research" onclick="toggleTag(this, 'Research')">Research</div>
                     <div class="type-pill pill-Competition" data-type="Competition" onclick="toggleTag(this, 'Competition')">Competition</div>
                 </div>
@@ -639,6 +649,34 @@
         </div>
 
         <div id="projectGrid" class="cards-grid">
+
+          <!-- 1. La lune / Startup – French listing with translate toggle -->
+<div class="project-card" data-type="Business" data-subject="Community Support" data-subject="Entrepreneurship" data-location="In-person">
+    <div class="pill-container">
+        <div class="program-label label-Business">Business</div>
+        <div class="subject-label">Community Support</div>
+        <div class="subject-label">Entrepreneurship</div>
+    </div>
+    <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">La lune</h3>
+    <p class="meta-text mt-2">In-person</p>
+    <button class="btn-translate" onclick="toggleTranslation(this)" data-lang="fr">
+        🌐 Translate to English
+    </button>
+    <p class="card-desc translatable"
+        data-fr="Soutenir notre quincaillerie familiale, c'est investir dans l'espoir d'une famille congolaise. Mes parents au chômage ont tout misé sur ce commerce pour nourrir leur foyer et aider leur quartier. En 1re année, j'apprends la gestion pour le développer. Votre sponsoring nous donnera des outils et des stocks pour servir plus de clients. Ensemble, nous bâtirons une entreprise locale solide, source d'emplois et de fierté pour notre communauté."
+        data-en="Supporting our family hardware store means investing in the hope of a Congolese family. My unemployed parents have put everything into this business to feed their household and support their neighborhood. As a first-year student, I'm learning management to help it grow. Your sponsorship will give us the tools and stock to serve more customers. Together, we will build a strong local business — a source of jobs and pride for our community.">
+        Soutenir notre quincaillerie familiale, c'est investir dans l'espoir d'une famille congolaise. Mes parents au chômage ont tout misé sur ce commerce pour nourrir leur foyer et aider leur quartier. En 1re année, j'apprends la gestion pour le développer. Votre sponsoring nous donnera des outils et des stocks pour servir plus de clients. Ensemble, nous bâtirons une entreprise locale solide, source d'emplois et de fierté pour notre communauté.
+    </p>
+    <div class="card-info-box">
+        <span class="box-label">Looking for:</span>
+        <span class="box-text translatable"
+            data-fr="Des sponsors"
+            data-en="Sponsors">Des sponsors</span>
+    </div>
+    <div class="btn-group">
+        <a href="mailto:bwinjacibalinda@gmail.com" class="btn-apply">Contact</a>
+    </div>
+</div>
 
           <!-- 53.  / Youth-led -->
 <div class="project-card" data-type="Youth-led" data-subject="Pre-med" data-subject="Community Support" data-subject="Youth Empowerment" data-location="Remote">
@@ -1653,6 +1691,17 @@
 
     <script>
         const activeFilters = { keyword: '', location: 'All', tags: new Set() };
+
+        function toggleTranslation(btn) {
+            const card = btn.closest('.project-card');
+            const isCurrentlyFr = btn.dataset.lang === 'fr';
+            const newLang = isCurrentlyFr ? 'en' : 'fr';
+            card.querySelectorAll('.translatable').forEach(el => {
+                el.textContent = el.dataset[newLang];
+            });
+            btn.dataset.lang = newLang;
+            btn.textContent = isCurrentlyFr ? '🌐 Afficher en français' : '🌐 Translate to English';
+        }
 
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
