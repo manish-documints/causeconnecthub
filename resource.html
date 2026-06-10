@@ -101,7 +101,7 @@
         .nav-links a { color: var(--text-dark); text-decoration: none; font-weight: 500; font-size: 0.82rem; margin: 0; transition: 0.2s; display: inline-flex; align-items: center; gap: 5px; }
         .nav-links a.active { color: var(--vibrant-orange); font-weight: 800; }
         .mobile-add-project { display: none; }
-        .desktop-btn { display: block; }
+        .desktop-btn { display: inline-flex; }
 
         .btn-nav {
             background: var(--hero-gradient); color: white; padding: 10px 22px;
@@ -109,6 +109,7 @@
             border-radius: 50px; font-weight: 700; text-decoration: none; transition: 0.2s;
             cursor: pointer; border: none;
         }
+        .btn-nav:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,102,51,0.4); }
     /* --- MOBILE MENU STYLES --- */
     .mobile-hamburger {
         display: none;
