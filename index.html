@@ -665,8 +665,10 @@
     }
 
     @media (max-width: 768px) {
-        .hero-container { border-radius: 0 0 40px 40px; min-height: 70vh; padding: 80px 20px 70px; }
-        .hero-content h2 { font-size: 3.2rem; letter-spacing: -1px; }
+        .hero-container { border-radius: 0 0 40px 40px; min-height: 70vh; padding: 80px 20px 70px; overflow: hidden; }
+        .hero-content { width: 100%; overflow: hidden; }
+        .hero-content h2 { font-size: 2.4rem; letter-spacing: -1px; }
+        .word-1, .word-2 { max-width: 100%; white-space: normal; }
         .hero-content p { font-size: 1rem; }
         .hero-btns { flex-direction: column; align-items: center; gap: 12px; }
         .hero-btns a { width: 100%; max-width: 280px; text-align: center; justify-content: center; }
@@ -681,7 +683,7 @@
         .faq-inner { padding: 0 16px; }
     }
     @media (max-width: 420px) {
-        .hero-content h2 { font-size: 2.6rem; }
+        .hero-content h2 { font-size: 1.9rem; letter-spacing: -0.5px; }
     }
     @media (max-width: 600px) {
         .nav-bar { padding: 0 8px; }
@@ -865,7 +867,7 @@
           <p>CauseConnectHub is a forum where youth-led entities can recruit members, and high school students can find extracurriculars.</p>
           <div class="hero-btns">
               <a href="explore.html" class="btn-main">Find a Project <span class="btn-arrow">→</span></a>
-              <a href="award.html" class="btn-outline">Browse Awards, Scholarships & Grants</a>
+              <a href="award.html" class="btn-outline">Explore Awards & Scholarships</a>
           </div>
       </div>
     </section>
