@@ -242,14 +242,28 @@
         .card-grid, .results-grid { grid-template-columns: 1fr !important; }
 
         .filter-wrapper { padding: 16px; border-radius: 22px; margin: 12px auto 30px; width: calc(100% - 32px); max-width: calc(100vw - 32px); box-sizing: border-box; }
-        .action-btn { padding: 10px 16px; font-size: 0.82rem; }
+        .action-btn { padding: 10px 16px; font-size: 0.82rem; width: 100%; }
+        .filter-wrapper .flex.flex-col { flex-direction: column; }
+        .filter-wrapper .flex.flex-col .relative { flex: 1; }
+        .filter-wrapper .flex.flex-col > div:not(.search-bar) { display: flex; gap: 8px; }
+        .filter-wrapper .flex.flex-col > div.relative:first-of-type,
+        .filter-wrapper .flex.flex-col > div.relative:last-of-type { flex: 1; }
+        .filter-wrapper .flex.flex-col { gap: 10px; }
+        /* Location + Subject side by side */
+        .filter-btn-row { display: flex; gap: 8px; }
+        .filter-btn-row .relative { flex: 1; }
+        .filter-btn-row .action-btn { width: 100%; justify-content: space-between; }
         .dropdown-menu {
             width: calc(100vw - 48px);
             right: auto;
             left: 0;
             padding: 16px;
         }
-        .location-dropdown { width: calc(100vw - 80px); }
+        .location-dropdown { width: calc(50vw - 24px); }
+        /* Program type: label on top, pills wrapping below */
+        .filter-wrapper .flex.items-center.gap-6 { flex-direction: column; align-items: flex-start; gap: 10px; }
+        .filter-wrapper .flex.items-center.gap-6 .flex.flex-wrap { gap: 8px; }
+        .type-pill { padding: 8px 14px; font-size: 0.75rem; }
         .cards-grid { grid-template-columns: 1fr !important; }
     }
     @media (max-width: 480px) {
@@ -547,6 +561,7 @@
                     <input type="text" id="keywordSearch" placeholder="Search by name, role, or keywords...">
                 </div>
                 
+                <div class="filter-btn-row">
                 <div class="relative">
                     <button class="action-btn" id="locBtn" onclick="toggleDropdown('locDropdown')">
                         <span id="locationLabel">Location</span>
@@ -644,6 +659,7 @@
                         </div>
                     </div>
                 </div>
+                </div><!-- end filter-btn-row -->
             </div>
 
             <div id="activeTagRow" class="flex flex-wrap gap-2 mb-6 min-h-[20px]"></div>
