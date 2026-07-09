@@ -243,12 +243,11 @@
 
         .filter-wrapper { padding: 16px; border-radius: 22px; margin: 12px auto 30px; width: calc(100% - 32px); max-width: calc(100vw - 32px); box-sizing: border-box; }
         .action-btn { padding: 10px 16px; font-size: 0.82rem; }
-        /* Location + Subject side by side */
-        .filter-btn-row { display: flex; gap: 8px; }
+        /* Location + Subject side by side on mobile */
         .filter-btn-row .relative { flex: 1; }
         .filter-btn-row .action-btn { width: 100%; justify-content: space-between; }
-        /* Subject dropdown: clamp to screen width */
-        .dropdown-menu { left: 0 !important; right: 0 !important; width: calc(100vw - 48px) !important; max-width: calc(100vw - 48px) !important; transform: none !important; padding: 16px; }
+        /* Subject dropdown: clamp to screen on mobile */
+        #subjectDropdown { position: fixed !important; left: 24px !important; right: 24px !important; width: auto !important; max-width: none !important; transform: none !important; top: auto !important; padding: 16px; z-index: 9999; }
         .location-dropdown { width: 160px; left: 0; right: auto; }
         /* Program type: label on top, pills wrapping below */
         .filter-wrapper .flex.items-center.gap-6 { flex-direction: column; align-items: flex-start; gap: 10px; }
@@ -289,6 +288,7 @@
             box-sizing: border-box; width: 100%;
         }
         .search-bar { position: relative; flex-grow: 1; }
+        .filter-btn-row { display: flex; gap: 8px; }
         .search-bar input {
             width: 100%; padding: 14px 20px 14px 50px; border: 1px solid var(--pastel-border);
             border-radius: 20px; outline: none; font-weight: 500; background-color: var(--pastel-bg);
