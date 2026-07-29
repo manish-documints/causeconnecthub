@@ -481,6 +481,180 @@
         [data-theme="dark"] .submit-text { color: var(--primary-purple); }
         [data-theme="dark"] .btn-insta { background: #1c1929; border-color: #2e2848; color: var(--text-dark); }
         [data-theme="dark"] .hero-box { box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+
+        /* ── SWIPE MODE ── */
+        /* Hero Discover button */
+        .hero-discover-btn {
+            position: relative; display: inline-flex; align-items: center; gap: 10px;
+            margin-top: 28px;
+            background: white; color: #ff3399;
+            border: 2.5px solid rgba(255,255,255,0.6);
+            border-radius: 50px; padding: 14px 30px;
+            font-size: 1rem; font-weight: 800; font-family: 'Outfit', sans-serif;
+            cursor: pointer; letter-spacing: 0.02em;
+            box-shadow: 0 8px 30px rgba(255,51,153,0.25);
+            animation: discoverFloat 3s ease-in-out infinite;
+            transition: transform 0.15s, box-shadow 0.15s;
+            overflow: visible;
+        }
+        .hero-discover-btn:hover {
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 14px 40px rgba(255,51,153,0.4);
+            animation: none;
+        }
+        @keyframes discoverFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+        .hero-discover-pulse {
+            position: absolute; inset: -4px; border-radius: 50px;
+            border: 2px solid rgba(255,255,255,0.5);
+            animation: discoverPulse 2s ease-out infinite;
+            pointer-events: none;
+        }
+        @keyframes discoverPulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.12); opacity: 0; }
+        }
+
+        .swipe-mode-btn {
+            display: flex; align-items: center; gap: 8px;
+            background: linear-gradient(135deg, #ff3399, #ff6633);
+            color: white; border: none; border-radius: 50px;
+            padding: 10px 20px; font-size: 0.85rem; font-weight: 800;
+            cursor: pointer; letter-spacing: 0.04em;
+            box-shadow: 0 4px 15px rgba(255,51,153,0.35);
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .swipe-mode-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255,51,153,0.45); }
+
+        .swipe-overlay {
+            position: fixed; inset: 0; z-index: 9000;
+            background: var(--soft-bg, #fdf6ff);
+            display: flex; flex-direction: column; align-items: center;
+            overflow: hidden;
+        }
+        .swipe-overlay.hidden { display: none; }
+
+        .swipe-header {
+            width: 100%; display: flex; align-items: center; justify-content: space-between;
+            padding: 16px 24px; flex-shrink: 0;
+            border-bottom: 1px solid var(--pastel-border, #f0e6ff);
+        }
+        .swipe-header-title {
+            font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800;
+            background: linear-gradient(135deg, #ff3399, #ff6633);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .swipe-header-right { display: flex; gap: 10px; align-items: center; }
+        .swipe-likes-btn {
+            background: white; color: #ff3399; border: 1.5px solid #ffb3d9;
+            border-radius: 50px; padding: 7px 16px; font-size: 0.8rem; font-weight: 700; cursor: pointer;
+            transition: background 0.2s; display: flex; align-items: center; gap: 6px;
+        }
+        .swipe-likes-btn:hover { background: #fff0f8; }
+        .swipe-close-btn {
+            background: white; color: #6b7280; border: 1.5px solid #e5e7eb;
+            border-radius: 50px; padding: 7px 16px; font-size: 0.8rem; font-weight: 700; cursor: pointer;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .swipe-close-btn:hover { background: #f9fafb; }
+        .swipe-back-btn {
+            background: white; color: #6b7280; border: 1.5px solid #e5e7eb;
+            border-radius: 50px; padding: 7px 16px; font-size: 0.8rem; font-weight: 700; cursor: pointer;
+            display: flex; align-items: center; gap: 6px; transition: background 0.15s;
+        }
+        .swipe-back-btn:hover { background: #f9fafb; }
+
+        .swipe-stage {
+            flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            width: 100%; padding: 0 20px; min-height: 0; overflow: hidden;
+        }
+
+        .swipe-card {
+            position: relative; width: 100%; max-width: 420px;
+            background: white; border-radius: 28px;
+            box-shadow: 0 8px 40px rgba(180,100,200,0.15), 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid #f0e6ff;
+            overflow: hidden; user-select: none;
+            transition: transform 0.08s ease;
+            max-height: calc(100vh - 260px);
+        }
+        .swipe-card-inner {
+            padding: 22px 22px 16px; overflow-y: auto;
+            max-height: calc(100vh - 280px);
+        }
+        .swipe-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+        .swipe-name { font-size: 1.4rem; font-weight: 800; color: #4c1d95; line-height: 1.25; margin-bottom: 6px; font-family: 'Outfit', sans-serif; }
+        .swipe-location { font-size: 0.82rem; color: #9ca3af; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 4px; }
+        .swipe-desc { font-size: 0.92rem; color: #374151; line-height: 1.55; margin-bottom: 14px; }
+        .swipe-looking { background: #faf5ff; border: 1px solid #e9d5ff; border-radius: 12px; padding: 12px 14px; font-size: 0.85rem; color: #5b21b6; }
+        .swipe-looking strong { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; color: #7c3aed; }
+
+        .swipe-stamp {
+            position: absolute; top: 28px; padding: 8px 18px; border-radius: 10px;
+            font-size: 1rem; font-weight: 900; letter-spacing: 0.08em;
+            opacity: 0; pointer-events: none;
+            border-width: 3px; border-style: solid;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .like-stamp { left: 20px; color: #22c55e; border-color: #22c55e; transform: rotate(-12deg); }
+        .nope-stamp { right: 20px; color: #ef4444; border-color: #ef4444; transform: rotate(12deg); }
+
+        .swipe-counter { color: #9ca3af; font-size: 0.8rem; font-weight: 600; margin-top: 14px; }
+
+        .swipe-actions { display: flex; gap: 32px; padding: 16px 0 8px; flex-shrink: 0; }
+        .swipe-btn {
+            width: 64px; height: 64px; border-radius: 50%; border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+            transition: transform 0.15s, box-shadow 0.15s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .swipe-btn:hover { transform: scale(1.12); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
+        .nope-btn { background: white; color: #ef4444; border: 2px solid #fecaca; }
+        .like-btn { background: linear-gradient(135deg, #ff3399, #ff6633); color: white; }
+
+        .swipe-hint { color: #c4b5d4; font-size: 0.75rem; padding-bottom: 16px; flex-shrink: 0; }
+
+        .swipe-done, .swipe-likes-panel {
+            position: absolute; inset: 0;
+            background: var(--soft-bg, #fdf6ff);
+            display: flex; align-items: center; justify-content: center;
+            padding: 24px;
+        }
+        .swipe-done.hidden, .swipe-likes-panel.hidden { display: none; }
+        .swipe-done-icon { margin-bottom: 16px; color: #ff3399; }
+        .swipe-done-inner { text-align: center; max-width: 480px; width: 100%; }
+        .swipe-done-inner h2 { font-size: 1.6rem; font-weight: 800; color: #4c1d95; margin-bottom: 8px; font-family: 'Outfit', sans-serif; }
+        .swipe-done-inner p { color: #6b7280; margin-bottom: 20px; }
+
+        .swipe-liked-list { display: flex; flex-direction: column; gap: 10px; max-height: 45vh; overflow-y: auto; margin-bottom: 20px; }
+        .swipe-liked-item {
+            background: white; border: 1px solid #f0e6ff;
+            border-radius: 14px; padding: 12px 16px; text-align: left;
+            display: flex; align-items: center; justify-content: space-between; gap: 12px;
+            box-shadow: 0 2px 8px rgba(180,100,200,0.08);
+        }
+        .swipe-liked-item span { font-weight: 700; font-size: 0.9rem; color: #374151; }
+        .swipe-liked-item a { color: #ff3399; font-size: 0.8rem; font-weight: 700; text-decoration: none; white-space: nowrap; }
+        .swipe-liked-item a:hover { text-decoration: underline; }
+
+        .swipe-done-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .swipe-restart-btn {
+            background: white; color: #6b7280; border: 1.5px solid #e5e7eb;
+            border-radius: 50px; padding: 12px 24px; font-weight: 700; cursor: pointer; font-size: 0.9rem;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .swipe-close-done-btn {
+            background: linear-gradient(135deg, #ff3399, #ff6633); color: white; border: none;
+            border-radius: 50px; padding: 12px 28px; font-weight: 800; cursor: pointer; font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .swipe-card { max-width: 100%; }
+            .swipe-btn { width: 56px; height: 56px; font-size: 1.4rem; }
+        }
         /* Dark orbs use screen blend to glow on dark bg */
         [data-theme="dark"] .orb { mix-blend-mode: screen; }
         [data-theme="dark"] .orb-1 { background: radial-gradient(ellipse, rgba(160,90,255,0.28) 0%, rgba(120,60,220,0.07) 70%); }
@@ -535,6 +709,11 @@
         <section class="hero-box">
             <h2>Find Your Perfect Project</h2>
             <p>Connect with student-led initiatives, research programs, and global competitions designed for high schoolers.</p>
+            <button onclick="openSwipeMode()" class="hero-discover-btn">
+                <span class="hero-discover-pulse"></span>
+                Try Discover Mode
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </button>
         </section>
 
         <a href="project.html" class="submit-bar">
@@ -656,14 +835,16 @@
 
             <div id="activeTagRow" class="flex flex-wrap gap-2 mb-6 min-h-[20px]"></div>
 
-            <div class="flex items-center gap-6 border-t pt-6">
-                <span class="text-[11px] font-black text-gray-400 uppercase tracking-[0.15em]">Program Type:</span>
-                <div class="flex flex-wrap gap-3">
-                    <div class="type-pill pill-Youth-led" data-type="Youth-led" onclick="toggleTag(this, 'Youth-led')">Youth-led</div>
-                    <div class="type-pill pill-Business" data-type="Business" onclick="toggleTag(this, 'Business')">Business</div>
-                    <div class="type-pill pill-Research" data-type="Research" onclick="toggleTag(this, 'Research')">Research</div>
-                    <div class="type-pill pill-Competition" data-type="Competition" onclick="toggleTag(this, 'Competition')">Competition</div>
-                    <div class="type-pill pill-Independent" data-type="Independent" onclick="toggleTag(this, 'Independent')">Independent</div>
+            <div class="flex items-center justify-between gap-6 border-t pt-6 flex-wrap">
+                <div class="flex items-center gap-6 flex-wrap">
+                    <span class="text-[11px] font-black text-gray-400 uppercase tracking-[0.15em]">Program Type:</span>
+                    <div class="flex flex-wrap gap-3">
+                        <div class="type-pill pill-Youth-led" data-type="Youth-led" onclick="toggleTag(this, 'Youth-led')">Youth-led</div>
+                        <div class="type-pill pill-Business" data-type="Business" onclick="toggleTag(this, 'Business')">Business</div>
+                        <div class="type-pill pill-Research" data-type="Research" onclick="toggleTag(this, 'Research')">Research</div>
+                        <div class="type-pill pill-Competition" data-type="Competition" onclick="toggleTag(this, 'Competition')">Competition</div>
+                        <div class="type-pill pill-Independent" data-type="Independent" onclick="toggleTag(this, 'Independent')">Independent</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1891,6 +2072,68 @@
         </div>
     </div>
 
+    <!-- SWIPE MODE OVERLAY -->
+    <div id="swipeOverlay" class="swipe-overlay hidden">
+        <div class="swipe-header">
+            <div style="display:flex;align-items:center;gap:12px;">
+                <button onclick="closeSwipeMode()" class="swipe-back-btn" title="Back to browse">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                    Browse
+                </button>
+                <span class="swipe-header-title">Discover Mode</span>
+            </div>
+            <div class="swipe-header-right">
+                <button onclick="openLikes()" class="swipe-likes-btn" id="likesBtn"><svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/></svg> <span id="likeCount">0</span> Saved</button>
+                <button onclick="closeSwipeMode()" class="swipe-close-btn"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg> Exit</button>
+            </div>
+        </div>
+
+        <div class="swipe-stage" id="swipeStage">
+            <div class="swipe-card" id="swipeCard">
+                <div class="swipe-card-inner" id="swipeCardInner">
+                    <div class="swipe-tags" id="swipeTags"></div>
+                    <h2 class="swipe-name" id="swipeName"></h2>
+                    <p class="swipe-location" id="swipeLocation"></p>
+                    <p class="swipe-desc" id="swipeDesc"></p>
+                    <div class="swipe-looking" id="swipeLooking"></div>
+                </div>
+                <div class="swipe-stamp like-stamp" id="likeStamp"><svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/></svg> LIKE</div>
+                <div class="swipe-stamp nope-stamp" id="nopeStamp"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg> SKIP</div>
+            </div>
+            <div class="swipe-counter" id="swipeCounter"></div>
+        </div>
+
+        <div class="swipe-actions">
+            <button class="swipe-btn nope-btn" onclick="swipeCard('left')" title="Skip"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
+            <button class="swipe-btn like-btn" onclick="swipeCard('right')" title="Like"><svg width="22" height="22" fill="currentColor" viewBox="0 0 16 16"><path d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/></svg></button>
+        </div>
+
+        <p class="swipe-hint">Swipe or use arrow keys &nbsp;·&nbsp; <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="display:inline;vertical-align:middle;"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg> skip &nbsp;·&nbsp; <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="display:inline;vertical-align:middle;"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg> like</p>
+
+        <!-- Done screen -->
+        <div class="swipe-done hidden" id="swipeDone">
+            <div class="swipe-done-inner">
+                <div class="swipe-done-icon"><svg width="48" height="48" fill="none" stroke="#ff3399" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+                <h2>You've seen them all!</h2>
+                <p id="swipeDoneMsg"></p>
+                <div id="swipeLikedList" class="swipe-liked-list"></div>
+                <div class="swipe-done-btns">
+                    <button onclick="restartSwipe()" class="swipe-restart-btn"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg> Start Over</button>
+                    <button onclick="closeSwipeMode()" class="swipe-close-done-btn">Back to Browse</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Likes panel -->
+        <div class="swipe-likes-panel hidden" id="swipeLikesPanel">
+            <div class="swipe-done-inner">
+                <h2><svg width="22" height="22" fill="#ff3399" viewBox="0 0 16 16" style="display:inline;vertical-align:middle;margin-right:6px;"><path d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/></svg>Your Saved Projects</h2>
+                <div id="likedPanelList" class="swipe-liked-list"></div>
+                <button onclick="closeLikes()" class="swipe-close-done-btn" style="margin-top:24px;">Back to Swiping</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const activeFilters = { keyword: '', location: 'All', tags: new Set() };
 
@@ -2002,6 +2245,153 @@
                 closeDropdowns();
             }
         }
+
+        // ── SWIPE MODE ──
+        let swipeCards = [], swipeIndex = 0, swipeLikes = [];
+        const LIKES_KEY = 'cch_swipe_likes';
+
+        function getVisibleCards() {
+            return [...document.querySelectorAll('.project-card:not(.hidden)')];
+        }
+
+        function extractCard(el) {
+            const name = el.querySelector('h3')?.innerText || '';
+            const desc = el.querySelector('.card-desc')?.innerText || '';
+            const location = el.querySelector('.meta-text')?.innerText || '';
+            const looking = el.querySelector('.box-text')?.innerText || '';
+            const pillHTML = el.querySelector('.pill-container')?.innerHTML || '';
+            const applyLink = el.querySelector('.btn-apply')?.href || '';
+            const instaLink = el.querySelector('.btn-insta')?.href || '';
+            return { name, desc, location, looking, pillHTML, applyLink, instaLink };
+        }
+
+        function openSwipeMode() {
+            swipeCards = getVisibleCards().map(extractCard);
+            swipeIndex = 0;
+            swipeLikes = JSON.parse(localStorage.getItem(LIKES_KEY) || '[]');
+            document.getElementById('swipeDone').classList.add('hidden');
+            document.getElementById('swipeLikesPanel').classList.add('hidden');
+            document.getElementById('swipeOverlay').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            updateLikeCount();
+            showSwipeCard();
+        }
+
+        function closeSwipeMode() {
+            document.getElementById('swipeOverlay').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function showSwipeCard() {
+            if (swipeIndex >= swipeCards.length) { showDone(); return; }
+            const c = swipeCards[swipeIndex];
+            document.getElementById('swipeName').innerText = c.name;
+            document.getElementById('swipeDesc').innerText = c.desc;
+            document.getElementById('swipeLocation').innerHTML = `<svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:inline;vertical-align:middle;margin-right:3px;"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>${c.location}`;
+            document.getElementById('swipeLooking').innerHTML = '<strong>Looking for</strong>' + c.looking;
+            const tagsEl = document.getElementById('swipeTags');
+            tagsEl.innerHTML = c.pillHTML;
+            document.getElementById('swipeCounter').innerText = `${swipeIndex + 1} of ${swipeCards.length}`;
+            document.getElementById('likeStamp').style.opacity = '0';
+            document.getElementById('nopeStamp').style.opacity = '0';
+            const card = document.getElementById('swipeCard');
+            card.style.transform = '';
+            card.style.opacity = '1';
+            card.style.transition = 'transform 0.08s ease';
+        }
+
+        function swipeCard(dir) {
+            const card = document.getElementById('swipeCard');
+            const isLike = dir === 'right';
+            document.getElementById(isLike ? 'likeStamp' : 'nopeStamp').style.opacity = '1';
+            card.style.transition = 'transform 0.35s ease, opacity 0.35s ease';
+            card.style.transform = `translateX(${isLike ? 120 : -120}%) rotate(${isLike ? 18 : -18}deg)`;
+            card.style.opacity = '0';
+            if (isLike) {
+                swipeLikes.push(swipeCards[swipeIndex]);
+                localStorage.setItem(LIKES_KEY, JSON.stringify(swipeLikes));
+                updateLikeCount();
+            }
+            setTimeout(() => { swipeIndex++; showSwipeCard(); }, 360);
+        }
+
+        function updateLikeCount() {
+            document.getElementById('likeCount').innerText = swipeLikes.length;
+        }
+
+        const heartSVG = `<svg width="13" height="13" fill="currentColor" viewBox="0 0 16 16" style="display:inline;vertical-align:middle;"><path d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/></svg>`;
+
+        function showDone() {
+            document.getElementById('swipeDone').classList.remove('hidden');
+            document.getElementById('swipeDoneMsg').innerText = swipeLikes.length > 0
+                ? `You liked ${swipeLikes.length} project${swipeLikes.length > 1 ? 's' : ''}! Check them out below.`
+                : "You didn't save any projects this time. Try again!";
+            renderLikedList('swipeLikedList');
+        }
+
+        function renderLikedList(containerId) {
+            const el = document.getElementById(containerId);
+            if (swipeLikes.length === 0) { el.innerHTML = '<p style="color:rgba(255,255,255,0.5);text-align:center;">No saved projects yet.</p>'; return; }
+            el.innerHTML = swipeLikes.map(c => `
+                <div class="swipe-liked-item">
+                    <span>${c.name}</span>
+                    <div style="display:flex;gap:8px;flex-shrink:0;">
+                        ${c.applyLink ? `<a href="${c.applyLink}" target="_blank">Apply →</a>` : ''}
+                        ${c.instaLink ? `<a href="${c.instaLink}" target="_blank">Insta →</a>` : ''}
+                    </div>
+                </div>`).join('');
+        }
+
+        function openLikes() {
+            swipeLikes = JSON.parse(localStorage.getItem(LIKES_KEY) || '[]');
+            renderLikedList('likedPanelList');
+            document.getElementById('swipeLikesPanel').classList.remove('hidden');
+        }
+
+        function closeLikes() {
+            document.getElementById('swipeLikesPanel').classList.add('hidden');
+        }
+
+        function restartSwipe() {
+            swipeIndex = 0;
+            document.getElementById('swipeDone').classList.add('hidden');
+            showSwipeCard();
+        }
+
+        // Touch swipe support
+        let touchStartX = 0;
+        document.getElementById('swipeCard').addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+        document.getElementById('swipeCard').addEventListener('touchend', e => {
+            const diff = e.changedTouches[0].clientX - touchStartX;
+            if (Math.abs(diff) > 60) swipeCard(diff > 0 ? 'right' : 'left');
+        });
+
+        // Drag support (desktop)
+        let dragStartX = 0, isDragging = false;
+        const swipeCardEl = document.getElementById('swipeCard');
+        swipeCardEl.addEventListener('mousedown', e => { dragStartX = e.clientX; isDragging = true; });
+        document.addEventListener('mousemove', e => {
+            if (!isDragging) return;
+            const diff = e.clientX - dragStartX;
+            swipeCardEl.style.transform = `translateX(${diff}px) rotate(${diff * 0.04}deg)`;
+            document.getElementById('likeStamp').style.opacity = diff > 40 ? Math.min((diff - 40) / 60, 1) : '0';
+            document.getElementById('nopeStamp').style.opacity = diff < -40 ? Math.min((-diff - 40) / 60, 1) : '0';
+        });
+        document.addEventListener('mouseup', e => {
+            if (!isDragging) return;
+            isDragging = false;
+            const diff = e.clientX - dragStartX;
+            if (Math.abs(diff) > 100) { swipeCard(diff > 0 ? 'right' : 'left'); }
+            else { swipeCardEl.style.transform = ''; document.getElementById('likeStamp').style.opacity = '0'; document.getElementById('nopeStamp').style.opacity = '0'; }
+        });
+
+        // Keyboard support
+        document.addEventListener('keydown', e => {
+            if (document.getElementById('swipeOverlay').classList.contains('hidden')) return;
+            if (e.key === 'ArrowRight') swipeCard('right');
+            if (e.key === 'ArrowLeft') swipeCard('left');
+            if (e.key === 'Escape') closeSwipeMode();
+        });
 
         // Hamburger Menu
         document.addEventListener('DOMContentLoaded', function() {
