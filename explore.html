@@ -133,14 +133,90 @@
         }
 
         /* --- HERO SECTION --- */
-        .hero-outer { padding-top: 110px; display: flex; flex-direction: column; align-items: center; }
+        .hero-outer { padding-top: 110px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
         .hero-box {
             width: 90%; max-width: 1200px; background: var(--hero-gradient);
-            padding: 60px 80px; text-align: center; color: white; border-radius: 40px;
-            position: relative; box-shadow: 0 20px 40px rgba(255, 102, 51, 0.15);
+            padding: 100px 80px 96px; text-align: center; color: white; border-radius: 40px;
+            position: relative; box-shadow: 0 20px 50px rgba(255, 102, 51, 0.22);
+            overflow: hidden;
         }
-        .hero-box h2 { font-family: 'Outfit', sans-serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; line-height: 1.1; margin-bottom: 12px; }
-        .hero-box p { font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+        .hero-box::before {
+            content: '';
+            position: absolute; inset: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.18) 1.5px, transparent 1.5px);
+            background-size: 26px 26px;
+            mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, transparent 20%, black 80%);
+            -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, transparent 20%, black 80%);
+            pointer-events: none;
+        }
+        .hero-box h2 { font-family: 'Outfit', sans-serif; font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 800; line-height: 1.08; margin-bottom: 14px; position: relative; }
+        .hero-box p { font-size: 1.1rem; opacity: 0.88; max-width: 560px; margin: 0 auto; line-height: 1.6; position: relative; }
+
+        /* --- DISCOVER BANNER --- */
+        .discover-banner {
+            width: 90%; max-width: 1200px;
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 8px 40px rgba(255, 51, 153, 0.1);
+            border: 1.5px solid rgba(255, 51, 153, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px 36px;
+            gap: 24px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .discover-banner:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 50px rgba(255, 51, 153, 0.18);
+        }
+        .discover-banner-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+        .discover-banner-icon {
+            width: 52px; height: 52px; border-radius: 16px; flex-shrink: 0;
+            background: linear-gradient(135deg, #ff3399, #ff6633);
+            display: flex; align-items: center; justify-content: center;
+            animation: discoverIconPop 2.5s ease-in-out infinite;
+        }
+        @keyframes discoverIconPop {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255,51,153,0.35); }
+            50% { box-shadow: 0 0 0 10px rgba(255,51,153,0); }
+        }
+        .discover-banner-text strong {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem; font-weight: 800; color: #1a1a1a; display: block; margin-bottom: 2px;
+        }
+        .discover-banner-text span {
+            font-size: 0.85rem; color: #888; font-weight: 500;
+        }
+        .discover-banner-cta {
+            background: linear-gradient(135deg, #ff3399, #ff6633);
+            color: white; border: none; border-radius: 50px;
+            padding: 12px 26px; font-size: 0.9rem; font-weight: 800;
+            font-family: 'Outfit', sans-serif; cursor: pointer;
+            display: flex; align-items: center; gap: 8px;
+            white-space: nowrap; flex-shrink: 0;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .discover-banner-cta:hover { transform: scale(1.04); box-shadow: 0 8px 24px rgba(255,51,153,0.35); }
+        .discover-banner-badge {
+            background: #fff0f6; color: #ff3399;
+            font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em;
+            padding: 3px 10px; border-radius: 50px; border: 1px solid rgba(255,51,153,0.2);
+            white-space: nowrap;
+        }
+        [data-theme="dark"] .discover-banner { background: #1c1929; border-color: rgba(208, 63, 130, 0.2); box-shadow: 0 8px 40px rgba(0,0,0,0.3); }
+        [data-theme="dark"] .discover-banner-text strong { color: #ede9ff; }
+        [data-theme="dark"] .discover-banner-badge { background: #2a1520; color: #d03f82; border-color: rgba(208,63,130,0.25); }
+        @media (max-width: 768px) {
+            .discover-banner { padding: 18px 20px; flex-direction: column; align-items: flex-start; gap: 16px; }
+            .discover-banner-cta { width: 100%; justify-content: center; }
+        }
             /* --- MOBILE MENU STYLES --- */
     .mobile-hamburger {
         display: none;
@@ -707,14 +783,25 @@
 
     <div class="hero-outer">
         <section class="hero-box">
-            <h2>Find Your Perfect Project</h2>
-            <p>Connect with student-led initiatives, research programs, and global competitions designed for high schoolers.</p>
-            <button onclick="openSwipeMode()" class="hero-discover-btn">
-                <span class="hero-discover-pulse"></span>
-                Try Discover Mode
+            <h2>Your Next Big Thing Starts Here</h2>
+            <p>Clubs, research programs, competitions, and passion projects built by students like you. Find your fit and get involved.</p>
+        </section>
+
+        <div class="discover-banner" onclick="openSwipeMode()">
+            <div class="discover-banner-left">
+                <div class="discover-banner-icon">
+                    <svg width="26" height="26" fill="none" stroke="white" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                </div>
+                <div class="discover-banner-text">
+                    <strong>Try Discover Mode <span class="discover-banner-badge">New</span></strong>
+                    <span>Swipe through opportunities Tinder-style and find your match</span>
+                </div>
+            </div>
+            <button class="discover-banner-cta">
+                Let's go
                 <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </button>
-        </section>
+        </div>
 
         <a href="project.html" class="submit-bar">
             <div class="submit-plus">+</div>
@@ -873,7 +960,7 @@
     <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Us Against Lupus</h3>
     <p class="meta-text mt-2">Both</p>
     <p class="card-desc">Us Against Lupus is a 501(c)(3) nonprofit organization devoted to positively impacting those affected by lupus and promoting awareness of lupus (a chronic autoimmune disease) through various projects, including hosting activity fairs, publishing lupus-related articles, fundraisers, yoga sessions, and more. Recently, we also received the Hershey Heartwarming Young Heroes grant and are working on publishing our lupus app.</p>
-    <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text">We are looking for volunteers for our writer program (students age 13-18 write lupus-related articles to be published on our website and social media); social media interns (create awareness content across Instagram, TikTok, and Facebook); and infographic designers (design posters for our events or help educate the public about lupus). All the opportunities mentioned will receive corresponding service hours.</span></div>
+    <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text">We are looking for volunteers for our writer program (students age 13-18 write lupus-related articles to be published on our website and social media), social media interns (create awareness content across Instagram, TikTok, and Facebook), and infographic designers (design posters for our events or help educate the public about lupus). All the opportunities mentioned will receive corresponding service hours.</span></div>
     <div class="btn-group"><a href="https://linktr.ee/usagainstlupus" class="btn-apply">Apply Now</a><a href="https://www.instagram.com/us.against.lupus/" class="btn-insta"><svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04 1.8.196 1.412.39 1.914.247.525.567.973.923 1.417.444.356.892.676 1.417.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.765-.893.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.282.11-.705.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg></a></div>
 </div>
 
@@ -898,8 +985,8 @@
     </div>
     <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Imprint Collective</h3>
     <p class="meta-text mt-2">Remote</p>
-    <p class="card-desc">Talented young creators don't lack passion—they lack accessible platforms, mentorship, and opportunities to turn their ideas into meaningful impact. Their ideas are prevented from flourishing due to systemic barriers and too often, their voices are unable to reach those who need to hear it. This platform exists to help creators find their authentic voice, grow into their full potential and leave their imprint on the world.</p>
-    <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text">Since our organization has just started out, we're looking for all kinds of contributors — staff and volunteers included. Our first ever initiative, The Perspective Project, gives young creatives an opportunity to talk about a piece of media that has change their perspective. The best part? They're free to use all of forms of media, both as inspiration and for their response. Additionally, all participants will receive 1-on-1 feedback regarding their submission.</span></div>
+    <p class="card-desc">Talented young creators don't lack passion, they lack accessible platforms, mentorship, and opportunities to turn their ideas into meaningful impact. Their ideas are prevented from flourishing due to systemic barriers and too often, their voices are unable to reach those who need to hear it. This platform exists to help creators find their authentic voice, grow into their full potential and leave their imprint on the world.</p>
+    <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text">Since our organization has just started out, we're looking for all kinds of contributors, staff and volunteers included. Our first ever initiative, The Perspective Project, gives young creatives an opportunity to talk about a piece of media that has change their perspective. The best part? They're free to use all of forms of media, both as inspiration and for their response. Additionally, all participants will receive 1-on-1 feedback regarding their submission.</span></div>
     <div class="btn-group"><a href="https://forms.gle/TVeLZXuUaJPw6gf79" class="btn-apply">Apply Now</a><a href="https://www.instagram.com/join.imprint/" class="btn-insta"><svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04 1.8.196 1.412.39 1.914.247.525.567.973.923 1.417.444.356.892.676 1.417.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.765-.893.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.282.11-.705.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg></a></div>
 </div>
 
@@ -1034,7 +1121,7 @@
     </button>
     <p class="card-desc translatable"
         data-fr="Soutenir notre quincaillerie familiale, c'est investir dans l'espoir d'une famille congolaise. Mes parents au chômage ont tout misé sur ce commerce pour nourrir leur foyer et aider leur quartier. En 1re année, j'apprends la gestion pour le développer. Votre sponsoring nous donnera des outils et des stocks pour servir plus de clients. Ensemble, nous bâtirons une entreprise locale solide, source d'emplois et de fierté pour notre communauté."
-        data-en="Supporting our family hardware store means investing in the hope of a Congolese family. My unemployed parents have put everything into this business to feed their household and support their neighborhood. As a first-year student, I'm learning management to help it grow. Your sponsorship will give us the tools and stock to serve more customers. Together, we will build a strong local business — a source of jobs and pride for our community.">
+        data-en="Supporting our family hardware store means investing in the hope of a Congolese family. My unemployed parents have put everything into this business to feed their household and support their neighborhood. As a first-year student, I'm learning management to help it grow. Your sponsorship will give us the tools and stock to serve more customers. Together, we will build a strong local business, a source of jobs and pride for our community.">
         Soutenir notre quincaillerie familiale, c'est investir dans l'espoir d'une famille congolaise. Mes parents au chômage ont tout misé sur ce commerce pour nourrir leur foyer et aider leur quartier. En 1re année, j'apprends la gestion pour le développer. Votre sponsoring nous donnera des outils et des stocks pour servir plus de clients. Ensemble, nous bâtirons une entreprise locale solide, source d'emplois et de fierté pour notre communauté.
     </p>
     <div class="card-info-box">
@@ -1312,7 +1399,7 @@
                 <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">A.B.S.O</h3>
                 <p class="meta-text mt-2">Both</p>
                 <p class="card-desc">A.B.S.O is a project that combines art and science to restore creativity in STEM and renew respect for humanities careers. It shows that meaningful change in communities comes from uniting disciplines rather than separating or devaluing them, encouraging collaboration, innovation, and empathy through interdisciplinary projects and creative problem-solving.</p>
-                <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text">Young scientists, artists, and media makers/journalists (all ages) to submit work exploring real-world problems — whether by solving them, representing them creatively, or explaining them to a wider audience.</span></div>
+                <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text">Young scientists, artists, and media makers/journalists (all ages) to submit work exploring real-world problems, whether by solving them, representing them creatively, or explaining them to a wider audience.</span></div>
                 <div class="btn-group"><a href="https://forms.gle/KKBKVArX9vPXK6hMA" class="btn-apply">Apply Now</a><a href="https://www.instagram.com/mission.a.b.s.o/" class="btn-insta"><svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04 1.8.196 1.412.39 1.914.247.525.567.973.923 1.417.444.356.892.676 1.417.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.765-.893.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.282.11-.705.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg></a></div>
             </div>
 
@@ -1594,7 +1681,7 @@
                 <div class="pill-container"><div class="program-label label-Youth-led">Youth-led</div><div class="subject-label">Business</div></div>
                 <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">GYIA</h3>
                 <p class="meta-text mt-2">Remote</p>
-                <p class="card-desc">Participants of GYIA Online will expand their understanding of investing through case studies that explore creative, real-world solutions. No prior experience is required—this competition rewards skills like critical thinking, analytical reasoning, and public speaking. Students may register in teams of three or individually and be placed on a team. This is a great opportunity to collaborate with peers from around the world. GYIA Online is open to middle and high school students globally and is completely free. Sign up through our Google Form and join us for an exciting competition on March 20, 2026!</p>
+                <p class="card-desc">Participants of GYIA Online will expand their understanding of investing through case studies that explore creative, real-world solutions. No prior experience is required, this competition rewards skills like critical thinking, analytical reasoning, and public speaking. Students may register in teams of three or individually and be placed on a team. This is a great opportunity to collaborate with peers from around the world. GYIA Online is open to middle and high school students globally and is completely free. Sign up through our Google Form and join us for an exciting competition on March 20, 2026!</p>
                 <div class="card-info-box"><span class="box-label">Looking for:</span><span class="box-text"> Students to participate </span></div>
                 <div class="btn-group"><a href="https://docs.google.com/forms/d/e/1FAIpQLSdQCav51e7anaOqoyVAYSz78LAgRpx7UYZA26mog40DO3Wa7A/viewform?usp=header" class="btn-apply">Apply Now</a><a href="https://www.instagram.com/_gyia__/" class="btn-insta"><svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04 1.8.196 1.412.39 1.914.247.525.567.973.923 1.417.444.356.892.676 1.417.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.765-.893.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.282.11-.705.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg></a></div>
             </div>
@@ -1700,7 +1787,7 @@
                 <div class="subject-label">STEM</div>
                 </div>
                 <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Lumiere Research Scholar Program</h3>
-                <p class="meta-text mt-2">Lumiere Education — Virtual</p>
+                <p class="meta-text mt-2">Lumiere Education, Virtual</p>
                 <p class="card-desc">Mentored 1:1 research program where students conduct independent research in STEM, social science, or humanities under PhD-level mentors, culminating in a paper or project.</p>
                 <div class="btn-group"><a href="https://www.lumiere-education.com/" class="btn-apply">Apply Now</a></div>
             </div>
@@ -1711,7 +1798,7 @@
                 <div class="subject-label">STEM</div>
                 </div>
                 <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Polygence Research Program</h3>
-                <p class="meta-text mt-2">Polygence — Virtual</p>
+                <p class="meta-text mt-2">Polygence, Virtual</p>
                 <p class="card-desc">Project-based research experience pairing students with expert mentors to explore original research questions in STEM, humanities, or CS.</p>
                 <div class="btn-group"><a href="https://www.polygence.org/" class="btn-apply">Apply Now</a></div>
             </div>
@@ -1733,7 +1820,7 @@
                 <div class="subject-label">STEM</div>
                 </div>
                 <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Clark Scholars Program</h3>
-                <p class="meta-text mt-2">Texas Tech University — Lubbock, TX</p>
+                <p class="meta-text mt-2">Texas Tech University, Lubbock, TX</p>
                 <p class="card-desc">Highly selective, fully funded 7-week summer research program allowing students to conduct intensive research with Texas Tech faculty mentors.</p>
                 <div class="btn-group"><a href="https://www.depts.ttu.edu/honors/academicsandenrichment/affiliatedandhighschool/clarks/" class="btn-apply">Apply Now</a></div>
             </div>
@@ -1744,7 +1831,7 @@
                 <div class="subject-label">Social Science</div>
                 </div>
                 <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Stanford SPICE Research Internships</h3>
-                <p class="meta-text mt-2">Stanford University — Palo Alto, CA</p>
+                <p class="meta-text mt-2">Stanford University, Palo Alto, CA</p>
                 <p class="card-desc">Research internship focused on international relations, education, and public policy through curriculum development and policy research.</p>
                 <div class="btn-group"><a href="https://spice.fsi.stanford.edu/" class="btn-apply">Apply Now</a></div>
             </div>
@@ -1755,7 +1842,7 @@
                 <div class="subject-label">Politics</div>
                 </div>
                 <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Civics Unplugged Fellowship</h3>
-                <p class="meta-text mt-2">Civics Unplugged — Virtual</p>
+                <p class="meta-text mt-2">Civics Unplugged, Virtual</p>
                 <p class="card-desc">Selective fellowship engaging students in research, policy writing, and civic innovation focused on democracy, technology, and social impact.</p>
                 <div class="btn-group"><a href="https://www.civicsunplugged.org/" class="btn-apply">Apply Now</a></div>
             </div>
@@ -1766,7 +1853,7 @@
                 <div class="subject-label">Literature</div>
                 </div>
                 <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Library of Congress High School Internship</h3>
-                <p class="meta-text mt-2">Library of Congress — Washington, DC</p>
+                <p class="meta-text mt-2">Library of Congress, Washington, DC</p>
                 <p class="card-desc">Archival research internship allowing students to work with primary historical documents and develop original humanities research.</p>
                 <div class="btn-group"><a href="https://www.loc.gov/item/internships/" class="btn-apply">Apply Now</a></div>
             </div>
@@ -1777,7 +1864,7 @@
                 <div class="subject-label">Computer Science</div>
                 </div>
                 <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">AI4ALL Research Pathways</h3>
-                <p class="meta-text mt-2">AI4ALL — Virtual</p>
+                <p class="meta-text mt-2">AI4ALL, Virtual</p>
                 <p class="card-desc">AI research and ethics program introducing students to machine learning, data science, and socially responsible AI research.</p>
                 <div class="btn-group"><a href="https://ai-4-all.org/" class="btn-apply">Apply Now</a></div>
             </div>
@@ -1788,7 +1875,7 @@
                 <div class="subject-label">Computer Science</div>
                 </div>
                 <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Google CSSI Extension Programs</h3>
-                <p class="meta-text mt-2">Google — Virtual</p>
+                <p class="meta-text mt-2">Google, Virtual</p>
                 <p class="card-desc">Advanced follow-on programs from Google's CSSI that include applied CS projects, mentorship, and collaborative research-style problem solving.</p>
                 <div class="btn-group"><a href="https://buildyourfuture.withgoogle.com/programs/computer-science-summer-institute" class="btn-apply">Apply Now</a></div>
             </div>
@@ -1799,7 +1886,7 @@
                 <div class="subject-label">Biology</div>
                 </div>
                 <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">NIH High School Summer Internship Program</h3>
-                <p class="meta-text mt-2">National Institutes of Health — Bethesda, MD</p>
+                <p class="meta-text mt-2">National Institutes of Health, Bethesda, MD</p>
                 <p class="card-desc">Paid biomedical research internship where students work alongside NIH scientists on cutting-edge medical research projects.</p>
                 <div class="btn-group"><a href="https://www.training.nih.gov/programs/hs-sip" class="btn-apply">Apply Now</a></div>
             </div>
@@ -1810,7 +1897,7 @@
                 <div class="subject-label">STEM</div>
                 </div>
                 <h3 class="font-bold text-purple-900 text-xl leading-tight" style="font-family:'Outfit';">Max Planck Institute Summer Programs</h3>
-                <p class="meta-text mt-2">Max Planck Society — Virtual / Germany</p>
+                <p class="meta-text mt-2">Max Planck Society, Virtual / Germany</p>
                 <p class="card-desc">International research opportunities offering students exposure to advanced scientific research in physics, biology, and neuroscience.</p>
                 <div class="btn-group"><a href="https://www.mpg.de/en" class="btn-apply">Apply Now</a></div>
             </div>
