@@ -39,9 +39,11 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden;
+            background-image:
+                linear-gradient(rgba(0,0,0,0.038) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.038) 1px, transparent 1px);
+            background-size: 32px 32px;
         }
-
-        /* --- BACKGROUND ORBS --- */
         .bg-orbs { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
         .orb { position: absolute; mix-blend-mode: multiply; filter: blur(85px); will-change: transform; animation: orbDrift ease-in-out infinite, blobMorph ease-in-out infinite alternate; }
         .orb-1 { width: 260px; height: 220px; top: -5%; left: -4%; background: radial-gradient(ellipse, rgba(255,205,40,0.70) 0%, rgba(255,180,20,0.22) 70%); border-radius: 62% 38% 70% 30% / 52% 64% 36% 68%; animation-duration: 26s, 9s; animation-delay: 0s, 0s; }
@@ -201,15 +203,25 @@
             width: 95%;
             max-width: 1280px;
             background: var(--hero-gradient);
-            padding: 120px 60px;
+            padding: 100px 80px 96px;
             text-align: center;
             color: white;
             border-radius: 40px;
             position: relative;
-            box-shadow: 0 20px 40px rgba(255, 102, 51, 0.15);
+            box-shadow: 0 20px 50px rgba(255, 102, 51, 0.22);
+            overflow: hidden;
         }
-        .hero-box h2 { font-family: 'Outfit', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 15px; }
-        .hero-box p { font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+        .hero-box::before {
+            content: '';
+            position: absolute; inset: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.32) 1.5px, transparent 1.5px);
+            background-size: 26px 26px;
+            mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, transparent 20%, black 80%);
+            -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, transparent 20%, black 80%);
+            pointer-events: none;
+        }
+        .hero-box h2 { font-family: 'Outfit', sans-serif; font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 800; line-height: 1.08; margin-bottom: 16px; position: relative; }
+        .hero-box p { font-size: 1.1rem; opacity: 0.88; max-width: 560px; margin: 0 auto; line-height: 1.6; position: relative; }
 
         /* --- FILTER DASHBOARD --- */
         .filter-wrapper {
@@ -517,13 +529,6 @@
 </head>
 <body>
 
-  <div class="bg-orbs" aria-hidden="true">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-    <div class="orb orb-4"></div>
-    <div class="orb orb-5"></div>
-  </div>
 
 <nav class="nav-bar">
     <div class="nav-container">

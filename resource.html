@@ -40,13 +40,15 @@
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--soft-bg);
+            background: var(--soft-bg);
             color: var(--text-dark);
             margin: 0;
             padding: 0;
+            background-image:
+                linear-gradient(rgba(0,0,0,0.038) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.038) 1px, transparent 1px);
+            background-size: 32px 32px;
         }
-
-        /* --- BACKGROUND ORBS --- */
         .bg-orbs { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
         .orb {
             position: absolute;
@@ -222,18 +224,28 @@
         }
 
         .hero-box {
-            width: 95%; 
-            max-width: 1200px; 
+            width: 95%;
+            max-width: 1200px;
             background: var(--hero-gradient);
-            padding: 80px 40px; 
+            padding: 100px 80px 96px;
             text-align: center;
             color: white;
             border-radius: 40px;
             position: relative;
-            box-shadow: 0 20px 40px rgba(255, 102, 51, 0.15);
+            box-shadow: 0 20px 50px rgba(255, 102, 51, 0.22);
+            overflow: hidden;
         }
-        .hero-box h2 { font-family: 'Outfit', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; line-height: 1.1; margin-bottom: 15px; }
-        .hero-box p { font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+        .hero-box::before {
+            content: '';
+            position: absolute; inset: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.32) 1.5px, transparent 1.5px);
+            background-size: 26px 26px;
+            mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, transparent 20%, black 80%);
+            -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, transparent 20%, black 80%);
+            pointer-events: none;
+        }
+        .hero-box h2 { font-family: 'Outfit', sans-serif; font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 800; line-height: 1.08; margin-bottom: 16px; position: relative; }
+        .hero-box p { font-size: 1.1rem; opacity: 0.88; max-width: 560px; margin: 0 auto; line-height: 1.6; position: relative; }
 
         /* --- CARDS --- */
         .content-wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px 100px; }
@@ -453,13 +465,6 @@
 <body>
 
   <!-- BACKGROUND ORBS -->
-  <div class="bg-orbs" aria-hidden="true">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-    <div class="orb orb-4"></div>
-    <div class="orb orb-5"></div>
-  </div>
 
     <nav class="nav-bar" id="navbar">
         <div class="nav-container">
@@ -488,13 +493,37 @@
 
     <div class="hero-outer">
         <section class="hero-box">
-            <h2>Resource Hub</h2>
-            <p>Everything you need to launch your project, track your impact, and find your passion.</p>
+            <h2>Your Launchpad for Real Impact</h2>
+            <p>Tools, guides, and kits built for students who want to start something, not just talk about it.</p>
         </section>
     </div>
 
     <div class="content-wrap">
         <div class="cards-grid">
+            <!-- PITCH YOUR INITIATIVE -->
+            <div class="resource-card" onclick="openPitchModal()">
+                <div class="icon-box">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/></svg>
+                </div>
+                <h3>Pitch Your Initiative</h3>
+                <p>Turn your idea into a compelling pitch. A framework for presenting your org to schools, sponsors, media, and potential members in under 60 seconds.</p>
+                <div class="card-footer">
+                    <button class="btn-action">Build Your Pitch</button>
+                </div>
+            </div>
+
+            <!-- YOUTH FUNDING GUIDE -->
+            <div class="resource-card" onclick="openFundingModal()">
+                <div class="icon-box">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <h3>Youth Grants & Funding</h3>
+                <p>Real money exists for student-led initiatives. A curated breakdown of grants, microfunds, and competitions that fund youth projects, no experience required.</p>
+                <div class="card-footer">
+                    <button class="btn-action">Find Funding</button>
+                </div>
+            </div>
+
             <!-- EC INTEREST FINDER -->
             <div class="resource-card" onclick="openModal('ec')">
                 <div class="icon-box">
@@ -675,6 +704,105 @@
                     <div class="tip-text"><strong>Submitting without reading aloud.</strong> If you stumble when reading it out loud, a reader will stumble too. Your essay should sound like you at your best.</div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- PITCH YOUR INITIATIVE MODAL -->
+    <div id="pitchModal" class="tool-modal">
+        <div class="tool-modal-overlay" onclick="closePitchModal()"></div>
+        <div class="tool-modal-content" style="max-width:640px;">
+            <button class="tool-modal-close" onclick="closePitchModal()">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            <p style="font-size:0.75rem;font-weight:800;color:var(--vibrant-pink);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Pitch Framework</p>
+            <h2 style="font-size:1.7rem;font-weight:800;color:var(--heading-dark);margin-bottom:6px;">Pitch Your Initiative</h2>
+            <p style="color:var(--text-muted);font-size:0.95rem;margin-bottom:28px;">A 60-second pitch framework that works for school boards, sponsors, social media, and new members. Fill in each block, then string them together.</p>
+            <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="background:var(--card-bg);border:1.5px solid var(--card-border);border-radius:14px;padding:20px 24px;">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                        <span style="font-size:1.3rem;font-weight:900;color:var(--vibrant-pink);">1</span>
+                        <strong style="color:var(--heading-dark);font-size:1rem;">The Hook</strong>
+                    </div>
+                    <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:10px;">Start with the problem, not your org. One sentence, real and specific.</p>
+                    <p style="font-style:italic;color:var(--text-muted);font-size:0.85rem;">"In [your city/school], [problem] is happening, and almost no one is doing anything about it."</p>
+                </div>
+                <div style="background:var(--card-bg);border:1.5px solid var(--card-border);border-radius:14px;padding:20px 24px;">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                        <span style="font-size:1.3rem;font-weight:900;color:var(--vibrant-orange);">2</span>
+                        <strong style="color:var(--heading-dark);font-size:1rem;">What You Do</strong>
+                    </div>
+                    <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:10px;">One clear sentence. Verb + who you help + how.</p>
+                    <p style="font-style:italic;color:var(--text-muted);font-size:0.85rem;">"We [run/build/organize/publish] [thing] for [audience] so that [outcome]."</p>
+                </div>
+                <div style="background:var(--card-bg);border:1.5px solid var(--card-border);border-radius:14px;padding:20px 24px;">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                        <span style="font-size:1.3rem;font-weight:900;color:var(--vibrant-yellow);">3</span>
+                        <strong style="color:var(--heading-dark);font-size:1rem;">Proof It Works</strong>
+                    </div>
+                    <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:10px;">One number, one story, or one result. Real beats polished.</p>
+                    <p style="font-style:italic;color:var(--text-muted);font-size:0.85rem;">"So far, we've [reached X people / raised $Y / ran Z events / published N articles]."</p>
+                </div>
+                <div style="background:var(--card-bg);border:1.5px solid var(--card-border);border-radius:14px;padding:20px 24px;">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                        <span style="font-size:1.3rem;font-weight:900;color:#8b5cf6;">4</span>
+                        <strong style="color:var(--heading-dark);font-size:1rem;">The Ask</strong>
+                    </div>
+                    <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:10px;">Tell them exactly what you need. Vague asks get ignored.</p>
+                    <p style="font-style:italic;color:var(--text-muted);font-size:0.85rem;">"We're looking for [a sponsor / new members / a room to meet in / $X]. Would you be open to [a quick follow-up call / connecting me with someone]?"</p>
+                </div>
+            </div>
+            <p style="color:var(--text-muted);font-size:0.82rem;margin-top:20px;text-align:center;">Practice it out loud until it sounds like you, not a script. That is the whole secret.</p>
+        </div>
+    </div>
+
+    <!-- YOUTH FUNDING MODAL -->
+    <div id="fundingModal" class="tool-modal">
+        <div class="tool-modal-overlay" onclick="closeFundingModal()"></div>
+        <div class="tool-modal-content" style="max-width:640px;">
+            <button class="tool-modal-close" onclick="closeFundingModal()">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            <p style="font-size:0.75rem;font-weight:800;color:#10b981;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Funding Guide</p>
+            <h2 style="font-size:1.7rem;font-weight:800;color:var(--heading-dark);margin-bottom:6px;">Youth Grants & Funding</h2>
+            <p style="color:var(--text-muted);font-size:0.95rem;margin-bottom:24px;">Real money exists for student-led work. Here is where to find it, sorted by what you actually need to do to apply.</p>
+            <div style="display:flex;flex-direction:column;gap:14px;">
+                <div style="background:var(--card-bg);border:1.5px solid var(--card-border);border-radius:14px;padding:18px 22px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                        <strong style="color:var(--heading-dark);font-size:0.97rem;">DoSomething.org Scholarships</strong>
+                        <span style="font-size:0.75rem;font-weight:700;color:#10b981;background:rgba(16,185,129,0.1);border-radius:6px;padding:2px 8px;">No app required</span>
+                    </div>
+                    <p style="color:var(--text-muted);font-size:0.87rem;">Scholarship sweepstakes tied to social good campaigns. Just participate in a campaign to enter. Great starting point.</p>
+                </div>
+                <div style="background:var(--card-bg);border:1.5px solid var(--card-border);border-radius:14px;padding:18px 22px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                        <strong style="color:var(--heading-dark);font-size:0.97rem;">Youth Service America Grants</strong>
+                        <span style="font-size:0.75rem;font-weight:700;color:var(--vibrant-orange);background:rgba(255,102,51,0.1);border-radius:6px;padding:2px 8px;">Short app</span>
+                    </div>
+                    <p style="color:var(--text-muted);font-size:0.87rem;">YSA funds youth-led service projects with grants up to $1,000. Projects of any size are eligible. Search "YSA grants" to find current cycles.</p>
+                </div>
+                <div style="background:var(--card-bg);border:1.5px solid var(--card-border);border-radius:14px;padding:18px 22px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                        <strong style="color:var(--heading-dark);font-size:0.97rem;">Local Community Foundations</strong>
+                        <span style="font-size:0.75rem;font-weight:700;color:var(--vibrant-orange);background:rgba(255,102,51,0.1);border-radius:6px;padding:2px 8px;">Short app</span>
+                    </div>
+                    <p style="color:var(--text-muted);font-size:0.87rem;">Every city has a community foundation. Search "[your city] community foundation youth grant." These are low-competition and often specifically want student applicants.</p>
+                </div>
+                <div style="background:var(--card-bg);border:1.5px solid var(--card-border);border-radius:14px;padding:18px 22px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                        <strong style="color:var(--heading-dark);font-size:0.97rem;">Awesome Foundation</strong>
+                        <span style="font-size:0.75rem;font-weight:700;color:var(--vibrant-pink);background:rgba(255,51,153,0.1);border-radius:6px;padding:2px 8px;">Full app</span>
+                    </div>
+                    <p style="color:var(--text-muted);font-size:0.87rem;">Monthly $1,000 micro-grants for "awesome" ideas. No nonprofit status required. Apply at awesomefoundation.org. They love bold, weird, and creative projects.</p>
+                </div>
+                <div style="background:var(--card-bg);border:1.5px solid var(--card-border);border-radius:14px;padding:18px 22px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                        <strong style="color:var(--heading-dark);font-size:0.97rem;">Local Businesses & Rotary Clubs</strong>
+                        <span style="font-size:0.75rem;font-weight:700;color:#8b5cf6;background:rgba(139,92,246,0.1);border-radius:6px;padding:2px 8px;">Cold outreach</span>
+                    </div>
+                    <p style="color:var(--text-muted);font-size:0.87rem;">Most underused source of funding. Walk in, send an email, or speak at a Rotary meeting. A one-page project overview + a clear ask goes a long way. Use the Pitch Framework above.</p>
+                </div>
+            </div>
+            <p style="color:var(--text-muted);font-size:0.82rem;margin-top:18px;text-align:center;">Start with the easiest ones first. A small win builds credibility for bigger asks.</p>
         </div>
     </div>
 
@@ -1097,6 +1225,26 @@
             document.querySelectorAll('.essay-panel').forEach(p => {
                 p.classList.toggle('active', p.id === 'panel-' + tab);
             });
+        }
+
+        // --- PITCH MODAL ---
+        function openPitchModal() {
+            document.getElementById('pitchModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        function closePitchModal() {
+            document.getElementById('pitchModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        // --- FUNDING MODAL ---
+        function openFundingModal() {
+            document.getElementById('fundingModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeFundingModal() {
+            document.getElementById('fundingModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
         }
 
         // --- INITIATIVE GUIDE ---

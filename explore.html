@@ -34,6 +34,10 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden;
+            background-image:
+                linear-gradient(rgba(0,0,0,0.038) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.038) 1px, transparent 1px);
+            background-size: 32px 32px;
         }
         /* --- ADVANCED TRANSITIONS --- */
         
@@ -143,7 +147,7 @@
         .hero-box::before {
             content: '';
             position: absolute; inset: 0;
-            background-image: radial-gradient(circle, rgba(255,255,255,0.18) 1.5px, transparent 1.5px);
+            background-image: radial-gradient(circle, rgba(255,255,255,0.32) 1.5px, transparent 1.5px);
             background-size: 26px 26px;
             mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, transparent 20%, black 80%);
             -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, transparent 20%, black 80%);
