@@ -195,15 +195,28 @@
     }
 
     .hero-box {
-      width: 95%; 
-      max-width: 1280px; 
+      width: 95%;
+      max-width: 1280px;
       background: var(--hero-gradient);
-      padding: 100px 60px; 
+      padding: 100px 60px;
       text-align: center;
       color: white;
       border-radius: 40px;
       position: relative;
+      overflow: hidden;
       box-shadow: 0 20px 40px rgba(255, 102, 51, 0.15);
+      --dot-x: 0px; --dot-y: 0px;
+    }
+    .hero-box::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.32) 1.5px, transparent 1.5px);
+      background-size: 26px 26px;
+      background-position: var(--dot-x) var(--dot-y);
+      transition: background-position 0.12s ease-out;
+      mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, transparent 20%, black 80%);
+      -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, transparent 20%, black 80%);
+      pointer-events: none;
     }
     .hero-box h2 { font-family: 'Outfit', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 15px; }
     .hero-box p { font-size: 1.1rem; opacity: 0.95; max-width: 650px; margin: 0 auto; }
@@ -414,6 +427,19 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.hero-box').forEach(box => {
+            box.addEventListener('mousemove', e => {
+                const r = box.getBoundingClientRect();
+                const x = ((e.clientX - r.left) / r.width - 0.5) * 18;
+                const y = ((e.clientY - r.top) / r.height - 0.5) * 18;
+                box.style.setProperty('--dot-x', x + 'px');
+                box.style.setProperty('--dot-y', y + 'px');
+            });
+            box.addEventListener('mouseleave', () => {
+                box.style.setProperty('--dot-x', '0px');
+                box.style.setProperty('--dot-y', '0px');
+            });
+        });
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('navLinks');
 
