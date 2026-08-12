@@ -355,7 +355,7 @@
     .hero-container::before {
         content: '';
         position: absolute; inset: 0;
-        background-image: radial-gradient(circle, rgba(255,255,255,0.22) 1.5px, transparent 1.5px);
+        background-image: radial-gradient(circle, rgba(255,255,255,0.5) 1.5px, transparent 1.5px);
         background-size: 28px 28px;
         mask-image: radial-gradient(ellipse 55% 55% at 50% 50%, transparent 25%, black 75%);
         -webkit-mask-image: radial-gradient(ellipse 55% 55% at 50% 50%, transparent 25%, black 75%);
@@ -693,6 +693,211 @@
         .nav-logo h1 { font-size: 1.15rem; }
     }
 
+    /* ===== HERO SPLIT LAYOUT ===== */
+    .hero-split {
+      max-width: 1160px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 56px;
+      text-align: left;
+    }
+    .hero-text { flex: 1; min-width: 0; }
+    .hero-split p { margin-left: 0; margin-right: 0; }
+    .hero-split .hero-btns { justify-content: flex-start; }
+    .hero-visual { flex: 0 0 310px; display: flex; align-items: center; justify-content: center; }
+
+    @keyframes globeFloat {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-14px); }
+    }
+    @keyframes globeRotate {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    .globe-wrap {
+      position: relative;
+      animation: globeFloat 5s ease-in-out infinite;
+    }
+    .globe-spin-group {
+      transform-origin: 150px 150px;
+      animation: globeRotate 28s linear infinite;
+    }
+    .globe-stat-badge {
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      border-radius: 50px;
+      padding: 9px 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #1a1a1a;
+      white-space: nowrap;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* ===== TESTIMONIALS ===== */
+    .testimonials-section {
+      padding: 40px 20px 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    .t-card {
+      background: white;
+      border-radius: 20px;
+      padding: 26px 28px 22px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+    .t-stars { color: #f5a623; font-size: 0.88rem; letter-spacing: 3px; margin-bottom: 12px; }
+    .t-text { color: var(--text-muted); line-height: 1.72; font-size: 0.92rem; margin: 0; }
+    [data-theme="dark"] .t-card { background: #1c1929; border-color: #2e2848; }
+
+    /* ===== STEPS SECTION ===== */
+    .steps-section {
+      padding: 80px 20px 20px;
+      max-width: 1160px;
+      margin: 0 auto;
+    }
+    .steps-eyebrow {
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--vibrant-orange);
+      margin-bottom: 14px;
+    }
+    .steps-main-heading {
+      text-align: center;
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin: 0 0 72px;
+      color: var(--text-dark);
+    }
+    .step-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+      margin-bottom: 88px;
+    }
+    .step-row.flip { direction: rtl; }
+    .step-row.flip > * { direction: ltr; }
+    .step-meta {
+      display: flex;
+      align-items: flex-end;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .step-mascot-svg { width: 68px; height: auto; flex-shrink: 0; }
+    .step-num-label {
+      font-family: 'Outfit', sans-serif;
+      font-size: 5.5rem;
+      font-weight: 800;
+      line-height: 0.85;
+      color: rgba(0,0,0,0.07);
+      letter-spacing: -4px;
+    }
+    [data-theme="dark"] .step-num-label { color: rgba(255,255,255,0.07); }
+    .step-cat-label {
+      display: inline-block;
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+    .step-h {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text-dark);
+      margin: 0 0 14px;
+      line-height: 1.2;
+    }
+    .step-p { color: var(--text-muted); line-height: 1.75; margin: 0 0 22px; font-size: 0.97rem; }
+    .step-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      text-decoration: none;
+      transition: gap 0.2s ease;
+    }
+    .step-link:hover { gap: 10px; }
+
+    /* Browser mockup */
+    .mock-browser {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+      overflow: hidden;
+      border: 1px solid #ebebeb;
+    }
+    .mock-bar {
+      background: #f5f5f5;
+      border-bottom: 1px solid #ebebeb;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .mock-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .mock-url-bar {
+      flex: 1;
+      background: white;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 0.7rem;
+      color: #bbb;
+      margin-left: 8px;
+    }
+    .mock-body { padding: 18px; min-height: 190px; background: #f8f8f8; }
+    .mock-item {
+      background: white;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      border: 1px solid #f0f0f0;
+    }
+    .mock-item-h { height: 9px; background: #e5e5e5; border-radius: 4px; width: 65%; margin-bottom: 7px; }
+    .mock-item-s { height: 7px; background: #efefef; border-radius: 4px; width: 88%; }
+    .mock-tags { display: flex; gap: 6px; margin-top: 9px; }
+    .mock-tag { height: 18px; width: 50px; background: #f2f2f2; border-radius: 10px; }
+    [data-theme="dark"] .mock-browser { background: #1c1929; border-color: #2e2848; }
+    [data-theme="dark"] .mock-bar { background: #141220; border-color: #2e2848; }
+    [data-theme="dark"] .mock-body { background: #141220; }
+    [data-theme="dark"] .mock-item { background: #1c1929; border-color: #2e2848; }
+    [data-theme="dark"] .mock-item-h { background: #2e2848; }
+    [data-theme="dark"] .mock-item-s { background: #241e35; }
+    [data-theme="dark"] .mock-tag { background: #241e35; }
+
+    @media (max-width: 900px) {
+      .hero-split { flex-direction: column; text-align: center; gap: 36px; }
+      .hero-split .hero-btns { justify-content: center; }
+      .hero-split p { margin-left: auto; margin-right: auto; }
+      .hero-visual { display: none; }
+      .step-row, .step-row.flip { grid-template-columns: 1fr; gap: 30px; direction: ltr; margin-bottom: 60px; }
+      .steps-main-heading { font-size: 2rem; margin-bottom: 48px; }
+      .step-h { font-size: 1.6rem; }
+    }
+    @media (max-width: 600px) {
+      .testimonials-grid { grid-template-columns: 1fr; }
+    }
+
     /* --- THEME TOGGLE --- */
     .theme-toggle {
         width: 36px; height: 36px; border-radius: 50%; border: none; cursor: pointer;
@@ -884,6 +1089,277 @@
         .mission-statement { font-size: 1.7rem; }
         .mission-sub { font-size: 0.95rem; }
     }
+
+
+    /* ===== SCROLLING TESTIMONIALS ===== */
+    .testimonials-marquee-outer {
+      overflow: hidden;
+      position: relative;
+    }
+    .testimonials-marquee-outer::before,
+    .testimonials-marquee-outer::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 100px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .testimonials-marquee-outer::before { left: 0; background: linear-gradient(to right, var(--soft-bg), transparent); }
+    .testimonials-marquee-outer::after  { right: 0; background: linear-gradient(to left, var(--soft-bg), transparent); }
+    @keyframes marqueeScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .testimonials-track {
+      display: flex;
+      gap: 20px;
+      width: max-content;
+      animation: marqueeScroll 40s linear infinite;
+      padding: 12px 0 20px;
+    }
+    .testimonials-track:hover { animation-play-state: paused; }
+    .t-card {
+      width: 285px;
+      flex-shrink: 0;
+      background: white;
+      border-radius: 20px;
+      padding: 22px 24px 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+    .t-quote-mark {
+      font-size: 2.6rem;
+      line-height: 0.85;
+      color: var(--vibrant-orange);
+      font-family: Georgia, serif;
+      margin-bottom: 8px;
+      opacity: 0.55;
+    }
+    .t-stars { color: #f5a623; font-size: 0.88rem; letter-spacing: 3px; margin-bottom: 8px; }
+    .t-text { color: var(--text-muted); line-height: 1.68; font-size: 0.9rem; margin: 0; }
+    [data-theme="dark"] .t-card { background: #1c1929; border-color: #2e2848; }
+
+    /* ===== FAQ REDESIGN ===== */
+    .faq-redesign {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 64px;
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 20px;
+      align-items: start;
+    }
+    .faq-eyebrow-new {
+      font-weight: 700;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--vibrant-orange);
+      margin-bottom: 14px;
+    }
+    .faq-left-heading {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin: 0 0 16px;
+      color: var(--text-dark);
+      line-height: 1.2;
+    }
+    .faq-left-sub {
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin: 0 0 36px;
+      font-size: 0.95rem;
+    }
+    .faq-item-new {
+      border-radius: 14px;
+      background: white;
+      margin-bottom: 10px;
+      border: 1px solid #f0f0f0;
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+    .faq-item-new:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.07); }
+    .faq-trigger-new {
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.96rem;
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-dark);
+      transition: color 0.2s;
+    }
+    .faq-num-badge {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      transition: background 0.3s, color 0.3s;
+    }
+    .faq-trigger-text-new { flex: 1; }
+    .faq-plus-new {
+      color: #ccc;
+      font-size: 1.2rem;
+      line-height: 1;
+      transition: transform 0.3s, color 0.3s;
+    }
+    .faq-item-new.active .faq-num-badge { background: var(--vibrant-orange); color: white; }
+    .faq-item-new.active .faq-plus-new  { transform: rotate(45deg); color: var(--vibrant-orange); }
+    .faq-item-new.active .faq-trigger-new { color: var(--vibrant-orange); }
+    .faq-body-new {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1), padding 0.45s;
+      color: var(--text-muted);
+      line-height: 1.75;
+      font-size: 0.93rem;
+      padding: 0 20px;
+    }
+    .faq-item-new.active .faq-body-new { max-height: 220px; padding: 0 20px 18px 64px; }
+    [data-theme="dark"] .faq-item-new { background: #1c1929; border-color: #2e2848; }
+    [data-theme="dark"] .faq-trigger-new { color: var(--text-dark); }
+    [data-theme="dark"] .faq-num-badge { background: #251f38; color: #9896b8; }
+    [data-theme="dark"] .faq-speech-bubble { background: #1c1929; color: var(--text-muted); }
+    [data-theme="dark"] .faq-body-new { color: var(--text-muted); }
+
+    /* ===== BOTTOM CTA SECTION ===== */
+    .cta-section {
+      max-width: 1160px;
+      margin: 0 auto 60px;
+      padding: 0 20px;
+    }
+    .cta-inner {
+      background: linear-gradient(135deg, #ff3399 0%, #ff6633 60%, #ffaa00 100%);
+      border-radius: 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      padding: 64px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-inner::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-eyebrow {
+      color: rgba(255,255,255,0.9);
+      font-weight: 700;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 14px;
+    }
+    .cta-heading {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: white;
+      margin: 0 0 16px;
+      line-height: 1.2;
+    }
+    .cta-sub {
+      color: rgba(255,255,255,0.62);
+      line-height: 1.72;
+      margin: 0 0 32px;
+      font-size: 0.96rem;
+    }
+    .cta-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .cta-btn-primary {
+      background: white;
+      color: var(--vibrant-orange);
+      padding: 13px 26px;
+      border-radius: 12px;
+      font-weight: 800;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+    .cta-btn-ghost {
+      border: 2px solid rgba(255,255,255,0.3);
+      color: white;
+      padding: 13px 26px;
+      border-radius: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: border-color 0.2s;
+    }
+    .cta-btn-ghost:hover { border-color: rgba(255,255,255,0.6); }
+    .cta-card-wrap {
+      background: white;
+      border-radius: 20px;
+      padding: 28px 28px 32px;
+      position: relative;
+    }
+    .cta-card-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #9ca3af;
+      margin-bottom: 18px;
+    }
+    .cta-feature {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid #f5f5f5;
+    }
+    .cta-feature:last-of-type { border-bottom: none; }
+    .cta-feat-num {
+      width: 30px;
+      height: 30px;
+      background: #f8f8f8;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #9ca3af;
+      flex-shrink: 0;
+    }
+    .cta-feat-cat {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--vibrant-orange);
+      margin-bottom: 2px;
+    }
+    .cta-feat-h {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+    @media (max-width: 900px) {
+      .faq-redesign { grid-template-columns: 1fr; gap: 36px; }
+      .cta-inner { grid-template-columns: 1fr; gap: 32px; padding: 40px 28px; }
+      .cta-heading { font-size: 2rem; }
+    }
   </style>
 </head>
 
@@ -891,7 +1367,7 @@
 
   <nav class="nav-bar">
     <div class="nav-container">
-        <div class="nav-logo"><h1><a href="index.html" class="logo-link">CauseConnectHub</a></h1></div>
+        <div class="nav-logo"><h1><a href="index.html" class="logo-link">Cause Connect Hub</a></h1></div>
         <div class="nav-links" id="navLinks">
           <a href="index.html" class="active"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg> Home</a>
           <a href="explore.html"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg> Find Extracurriculars</a>
@@ -917,12 +1393,12 @@
   <div class="hero-outer">
     <section class="hero-container">
       <div class="hero-content">
-          <h2><span class="word-1">Find Your Perfect</span><br><span class="word-2"><span class="perfect-word">Opportunity.</span></span></h2>
-          <p>Find youth-led clubs, passion projects, awards, and scholarships, all built for students like you. Free, forever.</p>
-          <div class="hero-btns">
-              <a href="explore.html" class="btn-main">Find a Project <span class="btn-arrow">→</span></a>
-              <a href="award.html" class="btn-outline">Explore Awards & Scholarships</a>
-          </div>
+        <h2><span class="word-1">Find Your Perfect</span><br><span class="word-2"><span class="perfect-word">Opportunity.</span></span></h2>
+        <p>Find youth-led clubs, passion projects, awards, and scholarships, all built for students like you. Free, forever.</p>
+        <div class="hero-btns">
+          <a href="explore.html" class="btn-main">Find a Project <span class="btn-arrow">→</span></a>
+          <a href="award.html" class="btn-outline">Explore Awards &amp; Scholarships</a>
+        </div>
       </div>
     </section>
   </div>
@@ -951,107 +1427,194 @@
     </div>
   </section>
 
-  <section class="mission-band">
-    <div class="mission-band-inner">
-      <div class="mission-accent-line"></div>
-      <h2 class="mission-statement">We made this because finding the right opportunity shouldn't be this hard.</h2>
-      <p class="mission-sub">CauseConnectHub started as a simple idea: what if every student, regardless of who they know or where they go to school, could find something real to be part of? So we built it. No paywalls, no gatekeeping — just a place where youth-led organizations can find members and students can find their thing.</p>
+  <section class="testimonials-section">
+    <div class="testimonials-marquee-outer">
+      <div class="testimonials-track">
+        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">Found three programs I actually wanted to apply to in like 20 minutes. I had no idea this many opportunities existed.</p></div>
+        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">I applied to an award I found here and got it. There's no way I would've come across it on my own.</p></div>
+        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">Finally something that feels like it was actually made for high schoolers and not just college admissions coaches.</p></div>
+        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">I kept waiting for a paywall or a catch. There isn't one. Genuinely free, which is rare for something this useful.</p></div>
+        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">Used this to find a youth policy program near me. My counselor had never even heard of it,so glad I found it myself.</p></div>
+        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">The resources section alone is worth bookmarking. I've already sent the link to three friends in my grade.</p></div>
+        <!-- Duplicate set for seamless infinite loop -->
+        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">Found three programs I actually wanted to apply to in like 20 minutes. I had no idea this many opportunities existed.</p></div>
+        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">I applied to an award I found here and got it. There's no way I would've come across it on my own.</p></div>
+        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">Finally something that feels like it was actually made for high schoolers and not just college admissions coaches.</p></div>
+        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">I kept waiting for a paywall or a catch. There isn't one. Genuinely free, which is rare for something this useful.</p></div>
+        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">Used this to find a youth policy program near me. My counselor had never even heard of it,so glad I found it myself.</p></div>
+        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">The resources section alone is worth bookmarking. I've already sent the link to three friends in my grade.</p></div>
+      </div>
     </div>
   </section>
 
-  <section class="section-wrap">
-      <div class="grid-cards">
-          <div class="card">
-              <div class="card-icon icon-pink">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                </svg>
-              </div>
-              <h3>Explore Projects</h3>
-              <p>Filter by topic, location, and type to find opportunities you actually care about, not just resume fillers.</p>
-          </div>
-          <div class="card">
-              <div class="card-icon icon-orange">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path>
-                </svg>
-              </div>
-              <h3>Grow Your Org</h3>
-              <p>Running your own initiative? List it here and connect with students who are ready to join your cause.</p>
-          </div>
-          <div class="card">
-              <div class="card-icon icon-yellow">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.143-5.714L5 12l5.714-2.143L13 3z"></path>
-                </svg>
-              </div>
-              <h3>Get Recognized</h3>
-              <p>Awards and scholarships for student leaders actually exist. We found them so you don't have to.</p>
-          </div>
-      </div>
+  <section class="steps-section">
+    <div class="steps-eyebrow">What you can do</div>
+    <h2 class="steps-main-heading">Four ways to find your place</h2>
 
-      <div class="about-flex">
-          <div class="about-image"></div>
-          <div class="about-text">
-              <span class="tagline">Our Mission</span>
-              <h2>Bridging the gap between ambition and action.</h2>
-              <p>Finding meaningful extracurricular opportunities shouldn't feel like a scavenger hunt. We bring high-quality programs, awards, scholarships, and resources into one supportive hub, so students can explore their passions and take action with confidence.</p>
-              <p>Whether you want to lead, volunteer, earn awards and grants, or start something of your own, CauseConnectHub is here to help you succeed.</p>
-          </div>
+    <!-- Step 01: Extracurriculars - green turtle -->
+    <div class="step-row">
+      <div>
+        <div class="step-meta">
+          <span class="step-num-label">01</span>
+        </div>
+        <span class="step-cat-label" style="color: var(--vibrant-orange)">Extracurriculars</span>
+        <h3 class="step-h">Find clubs and passion projects</h3>
+        <p class="step-p">Browse youth-led initiatives, volunteer roles, and leadership opportunities. Filter by topic, location, and type to find what actually fits you,not just what looks good on paper.</p>
+        <a href="explore.html" class="step-link" style="color: var(--vibrant-orange)">Explore extracurriculars &#8594;</a>
       </div>
+      <div>
+        <div class="mock-browser">
+          <div class="mock-bar">
+            <div class="mock-dot" style="background:#ff5f57"></div>
+            <div class="mock-dot" style="background:#ffbd2e"></div>
+            <div class="mock-dot" style="background:#28c941"></div>
+            <div class="mock-url-bar">causeconnecthub.com/explore</div>
+          </div>
+          <div class="mock-body" style="padding:0; overflow:hidden; min-height:0;">
+            <img src="exploreshot.webp" alt="Explore listings" style="width:100%; display:block; margin-top:-11%;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 02: Awards - purple robot -->
+    <div class="step-row flip">
+      <div>
+        <div class="step-meta">
+          <span class="step-num-label">02</span>
+        </div>
+        <span class="step-cat-label" style="color: var(--vibrant-pink)">Awards &amp; Scholarships</span>
+        <h3 class="step-h">Get recognized for what you do</h3>
+        <p class="step-p">Hundreds of awards and scholarships exist for student leaders, researchers, and activists. We found them so you don't have to spend hours searching.</p>
+        <a href="award.html" class="step-link" style="color: var(--vibrant-pink)">Explore awards &#8594;</a>
+      </div>
+      <div>
+        <div class="mock-browser">
+          <div class="mock-bar">
+            <div class="mock-dot" style="background:#ff5f57"></div>
+            <div class="mock-dot" style="background:#ffbd2e"></div>
+            <div class="mock-dot" style="background:#28c941"></div>
+            <div class="mock-url-bar">causeconnecthub.com/award</div>
+          </div>
+          <div class="mock-body" style="padding:0; overflow:hidden; min-height:0;">
+            <img src="awards.webp" alt="Awards and scholarships page" style="width:100%; display:block; margin-top:-11%;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 03: Resources - orange sun -->
+    <div class="step-row">
+      <div>
+        <div class="step-meta">
+          <span class="step-num-label">03</span>
+        </div>
+        <span class="step-cat-label" style="color: #c9920a">Resources</span>
+        <h3 class="step-h">Tools to build your own initiative</h3>
+        <p class="step-p">Guides, templates, and resources for students who want to start something. From writing your first proposal to building a team, we've collected what you actually need.</p>
+        <a href="resource.html" class="step-link" style="color: #c9920a">Explore resources &#8594;</a>
+      </div>
+      <div>
+        <div class="mock-browser">
+          <div class="mock-bar">
+            <div class="mock-dot" style="background:#ff5f57"></div>
+            <div class="mock-dot" style="background:#ffbd2e"></div>
+            <div class="mock-dot" style="background:#28c941"></div>
+            <div class="mock-url-bar">causeconnecthub.com/resource</div>
+          </div>
+          <div class="mock-body" style="padding:0; overflow:hidden; min-height:0;">
+            <img src="resourcespage.webp" alt="Resources page" style="width:100%; display:block; margin-top:-11%;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 04: Add Project - brown bear -->
+    <div class="step-row flip">
+      <div>
+        <div class="step-meta">
+          <span class="step-num-label">04</span>
+        </div>
+        <span class="step-cat-label" style="color: var(--vibrant-pink)">Share Your Project</span>
+        <h3 class="step-h">Running something? List it here</h3>
+        <p class="step-p">If you've started a club, initiative, or organization, add it to our directory. Students looking to get involved will find you,no experience required to be listed.</p>
+        <a href="project.html" class="step-link" style="color: var(--vibrant-pink)">Add your project &#8594;</a>
+      </div>
+      <div>
+        <div class="mock-browser">
+          <div class="mock-bar">
+            <div class="mock-dot" style="background:#ff5f57"></div>
+            <div class="mock-dot" style="background:#ffbd2e"></div>
+            <div class="mock-dot" style="background:#28c941"></div>
+            <div class="mock-url-bar">causeconnecthub.com/project</div>
+          </div>
+          <div class="mock-body" style="padding:0; overflow:hidden; min-height:0;">
+            <img src="submityourorojectpage.webp" alt="Add your project page" style="width:100%; display:block; margin-top:-11%;">
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <div class="faq-container">
-    <div class="faq-inner">
-        <h2 style="text-align: center; font-family: 'Outfit'; font-size: 2.5rem; margin-bottom: 40px;">Common Questions</h2>
-        
-        <div class="faq-item">
-            <div class="faq-trigger" onclick="this.parentElement.classList.toggle('active')">
-                What is Cause Connect Hub? 
-                <div class="faq-icon-box">+</div>
-            </div>
-            <div class="faq-body">Cause Connect Hub is a platform that helps students discover extracurricular opportunities, awards, scholarships, and resources to start their own passion projects, all in one place.</div>
+    <div class="faq-redesign">
+      <!-- Left column -->
+      <div>
+        <div class="faq-eyebrow-new">Questions, answered</div>
+        <h2 class="faq-left-heading">Everything you need to know before you start.</h2>
+        <p class="faq-left-sub">Learn how CauseConnectHub works so you can hit the ground running.</p>
+      </div>
+      <!-- Right column: accordion -->
+      <div>
+        <div class="faq-item-new">
+          <div class="faq-trigger-new" onclick="this.parentElement.classList.toggle('active')">
+            <div class="faq-num-badge">01</div>
+            <span class="faq-trigger-text-new">What is Cause Connect Hub?</span>
+            <div class="faq-plus-new">+</div>
+          </div>
+          <div class="faq-body-new">Cause Connect Hub is a platform that helps students discover extracurricular opportunities, awards, scholarships, and resources to start their own passion projects, all in one place.</div>
         </div>
-
-        <div class="faq-item">
-            <div class="faq-trigger" onclick="this.parentElement.classList.toggle('active')">
-                Who can use Cause Connect Hub? 
-                <div class="faq-icon-box">+</div>
-            </div>
-            <div class="faq-body">Cause Connect Hub is built for middle school and high school students who want to explore their passions, discover extracurricular opportunities, apply for awards and scholarships, and start their own initiatives.</div>
+        <div class="faq-item-new">
+          <div class="faq-trigger-new" onclick="this.parentElement.classList.toggle('active')">
+            <div class="faq-num-badge">02</div>
+            <span class="faq-trigger-text-new">Who can use Cause Connect Hub?</span>
+            <div class="faq-plus-new">+</div>
+          </div>
+          <div class="faq-body-new">Cause Connect Hub is built for middle school and high school students who want to explore their passions, discover extracurricular opportunities, apply for awards and scholarships, and start their own initiatives.</div>
         </div>
-
-        <div class="faq-item">
-            <div class="faq-trigger" onclick="this.parentElement.classList.toggle('active')">
-                Is there a cost involved? 
-                <div class="faq-icon-box">+</div>
-            </div>
-            <div class="faq-body">Nope! Cause Connect Hub is 100% free for students. Access to opportunities should never be a barrier.</div>
+        <div class="faq-item-new">
+          <div class="faq-trigger-new" onclick="this.parentElement.classList.toggle('active')">
+            <div class="faq-num-badge">03</div>
+            <span class="faq-trigger-text-new">Is there a cost involved?</span>
+            <div class="faq-plus-new">+</div>
+          </div>
+          <div class="faq-body-new">Nope! Cause Connect Hub is 100% free for students. Access to opportunities should never be a barrier.</div>
         </div>
-
-        <div class="faq-item">
-            <div class="faq-trigger" onclick="this.parentElement.classList.toggle('active')">
-                What kinds of opportunities can I find? 
-                <div class="faq-icon-box">+</div>
-            </div>
-            <div class="faq-body">You can explore youth-led initiatives, volunteer roles, leadership opportunities, competitions, awards, scholarships, and resources to start your own extracurriculars.</div>
+        <div class="faq-item-new">
+          <div class="faq-trigger-new" onclick="this.parentElement.classList.toggle('active')">
+            <div class="faq-num-badge">04</div>
+            <span class="faq-trigger-text-new">What kinds of opportunities can I find?</span>
+            <div class="faq-plus-new">+</div>
+          </div>
+          <div class="faq-body-new">You can explore youth-led initiatives, volunteer roles, leadership opportunities, competitions, awards, scholarships, and resources to start your own extracurriculars.</div>
         </div>
-
-        <div class="faq-item">
-            <div class="faq-trigger" onclick="this.parentElement.classList.toggle('active')">
-                Do I need prior experience to join opportunities? 
-                <div class="faq-icon-box">+</div>
-            </div>
-            <div class="faq-body">Not at all. Cause Connect Hub is built for students at any stage, whether you're just starting out or already deeply involved.</div>
+        <div class="faq-item-new">
+          <div class="faq-trigger-new" onclick="this.parentElement.classList.toggle('active')">
+            <div class="faq-num-badge">05</div>
+            <span class="faq-trigger-text-new">Do I need prior experience to join opportunities?</span>
+            <div class="faq-plus-new">+</div>
+          </div>
+          <div class="faq-body-new">Not at all. Cause Connect Hub is built for students at any stage, whether you're just starting out or already deeply involved.</div>
         </div>
-
-        <div class="faq-item">
-            <div class="faq-trigger" onclick="this.parentElement.classList.toggle('active')">
-                How do I list my organization? 
-                <div class="faq-icon-box">+</div>
-            </div>
-            <div class="faq-body">Click "Add Your Project" and fill out the form including information such as what you do and what your looking for. After about a week a confirmation email will be sent out!</div>
+        <div class="faq-item-new">
+          <div class="faq-trigger-new" onclick="this.parentElement.classList.toggle('active')">
+            <div class="faq-num-badge">06</div>
+            <span class="faq-trigger-text-new">How do I list my organization?</span>
+            <div class="faq-plus-new">+</div>
+          </div>
+          <div class="faq-body-new">Click "Add Your Project" and fill out the form with information about what you do and what you're looking for. After about a week, a confirmation email will be sent out!</div>
         </div>
+      </div>
     </div>
   </div>
 
@@ -1084,23 +1647,6 @@
   </script>
 
   <script>
-    // Staggered card scroll-reveal
-    const cards = document.querySelectorAll('.card');
-    const cardObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const card = entry.target;
-          const i = [...cards].indexOf(card);
-          setTimeout(() => card.classList.add('in-view'), i * 120);
-          cardObserver.unobserve(card);
-        }
-      });
-    }, { threshold: 0.15 });
-    cards.forEach(c => cardObserver.observe(c));
-
-  </script>
-
-  <script>
     // Count-up animation for hero stat cards
     function countUp(el, target, duration, suffix) {
       var start = performance.now();
@@ -1129,10 +1675,50 @@
     });
   </script>
 
+  <section class="cta-section">
+    <div class="cta-inner">
+      <div>
+        <div class="cta-eyebrow">Your next step</div>
+        <h2 class="cta-heading">Turn your interests into real opportunities.</h2>
+        <p class="cta-sub">Find programs that fit you, get recognized for your work, and connect with students building something real,all for free.</p>
+        <div class="cta-btns">
+          <a href="explore.html" class="cta-btn-primary">Find a Project &#8594;</a>
+          <a href="award.html" class="cta-btn-ghost">Explore Awards &#8594;</a>
+        </div>
+      </div>
+      <div>
+        <div class="cta-card-wrap">
+          <div class="cta-card-label">Start with a goal</div>
+          <div class="cta-feature">
+            <div class="cta-feat-num">01</div>
+            <div>
+              <div class="cta-feat-cat">Extracurriculars</div>
+              <div class="cta-feat-h">Find clubs and passion projects</div>
+            </div>
+          </div>
+          <div class="cta-feature">
+            <div class="cta-feat-num">02</div>
+            <div>
+              <div class="cta-feat-cat">Awards &amp; Scholarships</div>
+              <div class="cta-feat-h">Get recognized for your work</div>
+            </div>
+          </div>
+          <div class="cta-feature">
+            <div class="cta-feat-num">03</div>
+            <div>
+              <div class="cta-feat-cat">Share Your Project</div>
+              <div class="cta-feat-h">Add your initiative to our directory</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
     <footer class="site-footer">
         <div class="footer-inner">
             <div class="footer-logo-col">
-                <a href="index.html" class="footer-logo">CauseConnect<span>Hub</span></a>
+                <a href="index.html" class="footer-logo">Cause Connect<span> Hub</span></a>
                 <p class="footer-tagline">Where youth-led ideas find their people.</p>
             </div>
             <div class="footer-links-col">
