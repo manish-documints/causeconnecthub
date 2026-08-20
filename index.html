@@ -1056,11 +1056,16 @@
 
     /* --- MISSION BAND --- */
     .mission-band {
-        max-width: 860px;
-        margin: 72px auto 0;
-        padding: 0 20px;
+        width: 100%;
+        margin: 72px 0 0;
+        padding: 56px 20px;
+        background: rgba(255, 102, 51, 0.06);
+        border-top: 1.5px solid rgba(255, 102, 51, 0.15);
+        border-bottom: 1.5px solid rgba(255, 102, 51, 0.15);
     }
     .mission-band-inner {
+        max-width: 860px;
+        margin: 0 auto;
         padding: 0 12px;
     }
     .mission-accent-line {
@@ -1118,7 +1123,7 @@
       animation: marqueeScroll 40s linear infinite;
       padding: 12px 0 20px;
     }
-    .testimonials-track:hover { animation-play-state: paused; }
+    .testimonials-track:hover { animation-play-state: running; }
     .t-card {
       width: 285px;
       flex-shrink: 0;
@@ -1394,7 +1399,7 @@
     <section class="hero-container">
       <div class="hero-content">
         <h2><span class="word-1">Find Your Perfect</span><br><span class="word-2"><span class="perfect-word">Opportunity.</span></span></h2>
-        <p>Find youth-led clubs, passion projects, awards, and scholarships, all built for students like you. Free, forever.</p>
+        <p>You have the drive to make a difference. We built the place to help you find where to start. Free, always.</p>
         <div class="hero-btns">
           <a href="explore.html" class="btn-main">Find a Project <span class="btn-arrow">→</span></a>
           <a href="award.html" class="btn-outline">Explore Awards &amp; Scholarships</a>
@@ -1447,6 +1452,14 @@
     </div>
   </section>
 
+  <section class="mission-band">
+    <div class="mission-band-inner">
+      <div class="mission-accent-line"></div>
+      <h2 class="mission-statement">We made this because finding the right opportunity shouldn't be this hard.</h2>
+      <p class="mission-sub">We built this because we know how it feels to want to do something meaningful and not know where to begin. CauseConnectHub exists to make sure that no student who wants to create change is left searching alone. Every opportunity on this platform is here because we believe in what students are capable of when they have the right support.</p>
+    </div>
+  </section>
+
   <section class="steps-section">
     <div class="steps-eyebrow">What you can do</div>
     <h2 class="steps-main-heading">Four ways to find your place</h2>
@@ -1459,7 +1472,7 @@
         </div>
         <span class="step-cat-label" style="color: var(--vibrant-orange)">Extracurriculars</span>
         <h3 class="step-h">Find clubs and passion projects</h3>
-        <p class="step-p">Browse youth-led initiatives, volunteer roles, and leadership opportunities. Filter by topic, location, and type to find what actually fits you,not just what looks good on paper.</p>
+        <p class="step-p">Every student has something they care deeply about. Browse youth-led initiatives, volunteer roles, and leadership opportunities filtered by topic, location, and type to find the ones that actually speak to you, not just the ones that look impressive on a resume.</p>
         <a href="explore.html" class="step-link" style="color: var(--vibrant-orange)">Explore extracurriculars &#8594;</a>
       </div>
       <div>
@@ -1485,7 +1498,7 @@
         </div>
         <span class="step-cat-label" style="color: var(--vibrant-pink)">Awards &amp; Scholarships</span>
         <h3 class="step-h">Get recognized for what you do</h3>
-        <p class="step-p">Hundreds of awards and scholarships exist for student leaders, researchers, and activists. We found them so you don't have to spend hours searching.</p>
+        <p class="step-p">Your work deserves to be recognized. Hundreds of awards and scholarships exist for student leaders, researchers, and changemakers. We gathered them in one place so your energy goes toward applying, not hunting.</p>
         <a href="award.html" class="step-link" style="color: var(--vibrant-pink)">Explore awards &#8594;</a>
       </div>
       <div>
@@ -1511,7 +1524,7 @@
         </div>
         <span class="step-cat-label" style="color: #c9920a">Resources</span>
         <h3 class="step-h">Tools to build your own initiative</h3>
-        <p class="step-p">Guides, templates, and resources for students who want to start something. From writing your first proposal to building a team, we've collected what you actually need.</p>
+        <p class="step-p">Starting something from scratch takes courage. We put together guides, templates, and tools to walk alongside you, from writing your first proposal to rallying a team around an idea that matters to you.</p>
         <a href="resource.html" class="step-link" style="color: #c9920a">Explore resources &#8594;</a>
       </div>
       <div>
@@ -1537,7 +1550,7 @@
         </div>
         <span class="step-cat-label" style="color: var(--vibrant-pink)">Share Your Project</span>
         <h3 class="step-h">Running something? List it here</h3>
-        <p class="step-p">If you've started a club, initiative, or organization, add it to our directory. Students looking to get involved will find you,no experience required to be listed.</p>
+        <p class="step-p">If you've built something worth sharing, this is where it belongs. Add your club, initiative, or organization to our directory so other students who are looking for exactly what you created can find you.</p>
         <a href="project.html" class="step-link" style="color: var(--vibrant-pink)">Add your project &#8594;</a>
       </div>
       <div>
@@ -1562,7 +1575,7 @@
       <div>
         <div class="faq-eyebrow-new">Questions, answered</div>
         <h2 class="faq-left-heading">Everything you need to know before you start.</h2>
-        <p class="faq-left-sub">Learn how CauseConnectHub works so you can hit the ground running.</p>
+        <p class="faq-left-sub">We want this to feel easy from the moment you arrive. Here are the answers to what students ask us most.</p>
       </div>
       <!-- Right column: accordion -->
       <div>
@@ -1680,7 +1693,7 @@
       <div>
         <div class="cta-eyebrow">Your next step</div>
         <h2 class="cta-heading">Turn your interests into real opportunities.</h2>
-        <p class="cta-sub">Find programs that fit you, get recognized for your work, and connect with students building something real,all for free.</p>
+        <p class="cta-sub">You don't have to figure this out alone. Find programs that genuinely fit who you are, get recognized for the work you're already doing, and connect with other students who are building something real. All of it, completely free.</p>
         <div class="cta-btns">
           <a href="explore.html" class="cta-btn-primary">Find a Project &#8594;</a>
           <a href="award.html" class="cta-btn-ghost">Explore Awards &#8594;</a>
