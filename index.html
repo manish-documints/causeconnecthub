@@ -298,8 +298,6 @@
     .hero-container {
       min-height: 85vh;
       background: var(--hero-gradient);
-      background-size: 200% 200%;
-      animation: gradientBG 12s ease infinite;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -308,15 +306,45 @@
       color: white;
       position: relative;
       /* The requested rounded corners */
-      border-bottom-left-radius: 80px;
-      border-bottom-right-radius: 80px;
-      box-shadow: 0 20px 50px rgba(255, 102, 51, 0.15);
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      box-shadow: none;
     }
 
     .hero-content {
         max-width: 850px;
         position: relative;
         z-index: 2;
+    }
+
+    .hero-social-proof {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        background: rgba(255,255,255,0.15);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255,255,255,0.25);
+        border-radius: 999px;
+        padding: 8px 18px 8px 10px;
+        margin-bottom: 28px;
+        opacity: 0;
+        animation: heroFadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.05s forwards;
+    }
+    .hero-avatars {
+        display: flex;
+    }
+    .hero-avatar {
+        width: 30px; height: 30px;
+        border-radius: 50%;
+        border: 2px solid rgba(255,255,255,0.7);
+        margin-left: -8px;
+    }
+    .hero-avatars .hero-avatar:first-child { margin-left: 0; }
+    .hero-proof-text {
+        font-size: 0.85rem;
+        color: rgba(255,255,255,0.9);
+        font-style: italic;
+        font-family: 'Outfit', sans-serif;
     }
 
     .hero-content h2 {
@@ -330,24 +358,17 @@
 
     /* Hero line entrances */
     @keyframes lineEnter {
-        0%   { opacity: 0; transform: translateY(54px) scale(0.96); filter: blur(6px); }
-        60%  { opacity: 1; filter: blur(0.5px); }
-        100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
-    }
-    @keyframes wordGlow {
-        0%   { text-shadow: none; }
-        40%  { text-shadow: 0 0 28px rgba(255,255,255,0.9), 0 0 55px rgba(200,120,255,0.5); }
-        100% { text-shadow: none; }
+        0%   { opacity: 0; transform: translateY(24px); }
+        100% { opacity: 1; transform: translateY(0); }
     }
 
     .word-1 {
         display: inline-block; opacity: 0;
-        animation: lineEnter 1.0s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+        animation: lineEnter 0.7s ease 0.1s forwards;
     }
     .word-2 {
         display: inline-block; opacity: 0;
-        animation: blurRise 1.0s cubic-bezier(0.16, 1, 0.3, 1) 0.52s forwards,
-                   wordGlow 2.4s ease-in-out 2.0s 1;
+        animation: lineEnter 0.7s ease 0.35s forwards;
     }
 
     /* White dot grid + diagonal shine on hero */
@@ -355,21 +376,13 @@
     .hero-container::before {
         content: '';
         position: absolute; inset: 0;
-        background-image: radial-gradient(circle, rgba(255,255,255,0.18) 1.5px, transparent 1.5px);
+        background-image: radial-gradient(circle, rgba(255,255,255,0.09) 1.5px, transparent 1.5px);
         background-size: 28px 28px;
         mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, black 20%, transparent 80%);
         -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, black 20%, transparent 80%);
         pointer-events: none; z-index: 0;
     }
-    .hero-container::after {
-        content: '';
-        position: absolute;
-        top: -20%; left: -70%;
-        width: 55%; height: 140%;
-        background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.13) 50%, transparent 70%);
-        animation: heroShine 1.8s cubic-bezier(0.4,0,0.2,1) 2.9s 1 forwards;
-        pointer-events: none; z-index: 1;
-    }
+    .hero-container::after { display: none; }
 
     .hero-content p,
     .hero-btns a,
@@ -968,21 +981,12 @@
     }
     .perfect-word {
         display: inline-block;
-        background: linear-gradient(90deg,
-            #f9a8d4 0%,
-            #fdba74 17%,
-            #fde68a 33%,
-            #86efac 50%,
-            #93c5fd 67%,
-            #c4b5fd 83%,
-            #f9a8d4 100%
-        );
-        background-size: 250% 100%;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        animation: watercolorShift 7s ease-in-out infinite,
-                   perfectPop 1s cubic-bezier(0.16, 1, 0.3, 1) 0.28s both;
+        color: #ffe8b0;
+        -webkit-text-fill-color: #ffe8b0;
+        text-decoration: underline;
+        text-decoration-color: rgba(255,220,120,0.5);
+        text-underline-offset: 6px;
+        text-decoration-thickness: 3px;
     }
 
     /* --- STAT BANNER --- */
@@ -1435,19 +1439,19 @@
   <section class="testimonials-section">
     <div class="testimonials-marquee-outer">
       <div class="testimonials-track">
-        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">Found three programs I actually wanted to apply to in like 20 minutes. I had no idea this many opportunities existed.</p></div>
-        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">I applied to an award I found here and got it. There's no way I would've come across it on my own.</p></div>
-        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">Finally something that feels like it was actually made for high schoolers and not just college admissions coaches.</p></div>
-        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">I kept waiting for a paywall or a catch. There isn't one. Genuinely free, which is rare for something this useful.</p></div>
-        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">Used this to find a youth policy program near me. My counselor had never even heard of it,so glad I found it myself.</p></div>
-        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">The resources section alone is worth bookmarking. I've already sent the link to three friends in my grade.</p></div>
+        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">Found a fellowship I actually wanted to do</p></div>
+        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">Got into a scholarship I applied to from here</p></div>
+        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">Free, simple, and actually helpful</p></div>
+        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">Helped me find something I genuinely care about</p></div>
+        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">My counselor had never heard of the program I joined</p></div>
+        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">Still part of the nonprofit I found on here six months later</p></div>
         <!-- Duplicate set for seamless infinite loop -->
-        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">Found three programs I actually wanted to apply to in like 20 minutes. I had no idea this many opportunities existed.</p></div>
-        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">I applied to an award I found here and got it. There's no way I would've come across it on my own.</p></div>
-        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">Finally something that feels like it was actually made for high schoolers and not just college admissions coaches.</p></div>
-        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">I kept waiting for a paywall or a catch. There isn't one. Genuinely free, which is rare for something this useful.</p></div>
-        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">Used this to find a youth policy program near me. My counselor had never even heard of it,so glad I found it myself.</p></div>
-        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">The resources section alone is worth bookmarking. I've already sent the link to three friends in my grade.</p></div>
+        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">Found a fellowship I actually wanted to do</p></div>
+        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">Got into a scholarship I applied to from here</p></div>
+        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">Free, simple, and actually helpful</p></div>
+        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">Helped me find something I genuinely care about</p></div>
+        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">My counselor had never heard of the program I joined</p></div>
+        <div class="t-card"><div class="t-quote-mark">"</div><div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="t-text">Still part of the nonprofit I found on here six months later</p></div>
       </div>
     </div>
   </section>
