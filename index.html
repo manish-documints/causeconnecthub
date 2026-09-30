@@ -847,7 +847,7 @@
       margin: 0 0 14px;
       line-height: 1.2;
     }
-    .step-p { color: var(--text-muted); line-height: 1.75; margin: 0 0 22px; font-size: 0.97rem; }
+    .step-p { color: var(--text-muted); line-height: 1.75; margin: 0 0 22px; font-size: 1.08rem; }
     .step-link {
       display: inline-flex;
       align-items: center;
@@ -1068,27 +1068,27 @@
     /* --- MISSION BAND --- */
     .mission-band {
         width: 100%;
-        margin: 72px 0 0;
-        padding: 56px 20px;
-        background: rgba(255, 102, 51, 0.06);
-        border-top: 1.5px solid rgba(255, 102, 51, 0.15);
-        border-bottom: 1.5px solid rgba(255, 102, 51, 0.15);
+        margin: 80px 0 0;
+        padding: 80px 20px;
+        background: transparent;
+        border: none;
     }
     .mission-band-inner {
-        max-width: 860px;
+        max-width: 760px;
         margin: 0 auto;
         padding: 0 12px;
+        text-align: center;
     }
     .mission-accent-line {
-        width: 48px;
-        height: 5px;
+        width: 40px;
+        height: 4px;
         border-radius: 4px;
         background: var(--hero-gradient);
-        margin-bottom: 28px;
+        margin: 0 auto 28px;
     }
     .mission-statement {
         font-family: 'Outfit', sans-serif;
-        font-size: 2.4rem;
+        font-size: 2.6rem;
         font-weight: 800;
         line-height: 1.2;
         color: var(--text-dark);
@@ -1099,10 +1099,11 @@
         color: var(--text-muted);
         font-size: 1.05rem;
         line-height: 1.75;
-        max-width: 680px;
+        max-width: 580px;
+        margin: 0 auto;
     }
     @media (max-width: 768px) {
-        .mission-statement { font-size: 1.7rem; }
+        .mission-statement { font-size: 1.8rem; }
         .mission-sub { font-size: 0.95rem; }
     }
 
@@ -1467,7 +1468,7 @@
     <div class="mission-band-inner">
       <div class="mission-accent-line"></div>
       <h2 class="mission-statement">We made this because finding the right opportunity shouldn't be this hard.</h2>
-      <p class="mission-sub">We built this because we know how it feels to want to do something meaningful and not know where to begin. CauseConnectHub exists to make sure that no student who wants to create change is left searching alone. Every opportunity on this platform is here because we believe in what students are capable of when they have the right support.</p>
+      <p class="mission-sub">We built this because we know how it feels to want to do something meaningful and not know where to start. No student who wants to create change should be left searching alone.</p>
     </div>
   </section>
 
@@ -1483,7 +1484,7 @@
         </div>
         <span class="step-cat-label" style="color: var(--vibrant-orange)">Extracurriculars</span>
         <h3 class="step-h">Find clubs and passion projects</h3>
-        <p class="step-p">Every student has something they care deeply about. Browse youth-led initiatives, volunteer roles, and leadership opportunities filtered by topic, location, and type to find the ones that actually speak to you, not just the ones that look impressive on a resume.</p>
+        <p class="step-p">Browse youth-led initiatives, volunteer roles, and leadership opportunities filtered by topic and location. Find what actually speaks to you.</p>
         <a href="explore.html" class="step-link" style="color: var(--vibrant-orange)">Explore extracurriculars &#8594;</a>
       </div>
       <div>
@@ -1509,7 +1510,7 @@
         </div>
         <span class="step-cat-label" style="color: var(--vibrant-pink)">Awards &amp; Scholarships</span>
         <h3 class="step-h">Get recognized for what you do</h3>
-        <p class="step-p">Your work deserves to be recognized. Hundreds of awards and scholarships exist for student leaders, researchers, and changemakers. We gathered them in one place so your energy goes toward applying, not hunting.</p>
+        <p class="step-p">Hundreds of awards and scholarships exist for students doing real work. We put them in one place so you spend your time applying, not searching.</p>
         <a href="award.html" class="step-link" style="color: var(--vibrant-pink)">Explore awards &#8594;</a>
       </div>
       <div>
@@ -1535,7 +1536,7 @@
         </div>
         <span class="step-cat-label" style="color: #c9920a">Resources</span>
         <h3 class="step-h">Tools to build your own initiative</h3>
-        <p class="step-p">Starting something from scratch takes courage. We put together guides, templates, and tools to walk alongside you, from writing your first proposal to rallying a team around an idea that matters to you.</p>
+        <p class="step-p">Guides, templates, and tools to help you get started — from writing your first proposal to building a team around something you care about.</p>
         <a href="resource.html" class="step-link" style="color: #c9920a">Explore resources &#8594;</a>
       </div>
       <div>
@@ -1561,7 +1562,7 @@
         </div>
         <span class="step-cat-label" style="color: var(--vibrant-pink)">Share Your Project</span>
         <h3 class="step-h">Running something? List it here</h3>
-        <p class="step-p">If you've built something worth sharing, this is where it belongs. Add your club, initiative, or organization to our directory so other students who are looking for exactly what you created can find you.</p>
+        <p class="step-p">Built something worth sharing? Add your club, initiative, or organization so other students can find you.</p>
         <a href="project.html" class="step-link" style="color: var(--vibrant-pink)">Add your project &#8594;</a>
       </div>
       <div>
@@ -1761,7 +1762,7 @@
                 <a href="https://www.causeconnecthub.com" target="_blank"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253M3 12a8.959 8.959 0 01.284-2.253"/></svg>causeconnecthub.com</a>
             </div>
         </div>
-        <div class="footer-bottom"><p>&copy; 2025 CauseConnectHub. Made with care for the next generation.</p></div>
+        <div class="footer-bottom"><p>&copy; 2025 Cause Connect Hub. Made with care for the next generation.</p></div>
     </footer>
     <style>
         .site-footer { background: white; border-top: 1px solid #f0e6ff; margin-top: 80px; font-family: 'Outfit', sans-serif; }
